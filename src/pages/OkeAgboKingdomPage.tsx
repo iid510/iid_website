@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Crown, Users } from "lucide-react";
+import { ChevronDown, Crown, Users, Images } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
@@ -15,6 +15,13 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 const galleryImages = [
   { src: "/images/oke-agbo/oba-bejeroku-stephen-adekoya.webp", alt: "HRH Oba Stephen Adekoya, The Bejeroku of Oke-Agbo" },
+  { src: "/images/oke-agbo/oba-bejeroku-stephen-adekoya-2.webp", alt: "HRH Oba Stephen Adekoya, The Bejeroku of Oke-Agbo, in royal regalia" },
+  { src: "/images/oke-agbo/oba-bejeroku-stephen-adekoya-3.webp", alt: "HRH Oba Stephen Adekoya, The Bejeroku of Oke-Agbo, in royal regalia" },
+  { src: "/images/oke-agbo/oba-bejeroku-stephen-adekoya-4.webp", alt: "HRH Oba Stephen Adekoya, The Bejeroku of Oke-Agbo, in royal regalia" },
+  { src: "/images/oke-agbo/oba-bejeroku-stephen-adekoya-5.webp", alt: "HRH Oba Stephen Adekoya, The Bejeroku of Oke-Agbo, in royal regalia" },
+  { src: "/images/oke-agbo/oba-bejeroku-stephen-adekoya-6.webp", alt: "HRH Oba Stephen Adekoya, The Bejeroku of Oke-Agbo, in royal regalia" },
+  { src: "/images/oke-agbo/oba-bejeroku-stephen-adekoya-7.webp", alt: "HRH Oba Stephen Adekoya, The Bejeroku of Oke-Agbo, in royal regalia" },
+  { src: "/images/oke-agbo/oba-bejeroku-stephen-adekoya-8.webp", alt: "HRH Oba Stephen Adekoya, The Bejeroku of Oke-Agbo, in royal regalia" },
 ];
 
 const Baales = [
@@ -134,6 +141,29 @@ export default function OkeAgboKingdomPage() {
               We're still gathering history, chiefs and heritage places for Oke-Agbo. If you have content to share, reach out via the Contact page.
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Royal Gallery */}
+      <section className="section-padding bg-[#f0fbf6]">
+        <div className="container-main max-w-5xl">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}
+            className="text-center mb-10">
+            <h2 className="label-accent mb-2">Gallery</h2>
+            <h3 className="heading-section flex items-center justify-center gap-2">
+              <Images size={26} className="text-accent" /> The Bejeroku in Regalia
+            </h3>
+            <p className="text-body mt-2">Photos of His Royal Highness Oba Stephen Adekoya, The Bejeroku of Oke-Agbo.</p>
+          </motion.div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {galleryImages.slice(1).map((img, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: (i % 8) * 0.05, ease }}
+                className="rounded-2xl overflow-hidden border-2 border-white shadow-sm aspect-[3/4]">
+                <ZoomableImage src={img.src} alt={img.alt} onClick={() => open(1 + i)} />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
