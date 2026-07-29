@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { useRef } from "react";
 import { Calendar, Crown, Globe, Ship, Users, Heart } from "lucide-react";
 
@@ -60,8 +60,6 @@ export default function Timeline() {
     offset: ["start end", "end start"],
   });
 
-  const progressBarHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
   return (
     <section id="timeline" className="section-padding bg-background relative overflow-hidden">
       {/* Background pattern */}
@@ -97,8 +95,8 @@ export default function Timeline() {
           <div className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 hidden lg:block">
             <div className="absolute inset-0 bg-border" />
             <motion.div
-              style={{ height: progressBarHeight }}
-              className="absolute top-0 left-0 right-0 bg-gradient-to-b from-primary to-accent"
+              style={{ scaleY: scrollYProgress, transformOrigin: "top" }}
+              className="absolute inset-0 bg-gradient-to-b from-primary to-accent"
             />
           </div>
 
@@ -106,8 +104,8 @@ export default function Timeline() {
           <div className="absolute left-8 sm:left-12 top-0 bottom-0 w-0.5 lg:hidden">
             <div className="absolute inset-0 bg-border" />
             <motion.div
-              style={{ height: progressBarHeight }}
-              className="absolute top-0 left-0 right-0 bg-gradient-to-b from-primary to-accent"
+              style={{ scaleY: scrollYProgress, transformOrigin: "top" }}
+              className="absolute inset-0 bg-gradient-to-b from-primary to-accent"
             />
           </div>
 

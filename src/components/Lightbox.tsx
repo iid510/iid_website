@@ -143,7 +143,7 @@ export function ZoomableImage({
       onClick={onClick}
       className={`group relative block text-left cursor-zoom-in focus:outline-none ${className}`}
     >
-      <img src={src} alt={alt} className={imgClassName} />
+      <img src={src} alt={alt} className={imgClassName} loading="lazy" decoding="async" />
       <span className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
         <Expand size={20} className="text-white drop-shadow-lg" />
       </span>
