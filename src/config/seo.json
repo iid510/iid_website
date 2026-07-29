@@ -107,6 +107,10 @@
     "/businesses": {
       "title": "Ijebu Igbo Business Directory — Diaspora | IID",
       "description": "Find and support Ijebu-Igbo businesses and entrepreneurs across the diaspora in the IID community business directory."
+    },
+    "/honour-roll": {
+      "title": "Honour Roll — IID Foundation Members | Ijebu Igbo Descendants",
+      "description": "Honouring the pioneer executive committee and founding members who established IID Omo Orimolusi in Diaspora in 2006–2009."
     }
   }
 }

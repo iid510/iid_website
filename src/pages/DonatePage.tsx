@@ -1,39 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Heart, Building2, Copy, CheckCircle2, Users, BookOpen, Wrench } from "lucide-react";
+import { Heart, Building2, Copy, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
+import { useSanityDonatePage } from "@/hooks/useSanityDonatePage";
+import { resolveIcon } from "@/lib/iconMap";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-
-const BANK_UK = {
-  accountName: "IID Omo Orimolusi in Diaspora",
-  bankName: "Natwest",
-  accountNumber: "21598770",
-  sortCode: "50-10-29",
-  reference: "UNITY HOUSE",
-};
-
-const BANK_NG = {
-  accountName: "IID Omo Orimolusi in Diaspora",
-  bankName: "FCMB",
-  accountNumber: "4052231013",
-  reference: "UNITY HOUSE",
-};
-
-const TARGET = 50_000;
-const RAISED = 0; // ← update as funds come in
-
-const IMPACT_ITEMS = [
-  { icon: <Building2 size={22} className="text-accent" />, label: "Unity House", desc: "A permanent multipurpose learning and community centre in Ijebu-Igbo" },
-  { icon: <BookOpen size={22} className="text-accent" />, label: "Scholarships", desc: "Supporting deserving students from Ijebu-Igbo with educational bursaries" },
-  { icon: <Wrench size={22} className="text-accent" />, label: "Infrastructure", desc: "Funding community infrastructure projects in the homeland" },
-  { icon: <Users size={22} className="text-accent" />, label: "Community Events", desc: "Enabling cultural events, AGMs, and diaspora gatherings" },
-];
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -54,7 +31,12 @@ function CopyButton({ text }: { text: string }) {
 }
 
 export default function DonatePage() {
-  const pct = Math.min(100, Math.round((RAISED / TARGET) * 100));
+  const { data } = useSanityDonatePage();
+  const bankAccounts = data?.bankAccounts ?? [];
+  const IMPACT_ITEMS = data?.impactItems ?? [];
+  const TARGET = data?.target ?? 0;
+  const RAISED = data?.raised ?? 0;
+  const pct = TARGET > 0 ? Math.min(100, Math.round((RAISED / TARGET) * 100)) : 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -144,44 +126,28 @@ export default function DonatePage() {
               Please use the reference <strong className="text-foreground">UNITY HOUSE</strong> so we can track your donation.
             </p>
 
-            {/* UK Account */}
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">🇬🇧 UK Account</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-              {[
-                { label: "Account Name", value: BANK_UK.accountName },
-                { label: "Bank",         value: BANK_UK.bankName },
-                { label: "Account No.",  value: BANK_UK.accountNumber },
-                { label: "Sort Code",    value: BANK_UK.sortCode },
-                { label: "Reference",    value: BANK_UK.reference },
-              ].map(({ label, value }) => (
-                <div key={label} className="bg-muted/50 rounded-xl p-4">
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">{label}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="font-mono font-semibold text-foreground text-sm flex-1">{value}</p>
-                    <CopyButton text={value} />
-                  </div>
+            {bankAccounts.map((account, idx) => (
+              <div key={account.label} className={idx < bankAccounts.length - 1 ? "mb-6" : ""}>
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{account.label}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    { label: "Account Name", value: account.accountName },
+                    { label: "Bank", value: account.bankName },
+                    { label: "Account No.", value: account.accountNumber },
+                    { label: "Sort Code", value: account.sortCode },
+                    { label: "Reference", value: account.reference },
+                  ].filter((f) => f.value).map(({ label, value }) => (
+                    <div key={label} className="bg-muted/50 rounded-xl p-4">
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">{label}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="font-mono font-semibold text-foreground text-sm flex-1">{value}</p>
+                        <CopyButton text={value!} />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-
-            {/* Nigeria Account */}
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">🇳🇬 Nigeria Account</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                { label: "Account Name", value: BANK_NG.accountName },
-                { label: "Bank",         value: BANK_NG.bankName },
-                { label: "Account No.",  value: BANK_NG.accountNumber },
-                { label: "Reference",    value: BANK_NG.reference },
-              ].map(({ label, value }) => (
-                <div key={label} className="bg-muted/50 rounded-xl p-4">
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">{label}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="font-mono font-semibold text-foreground text-sm flex-1">{value}</p>
-                    <CopyButton text={value} />
-                  </div>
-                </div>
-              ))}
-            </div>
+              </div>
+            ))}
 
             <div className="mt-5 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
               <p className="text-amber-800 text-xs font-medium">
@@ -205,17 +171,20 @@ export default function DonatePage() {
           >
             <h2 className="font-display font-black text-xl text-foreground mb-5">What Your Donation Funds</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {IMPACT_ITEMS.map((item) => (
-                <div key={item.label} className="bg-card border border-border rounded-xl p-5 flex gap-4">
-                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center shrink-0">
-                    {item.icon}
+              {IMPACT_ITEMS.map((item) => {
+                const Icon = resolveIcon(item.icon);
+                return (
+                  <div key={item.title} className="bg-card border border-border rounded-xl p-5 flex gap-4">
+                    <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center shrink-0">
+                      <Icon size={22} className="text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground text-sm">{item.title}</h3>
+                      <p className="text-muted-foreground text-xs mt-0.5 leading-relaxed">{item.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground text-sm">{item.label}</h3>
-                    <p className="text-muted-foreground text-xs mt-0.5 leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </motion.div>
 

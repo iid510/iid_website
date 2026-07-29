@@ -10,11 +10,12 @@ import Testimonials from "@/components/Testimonials";
 import News from "@/components/News";
 import Gallery from "@/components/Gallery";
 import OrimolusiSection from "@/components/OrimolusiSection";
-import FAQ, { faqs } from "@/components/FAQ";
+import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
+import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
 
 const ORG_JSONLD = {
   "@context": "https://schema.org",
@@ -34,21 +35,22 @@ const ORG_JSONLD = {
   sameAs: ["https://www.ijebuigbodescendants.org/"],
 };
 
-const HOME_FAQ_JSONLD = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.slice(0, 2).map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: { "@type": "Answer", text: faq.answer.join(" ") },
-  })),
-};
-
 const Index = () => {
+  const { data: siteSettings } = useSanitySiteSettings();
+  const homeFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: (siteSettings?.faqs ?? []).slice(0, 2).map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: (faq.answer ?? []).join(" ") },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <Seo path="/" jsonLd={[ORG_JSONLD, HOME_FAQ_JSONLD]} />
+      <Seo path="/" jsonLd={[ORG_JSONLD, homeFaqJsonLd]} />
       <Hero />
       <About />
       <VideoSection />

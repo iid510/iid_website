@@ -29,7 +29,7 @@ export default function AboutPage() {
               About Us
             </h1>
             <p className="text-white/70 text-sm sm:text-base mt-2 max-w-lg mx-auto">
-              Who we are, what we stand for, and the five clans that define us.
+              Who we are, what we stand for, and the seven clans that define us.
             </p>
           </motion.div>
         </div>

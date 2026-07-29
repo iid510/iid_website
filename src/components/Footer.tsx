@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Globe, MessageCircle, ArrowRight, Users, CalendarDays, Flag, Send } from "lucide-react";
+import { Mail, MapPin, Phone, Globe, MessageCircle, ArrowRight, Send } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
+import { resolveIcon } from "@/lib/iconMap";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -19,19 +21,13 @@ const communityLinks = [
   { label: "Impact", href: "/impact" },
   { label: "News", href: "/news" },
   { label: "Blog", href: "/blog" },
+  { label: "Honour Roll", href: "/honour-roll" },
   { label: "Business Directory", href: "/businesses" },
   { label: "Submit an Event", href: "mailto:softlineazeez123@gmail.com?subject=Event%20Submission" },
   { label: "List Your Business", href: "/businesses" },
 ];
 
 const WHATSAPP_COMMUNITY = "https://wa.me/447496933887?text=Hello%2C%20I%27d%20like%20to%20join%20the%20IID%20community.";
-
-const stats = [
-  { icon: Users,       value: "200+",  label: "Members"      },
-  { icon: CalendarDays, value: "2017",  label: "Est."         },
-  { icon: Globe,       value: "3",     label: "Countries"    },
-  { icon: Flag,        value: "1",     label: "Hometown"     },
-];
 
 function NewsletterSignup() {
   const [name, setName] = useState("");
@@ -74,6 +70,9 @@ function NewsletterSignup() {
 }
 
 export default function Footer() {
+  const { data: siteSettings } = useSanitySiteSettings();
+  const stats = siteSettings?.footerStats ?? [];
+
   return (
     <footer id="footer" className="bg-charcoal text-primary-foreground safe-area-bottom">
       <div className="container-main py-8 md:py-16 lg:py-20">
@@ -167,17 +166,20 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             className="grid grid-cols-4 gap-4 mb-14 border border-primary-foreground/10 rounded-2xl p-6 bg-primary-foreground/5"
           >
-            {stats.map((s) => (
-              <div key={s.label} className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center shrink-0">
-                  <s.icon size={18} className="text-accent" />
+            {stats.map((s) => {
+              const Icon = resolveIcon(s.icon);
+              return (
+                <div key={s.label} className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center shrink-0">
+                    <Icon size={18} className="text-accent" />
+                  </div>
+                  <div>
+                    <p className="font-display font-black text-2xl text-white leading-none">{s.value}</p>
+                    <p className="text-primary-foreground/50 text-xs mt-0.5">{s.label}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-display font-black text-2xl text-white leading-none">{s.value}</p>
-                  <p className="text-primary-foreground/50 text-xs mt-0.5">{s.label}</p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </motion.div>
 
           {/* Newsletter signup */}

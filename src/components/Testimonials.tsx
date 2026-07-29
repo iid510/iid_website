@@ -1,27 +1,13 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
-
-const testimonials = [
-  {
-    quote: "No matter where we live in the world, Ijebu Igbo remains home.",
-    author: "Diaspora Member",
-    location: "United Kingdom"
-  },
-  {
-    quote: "Our culture connects us beyond borders.",
-    author: "Community Leader",
-    location: "United States"
-  },
-  {
-    quote: "Development begins when sons and daughters remember their roots.",
-    author: "Development Advocate",
-    location: "Canada"
-  }
-];
+import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Testimonials() {
+  const { data: siteSettings } = useSanitySiteSettings();
+  const testimonials = siteSettings?.testimonials ?? [];
+
   return (
     <section className="section-padding bg-surface">
       <div className="container-main">

@@ -7,7 +7,8 @@ import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
-import { ANNOUNCEMENTS, CATEGORY_STYLES, type AnnouncementCategory } from "@/data/announcements";
+import { CATEGORY_STYLES, type AnnouncementCategory, type Announcement } from "@/data/announcements";
+import { useSanityAnnouncements } from "@/hooks/useSanityAnnouncements";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -28,7 +29,7 @@ const CATEGORY_ICONS: Record<AnnouncementCategory, React.ReactNode> = {
   Notice:          <Bell size={16} />,
 };
 
-function AnnouncementCard({ item, index }: { item: typeof ANNOUNCEMENTS[0]; index: number }) {
+function AnnouncementCard({ item, index }: { item: Announcement; index: number }) {
   const style = CATEGORY_STYLES[item.category];
   const date = new Date(item.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
@@ -66,6 +67,7 @@ function AnnouncementCard({ item, index }: { item: typeof ANNOUNCEMENTS[0]; inde
 }
 
 export default function AnnouncementsPage() {
+  const { data: ANNOUNCEMENTS = [] } = useSanityAnnouncements();
   const [active, setActive] = useState<AnnouncementCategory | "All">("All");
 
   const filtered = active === "All"

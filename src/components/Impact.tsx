@@ -1,30 +1,11 @@
 import { motion } from "framer-motion";
-import { Globe, BookOpen, Heart, Users } from "lucide-react";
-
-const impacts = [
-  {
-    title: "Community Development",
-    desc: "Infrastructural projects targeting clean water, roads, and renewable energy in Ijebu Igbo.",
-    icon: Globe,
-  },
-  {
-    title: "Education Support",
-    desc: "Scholarship funds and digital literacy programs empowering local youth for global opportunities.",
-    icon: BookOpen,
-  },
-  {
-    title: "Cultural Preservation",
-    desc: "Documenting oral histories, supporting the annual Ojude Oba festival, and preserving Ijebu traditions.",
-    icon: Heart,
-  },
-  {
-    title: "Diaspora Networking",
-    desc: "A professional bridge connecting experts abroad with local opportunities back home.",
-    icon: Users,
-  },
-];
+import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
+import { resolveIcon } from "@/lib/iconMap";
 
 export default function Impact() {
+  const { data: siteSettings } = useSanitySiteSettings();
+  const impacts = siteSettings?.impactCards ?? [];
+
   return (
     <section id="impact" className="section-padding bg-background">
       <div className="container-main">
@@ -41,21 +22,24 @@ export default function Impact() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-px sm:bg-border sm:border sm:border-border rounded-xl sm:rounded-sm overflow-hidden">
-          {impacts.map((item, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -5 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-card p-6 sm:p-8 lg:p-10 flex flex-col h-full rounded-xl sm:rounded-none border border-border sm:border-0 touch-manipulation"
-            >
-              <item.icon className="w-8 h-8 sm:w-10 sm:h-10 text-accent mb-4 sm:mb-6 lg:mb-8" strokeWidth={1.5} />
-              <h4 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-4 font-display">
-                {item.title}
-              </h4>
-              <p className="text-body text-sm sm:text-base">{item.desc}</p>
-            </motion.div>
-          ))}
+          {impacts.map((item, idx) => {
+            const Icon = resolveIcon(item.icon);
+            return (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -5 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="bg-card p-6 sm:p-8 lg:p-10 flex flex-col h-full rounded-xl sm:rounded-none border border-border sm:border-0 touch-manipulation"
+              >
+                <Icon className="w-8 h-8 sm:w-10 sm:h-10 text-accent mb-4 sm:mb-6 lg:mb-8" strokeWidth={1.5} />
+                <h4 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-4 font-display">
+                  {item.title}
+                </h4>
+                <p className="text-body text-sm sm:text-base">{item.description}</p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

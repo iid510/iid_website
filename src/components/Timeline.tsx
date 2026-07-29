@@ -6,8 +6,8 @@ const timelineEvents = [
   {
     era: "Ancient Times",
     year: "Pre-1500s",
-    title: "The Five Clans Unite",
-    description: "The five foundational clans—Oke-Sopen, Japara, Oke-Agbo, Atikori, and Ojowo—establish Ijebu Igbo under the Orímólúsí dynasty.",
+    title: "The Seven Clans Unite",
+    description: "The seven foundational clans—Oke-Sopen, Japara, Oke-Agbo, Atikori, Ojowo, Imope-Ijebu, and Aparaki—establish Ijebu Igbo under the Orímólúsí dynasty.",
     icon: Crown,
     color: "from-yellow-600 to-amber-700",
   },
@@ -46,8 +46,8 @@ const timelineEvents = [
   {
     era: "Global Community",
     year: "2000s-Present",
-    title: "Ijebu Igbo Descendants in Diaspora, UK",
-    description: "Formation of organized diaspora communities like IJIDD UK, connecting generations and preserving our heritage for the future.",
+    title: "Ijebu Igbo Descendants in Diaspora",
+    description: "Formation of organized diaspora communities like IID, connecting generations and preserving our heritage for the future.",
     icon: Globe,
     color: "from-accent to-primary",
   },

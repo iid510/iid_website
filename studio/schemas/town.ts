@@ -1,0 +1,57 @@
+import { defineField, defineType } from "sanity";
+
+export default defineType({
+  name: "town",
+  title: "Kingdom / Quarter Page",
+  type: "document",
+  fields: [
+    defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "name" }, validation: (r) => r.required(), description: "Must match the route segment exactly, e.g. oke-sopen" }),
+    defineField({ name: "name", title: "Name", type: "string", validation: (r) => r.required() }),
+    defineField({ name: "eyebrow", title: "Eyebrow", type: "string" }),
+    defineField({ name: "tagline", title: "Tagline", type: "string" }),
+    defineField({ name: "rulerTitle", title: "Ruler Title", type: "string" }),
+    defineField({ name: "rulerName", title: "Ruler Name", type: "string" }),
+    defineField({ name: "rulerPhoto", title: "Ruler Photo", type: "image", options: { hotspot: true } }),
+    defineField({ name: "consortName", title: "Consort Name", type: "string" }),
+    defineField({ name: "consortPhoto", title: "Consort Photo", type: "image", options: { hotspot: true } }),
+    defineField({ name: "quickFacts", title: "Quick Facts", type: "array", of: [{ type: "quickFact" }] }),
+    defineField({ name: "history", title: "History Paragraphs", type: "array", of: [{ type: "text" }] }),
+    defineField({ name: "governanceNotes", title: "Governance / Structure Paragraphs", type: "array", of: [{ type: "text" }] }),
+    defineField({ name: "rulerBio", title: "Ruler Biography Paragraphs", type: "array", of: [{ type: "text" }] }),
+    defineField({ name: "rulerOriki", title: "Ruler Oriki / Praise Verses", type: "array", of: [{ type: "text" }] }),
+    defineField({ name: "townOriki", title: "Town Oriki / Praise Verses", type: "array", of: [{ type: "text" }] }),
+    defineField({ name: "anthem", title: "Anthem Lines", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "subdivisionGroups", title: "Subdivisions (Quarters / Ituns / Odos)", type: "array", of: [{ type: "groupedList" }] }),
+    defineField({
+      name: "chiefGroups",
+      title: "Chiefs / Councils",
+      type: "array",
+      of: [{
+        type: "object",
+        name: "chiefGroup",
+        fields: [
+          defineField({ name: "groupLabel", title: "Group Label", type: "string", validation: (r) => r.required() }),
+          defineField({ name: "members", title: "Members", type: "array", of: [{ type: "personEntry" }] }),
+        ],
+        preview: { select: { title: "groupLabel" } },
+      }],
+    }),
+    defineField({ name: "baales", title: "Baales (canonical list)", type: "array", of: [{ type: "personEntry" }] }),
+    defineField({ name: "pastRulers", title: "Past Rulers", type: "array", of: [{ type: "rulerEntry" }] }),
+    defineField({ name: "notableProfiles", title: "Notable Profiles", type: "array", of: [{ type: "bioProfile" }] }),
+    defineField({ name: "heritagePlaces", title: "Heritage Places", type: "array", of: [{ type: "landmarkCard" }] }),
+    defineField({ name: "aroundTown", title: "Around Town (Institutions / Landmarks)", type: "array", of: [{ type: "landmarkCard" }] }),
+    defineField({ name: "projectAchievements", title: "Community Projects / Achievements", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "galleryCaptions", title: "Captioned Gallery", type: "array", of: [{ type: "galleryCaptioned" }] }),
+    defineField({ name: "extraGalleryImages", title: "Extra Gallery Images", type: "array", of: [{ type: "image" }] }),
+    defineField({ name: "sourceNote", title: "Source / Attribution Note", type: "text" }),
+    defineField({ name: "placeholderNote", title: "Placeholder Note (thin pages)", type: "string" }),
+    defineField({ name: "order", title: "Display Order", type: "number" }),
+  ],
+  preview: {
+    select: { title: "name", subtitle: "rulerTitle", media: "rulerPhoto" },
+  },
+  orderings: [
+    { title: "Display Order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
+  ],
+});

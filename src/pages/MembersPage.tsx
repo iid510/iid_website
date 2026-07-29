@@ -8,7 +8,8 @@ import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
 import ImageWithSkeleton from "@/components/ImageWithSkeleton";
-import { MEMBERS, type Clan } from "@/data/members";
+import { type Clan } from "@/data/members";
+import { useSanityMembers } from "@/hooks/useSanityMembers";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -18,6 +19,7 @@ const ALL_CLANS: (Clan | "All")[] = [
 ];
 
 export default function MembersPage() {
+  const { data: MEMBERS = [] } = useSanityMembers();
   const [query, setQuery] = useState("");
   const [clan, setClan] = useState<Clan | "All">("All");
 
@@ -28,7 +30,7 @@ export default function MembersPage() {
       const matchesQuery = !q || m.name.toLowerCase().includes(q) || m.location.toLowerCase().includes(q);
       return matchesClan && matchesQuery;
     });
-  }, [query, clan]);
+  }, [query, clan, MEMBERS]);
 
   return (
     <div className="min-h-screen bg-background">

@@ -1,6 +1,6 @@
 export const NEWS_QUERY = `
   *[_type == "newsArticle"] | order(_createdAt desc) {
-    id,
+    "id": id.current,
     title,
     excerpt,
     "featuredImage": featuredImage.asset->url,
@@ -17,7 +17,7 @@ export const NEWS_QUERY = `
 export const BUSINESSES_QUERY = `
   *[_type == "business"] | order(id asc) {
     id,
-    slug,
+    "slug": slug.current,
     name,
     category,
     tagline,
@@ -29,7 +29,7 @@ export const BUSINESSES_QUERY = `
     website,
     "flyer": flyer.asset->url,
     "banner": banner.asset->url,
-    "promoVideo": promoVideo.asset->url,
+    "promoVideo": select(defined(promoVideo) => promoVideo.asset->url, promoVideoUrl),
     "gallery": gallery[].asset->url,
     services,
     serviceCategories,
@@ -50,7 +50,7 @@ export const BUSINESSES_QUERY = `
 
 export const KINGS_QUERY = `
   *[_type == "king"] | order(_createdAt asc) {
-    slug,
+    "slug": slug.current,
     name,
     fullTitle,
     subtitle,
@@ -102,11 +102,171 @@ export const EVENT_VIDEOS_QUERY = `
     id,
     title,
     description,
-    "src": videoFile.asset->url,
+    "src": select(defined(videoFile) => videoFile.asset->url, localSrc),
     youtubeId,
     date,
     credit,
     tag,
     featured
+  }
+`;
+
+const TOWN_PROJECTION = `
+  "slug": slug.current,
+  name,
+  eyebrow,
+  tagline,
+  rulerTitle,
+  rulerName,
+  "rulerPhoto": rulerPhoto.asset->url,
+  consortName,
+  "consortPhoto": consortPhoto.asset->url,
+  quickFacts,
+  history,
+  governanceNotes,
+  rulerBio,
+  rulerOriki,
+  townOriki,
+  anthem,
+  subdivisionGroups,
+  "chiefGroups": chiefGroups[]{
+    groupLabel,
+    "members": members[]{ name, title, note, quarter, occupation, phone, "photo": photo.asset->url }
+  },
+  "baales": baales[]{ name, title, note, quarter, occupation, phone, "photo": photo.asset->url },
+  pastRulers,
+  "notableProfiles": notableProfiles[]{ name, title, bio, "photo": photo.asset->url },
+  "heritagePlaces": heritagePlaces[]{ name, description, "image": image.asset->url },
+  "aroundTown": aroundTown[]{ name, description, "image": image.asset->url },
+  projectAchievements,
+  "galleryCaptions": galleryCaptions[]{ caption, "image": image.asset->url },
+  "extraGalleryImages": extraGalleryImages[].asset->url,
+  sourceNote,
+  placeholderNote
+`;
+
+export const TOWNS_QUERY = `
+  *[_type == "town"] | order(order asc) {
+    ${TOWN_PROJECTION}
+  }
+`;
+
+export const TOWN_BY_SLUG_QUERY = `
+  *[_type == "town" && slug.current == $slug][0] {
+    ${TOWN_PROJECTION}
+  }
+`;
+
+export const BLOG_POSTS_QUERY = `
+  *[_type == "blogPost"] | order(order asc) {
+    "slug": slug.current,
+    title,
+    keyword,
+    category,
+    excerpt,
+    "image": image.asset->url,
+    "date": dateLabel,
+    content
+  }
+`;
+
+export const ANNOUNCEMENTS_QUERY = `
+  *[_type == "announcement"] | order(date desc) {
+    "id": _id,
+    category,
+    title,
+    body,
+    date,
+    postedBy,
+    "imageUrl": image.asset->url
+  }
+`;
+
+export const MEMBERS_QUERY = `
+  *[_type == "member"] | order(name asc) {
+    "id": _id,
+    name,
+    clan,
+    location,
+    role,
+    "photo": photo.asset->url,
+    joinedYear
+  }
+`;
+
+export const PLACES_QUERY = `
+  *[_type == "place"] | order(order asc) {
+    "id": slug.current,
+    name,
+    subtitle,
+    badge,
+    "badgeColor": badgeColorKey,
+    location,
+    "image": image.asset->url,
+    description,
+    quote,
+    mapLink
+  }
+`;
+
+export const FOUNDATION_MEMBERS_QUERY = `
+  *[_type == "foundationMember"] | order(group asc, order asc) {
+    name,
+    position,
+    group
+  }
+`;
+
+export const SITE_SETTINGS_QUERY = `
+  *[_type == "siteSettings"][0] {
+    footerStats,
+    heroPhrases,
+    clans,
+    culturalPillars,
+    impactCards,
+    testimonials,
+    faqs,
+    honourRoll
+  }
+`;
+
+export const KINGDOM_OVERVIEW_QUERY = `
+  *[_type == "kingdomOverview"][0] {
+    "orgChartImage": orgChartImage.asset->url,
+    "councilOfObasImage": councilOfObasImage.asset->url,
+    grade1Description,
+    satelliteTowns
+  }
+`;
+
+export const SCHOLARSHIP_PAGE_QUERY = `
+  *[_type == "scholarshipPage"][0] {
+    eligibility,
+    howToApply,
+    pastRecipients
+  }
+`;
+
+export const TRAVEL_GUIDE_PAGE_QUERY = `
+  *[_type == "travelGuidePage"][0] {
+    flights,
+    roadOptions,
+    whatToBring,
+    contacts
+  }
+`;
+
+export const DONATE_PAGE_QUERY = `
+  *[_type == "donatePage"][0] {
+    bankAccounts,
+    target,
+    raised,
+    impactItems
+  }
+`;
+
+export const CONTACT_PAGE_QUERY = `
+  *[_type == "contactPage"][0] {
+    contacts
   }
 `;

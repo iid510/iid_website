@@ -7,10 +7,11 @@ import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
-import { BLOG_POSTS } from "@/data/blogPosts";
+import { useSanityBlogPosts } from "@/hooks/useSanityBlogPosts";
 
 export default function BlogPost() {
   const { slug } = useParams();
+  const { data: BLOG_POSTS = [] } = useSanityBlogPosts();
   const post = slug ? BLOG_POSTS.find((p) => p.slug === slug) ?? null : null;
 
   useEffect(() => {

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, CheckCircle2, Clock, FileText, Users, ChevronRight, GraduationCap } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -7,29 +6,16 @@ import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
+import { useSanityScholarshipPage } from "@/hooks/useSanityScholarshipPage";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const ELIGIBILITY = [
-  "Must be of Ijebu-Igbo descent (parent or grandparent from Ijebu-Igbo)",
-  "Currently enrolled in a recognised secondary school, college, or university",
-  "Demonstrated financial need or exceptional academic achievement",
-  "Recommendation from a parent, guardian, or community elder who is an IID member",
-  "Completion of the scholarship application form",
-];
-
-const HOW_TO_APPLY = [
-  { step: "1", title: "Download the form", desc: "Contact the General Secretary via WhatsApp to receive the scholarship application form." },
-  { step: "2", title: "Complete & submit", desc: "Fill in all sections, attach your academic records and a personal statement, and submit before the deadline." },
-  { step: "3", title: "Review process", desc: "The scholarship committee reviews all applications. Shortlisted candidates may be contacted for a brief interview." },
-  { step: "4", title: "Award announcement", desc: "Successful recipients are announced at the Annual General Meeting and contacted directly." },
-];
-
-const PAST_RECIPIENTS: { name: string; year: number; institution: string }[] = [
-  // Add past recipients here as the programme grows
-];
-
 export default function ScholarshipPage() {
+  const { data } = useSanityScholarshipPage();
+  const ELIGIBILITY = data?.eligibility ?? [];
+  const HOW_TO_APPLY = data?.howToApply ?? [];
+  const PAST_RECIPIENTS = data?.pastRecipients ?? [];
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -125,13 +111,13 @@ export default function ScholarshipPage() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {HOW_TO_APPLY.map((item) => (
-                <div key={item.step} className="bg-card border border-border rounded-xl p-5 flex gap-4">
+                <div key={item.stepNumber} className="bg-card border border-border rounded-xl p-5 flex gap-4">
                   <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground font-display font-black text-sm flex items-center justify-center shrink-0">
-                    {item.step}
+                    {item.stepNumber}
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground text-sm">{item.title}</h3>
-                    <p className="text-muted-foreground text-xs mt-1 leading-relaxed">{item.desc}</p>
+                    <p className="text-muted-foreground text-xs mt-1 leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               ))}

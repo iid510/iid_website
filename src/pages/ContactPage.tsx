@@ -6,68 +6,20 @@ import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Mail, Phone, Globe, MessageCircle, Send,
+  Mail, MessageCircle, Send,
   Clock, CheckCircle, MapPin, ArrowRight, Users,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useSanityContactPage } from "@/hooks/useSanityContactPage";
+import { resolveIcon } from "@/lib/iconMap";
 
-/* ── Contact detail cards ────────────────────────────────────── */
-const contacts = [
-  {
-    icon: Phone,
-    label: "Phone / WhatsApp",
-    value: "+44 7723 953174",
-    sub: "Available Mon – Fri, 9 am – 6 pm (BST)",
-    href: "tel:+447723953174",
-    cta: { label: "Chat on WhatsApp", href: "https://wa.me/447723953174" },
-    accent: "from-emerald-500 to-teal-600",
-    bg: "bg-emerald-50",
-    ring: "ring-emerald-200",
-  },
-  {
-    icon: Mail,
-    label: "General Enquiries",
-    value: "info@ijebuigbodescendants.org",
-    sub: "We reply within 2 business days",
-    href: "mailto:info@ijebuigbodescendants.org",
-    cta: null,
-    accent: "from-blue-500 to-indigo-600",
-    bg: "bg-blue-50",
-    ring: "ring-blue-200",
-  },
-  {
-    icon: Mail,
-    label: "Support",
-    value: "support@ijebuigbodescendants.org",
-    sub: "Technical & membership questions",
-    href: "mailto:support@ijebuigbodescendants.org",
-    cta: null,
-    accent: "from-violet-500 to-purple-600",
-    bg: "bg-violet-50",
-    ring: "ring-violet-200",
-  },
-  {
-    icon: Globe,
-    label: "Website",
-    value: "ijebuigbodescendants.org",
-    sub: "Official IID Omo Orimolusi portal",
-    href: "https://www.ijebuigbodescendants.org/",
-    cta: null,
-    accent: "from-amber-500 to-orange-500",
-    bg: "bg-amber-50",
-    ring: "ring-amber-200",
-  },
-  {
-    icon: MapPin,
-    label: "Community Reach",
-    value: "Worldwide — in Diaspora",
-    sub: "Connecting Ijebu Igbo descendants globally",
-    href: null,
-    cta: null,
-    accent: "from-rose-500 to-pink-600",
-    bg: "bg-rose-50",
-    ring: "ring-rose-200",
-  },
+/* ── Contact card presentation styles (kept in code, content comes from CMS) ── */
+const CARD_STYLES = [
+  { accent: "from-emerald-500 to-teal-600", bg: "bg-emerald-50", ring: "ring-emerald-200" },
+  { accent: "from-blue-500 to-indigo-600", bg: "bg-blue-50", ring: "ring-blue-200" },
+  { accent: "from-violet-500 to-purple-600", bg: "bg-violet-50", ring: "ring-violet-200" },
+  { accent: "from-amber-500 to-orange-500", bg: "bg-amber-50", ring: "ring-amber-200" },
+  { accent: "from-rose-500 to-pink-600", bg: "bg-rose-50", ring: "ring-rose-200" },
 ];
 
 /* ── Inline message form ─────────────────────────────────────── */
@@ -226,6 +178,9 @@ function MessageForm() {
 
 /* ── Page ────────────────────────────────────────────────────── */
 export default function ContactPage() {
+  const { data } = useSanityContactPage();
+  const contacts = data?.contacts ?? [];
+
   return (
     <div className="min-h-screen bg-[#f8f6f1]">
       <Navbar />
@@ -308,51 +263,55 @@ export default function ContactPage() {
               </motion.div>
 
               <div className="space-y-3 mt-6">
-                {contacts.map((c, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -16 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.07, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                    whileHover={{ x: 4, transition: { duration: 0.2 } }}
-                    className={`${c.bg} ring-1 ${c.ring} rounded-2xl p-4 flex items-start gap-4 group`}
-                  >
-                    {/* Icon */}
-                    <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${c.accent} flex items-center justify-center shrink-0 shadow-sm`}>
-                      <c.icon size={18} className="text-white" />
-                    </div>
+                {contacts.map((c, i) => {
+                  const Icon = resolveIcon(c.icon);
+                  const style = CARD_STYLES[i % CARD_STYLES.length];
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -16 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.07, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                      whileHover={{ x: 4, transition: { duration: 0.2 } }}
+                      className={`${style.bg} ring-1 ${style.ring} rounded-2xl p-4 flex items-start gap-4 group`}
+                    >
+                      {/* Icon */}
+                      <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${style.accent} flex items-center justify-center shrink-0 shadow-sm`}>
+                        <Icon size={18} className="text-white" />
+                      </div>
 
-                    {/* Content */}
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">{c.label}</p>
-                      {c.href ? (
-                        <a
-                          href={c.href}
-                          className="text-sm sm:text-base font-bold text-foreground hover:text-primary transition-colors break-all leading-snug block"
-                        >
-                          {c.value}
-                        </a>
-                      ) : (
-                        <p className="text-sm sm:text-base font-bold text-foreground leading-snug">{c.value}</p>
-                      )}
-                      <p className="text-xs text-muted-foreground mt-1">{c.sub}</p>
+                      {/* Content */}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">{c.label}</p>
+                        {c.href ? (
+                          <a
+                            href={c.href}
+                            className="text-sm sm:text-base font-bold text-foreground hover:text-primary transition-colors break-all leading-snug block"
+                          >
+                            {c.value}
+                          </a>
+                        ) : (
+                          <p className="text-sm sm:text-base font-bold text-foreground leading-snug">{c.value}</p>
+                        )}
+                        <p className="text-xs text-muted-foreground mt-1">{c.sub}</p>
 
-                      {c.cta && (
-                        <a
-                          href={c.cta.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
-                        >
-                          <MessageCircle size={12} />
-                          {c.cta.label}
-                          <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
-                        </a>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
+                        {c.ctaLabel && c.ctaHref && (
+                          <a
+                            href={c.ctaHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
+                          >
+                            <MessageCircle size={12} />
+                            {c.ctaLabel}
+                            <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                          </a>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
 

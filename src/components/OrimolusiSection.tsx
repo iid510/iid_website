@@ -22,11 +22,11 @@ export default function OrimolusiSection() {
           <h2 className="label-accent">Royal Heritage</h2>
           <h3 className="heading-section">The Orimolusi of Ijebu-Igbo</h3>
           <p className="text-body mt-3">
-            The paramount throne of Ijebu-Igbo — past and present. Two kings whose legacies define the identity and progress of our great town.
+            The paramount throne of Ijebu-Igbo — past and present. Generations of kings whose legacies define the identity and progress of our great town.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
           {kings.map((king, i) => (
             <motion.div
               key={king.slug}

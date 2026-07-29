@@ -2,19 +2,14 @@ import { motion } from "framer-motion";
 import heroBg from "@/assets/hero-bg.jpg";
 import JoinModal from "@/components/JoinModal";
 import ClanNetwork from "@/components/ClanNetwork";
+import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-// Cultural phrases for marquee
-const culturalPhrases = [
-  "KÁÀBỌ̀ ỌMỌ ORÍMÓLÚSÍ",
-  "Ẹ̀ WẸ̀ SỌ̀Ọ́ ỌMỌ ALÁRÈ",
-  "IJEBU IGBO KÌ Í ṢOFO",
-  "ILU WA, IGBERAGA WA",
-  "ỌMỌ ALÁRÈ KÁ GBÉ IJEBU IGBO GA",
-];
-
 export default function Hero() {
+  const { data: siteSettings } = useSanitySiteSettings();
+  const culturalPhrases = siteSettings?.heroPhrases ?? [];
+
   return (
     <section className="relative min-h-[100svh] lg:h-screen flex flex-col justify-between overflow-hidden bg-charcoal pt-14 md:pt-16">
       <div className="absolute inset-0 z-0">

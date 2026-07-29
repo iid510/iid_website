@@ -24,7 +24,8 @@ export default defineType({
     defineField({ name: "website", title: "Website", type: "string" }),
     defineField({ name: "flyer", title: "Flyer Image", type: "image", options: { hotspot: true } }),
     defineField({ name: "banner", title: "Banner Image", type: "image", options: { hotspot: true } }),
-    defineField({ name: "promoVideo", title: "Promo Video", type: "file", options: { accept: "video/*" } }),
+    defineField({ name: "promoVideo", title: "Promo Video (uploaded to Sanity)", type: "file", options: { accept: "video/*" } }),
+    defineField({ name: "promoVideoUrl", title: "Promo Video URL (local /videos path)", type: "string", description: "Used when the video is hosted locally instead of uploaded above" }),
     defineField({ name: "gallery", title: "Gallery", type: "array", of: [{ type: "image" }] }),
     defineField({ name: "services", title: "Services (simple list)", type: "array", of: [{ type: "string" }] }),
     defineField({

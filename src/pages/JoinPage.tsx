@@ -5,17 +5,8 @@ import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
-import FAQ, { faqs } from "@/components/FAQ";
-
-const JOIN_FAQ_JSONLD = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: { "@type": "Answer", text: faq.answer.join(" ") },
-  })),
-};
+import FAQ from "@/components/FAQ";
+import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
 
 const IJEBU_AREAS = [
   "Oke-Sopen",
@@ -64,6 +55,16 @@ const empty: FormData = {
 };
 
 export default function JoinPage() {
+  const { data: siteSettings } = useSanitySiteSettings();
+  const joinFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: (siteSettings?.faqs ?? []).map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: (faq.answer ?? []).join(" ") },
+    })),
+  };
   const [form, setForm] = useState<FormData>(empty);
   const [submitted, setSubmitted] = useState(false);
 
@@ -100,7 +101,7 @@ export default function JoinPage() {
   return (
     <div className="min-h-screen bg-[#f4f6f8]">
       <Navbar />
-      <Seo path="/join" jsonLd={JOIN_FAQ_JSONLD} />
+      <Seo path="/join" jsonLd={joinFaqJsonLd} />
 
       {/* Hero */}
       <section className="relative pt-14 md:pt-20 overflow-hidden">

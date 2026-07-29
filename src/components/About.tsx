@@ -1,44 +1,16 @@
 import { motion } from "framer-motion";
 import aboutImg from "@/assets/about-culture.jpg";
-import { Users, Crown, Heart, Megaphone, MapPin } from "lucide-react";
 import ClanNetwork from "@/components/ClanNetwork";
+import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
+import { resolveIcon } from "@/lib/iconMap";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-// The 5 clans of Ijebu Igbo
-const clans = [
-  { name: "Oke-Sopen", meaning: "The Elevated Ones" },
-  { name: "Japara", meaning: "The Peaceful Settlers" },
-  { name: "Oke-Agbo", meaning: "The Noble Highlands" },
-  { name: "Atikori", meaning: "The Ancient Lineage" },
-  { name: "Ojowo", meaning: "The Prosperous Path" },
-];
-
-// IID Pillars
-const culturalPillars = [
-  {
-    icon: Megaphone,
-    title: "IID — Awareness",
-    description: "Ijebu Igbo Descendants create awareness on what is going on in Ijebu Igbo for all Omo Orimolusi in Diaspora worldwide.",
-  },
-  {
-    icon: Users,
-    title: "IID — Togetherness",
-    description: "Ijebu Igbo Descendants create an atmosphere to bring all Omo Orimolusi in Diaspora together, no matter where in the world they live.",
-  },
-  {
-    icon: Heart,
-    title: "IID — Support",
-    description: "Ijebu Igbo Descendants give support to hometown projects and other related causes.",
-  },
-  {
-    icon: Crown,
-    title: "IID — We Represent",
-    description: "One of our visions is to represent our most respected town — Ijebu Igbo — well in character, diversity and prosperity.",
-  },
-];
-
 export default function About() {
+  const { data: siteSettings } = useSanitySiteSettings();
+  const clans = siteSettings?.clans ?? [];
+  const culturalPillars = siteSettings?.culturalPillars ?? [];
+
   return (
     <section id="about" className="section-padding bg-background overflow-hidden">
       <div className="container-main">
@@ -141,7 +113,7 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* The 5 Clans - Mobile Only */}
+        {/* The 7 Clans - Mobile Only */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -151,10 +123,10 @@ export default function About() {
         >
           <div className="text-center mb-6 sm:mb-8">
             <h3 className="font-display font-bold text-xl sm:text-2xl text-foreground mb-2">
-              The Five Clans of Ijebu Igbo
+              The Seven Clans of Ijebu Igbo
             </h3>
             <p className="text-body">
-              United under Orímólúsí, our town stands on five foundational quarters
+              United under Orímólúsí, our town stands on seven foundational quarters
             </p>
           </div>
 
@@ -187,26 +159,29 @@ export default function About() {
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {culturalPillars.map((pillar, index) => (
-              <motion.div
-                key={pillar.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1, ease }}
-                className="bg-primary/5 border border-primary/10 rounded-xl p-5 sm:p-6 text-center hover:bg-primary/10 transition-colors"
-              >
-                <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-full bg-accent/20 flex items-center justify-center">
-                  <pillar.icon className="w-6 h-6 sm:w-7 sm:h-7 text-accent" />
-                </div>
-                <h4 className="font-display font-bold text-foreground text-sm sm:text-base mb-1 sm:mb-2">
-                  {pillar.title}
-                </h4>
-                <p className="text-foreground/70 text-xs sm:text-sm leading-relaxed">
-                  {pillar.description}
-                </p>
-              </motion.div>
-            ))}
+            {culturalPillars.map((pillar, index) => {
+              const Icon = resolveIcon(pillar.icon);
+              return (
+                <motion.div
+                  key={pillar.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1, ease }}
+                  className="bg-primary/5 border border-primary/10 rounded-xl p-5 sm:p-6 text-center hover:bg-primary/10 transition-colors"
+                >
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-full bg-accent/20 flex items-center justify-center">
+                    <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-accent" />
+                  </div>
+                  <h4 className="font-display font-bold text-foreground text-sm sm:text-base mb-1 sm:mb-2">
+                    {pillar.title}
+                  </h4>
+                  <p className="text-foreground/70 text-xs sm:text-sm leading-relaxed">
+                    {pillar.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
 

@@ -8,13 +8,14 @@ import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
-import { BLOG_POSTS } from "@/data/blogPosts";
-
-const CATEGORIES = ["All", ...Array.from(new Set(BLOG_POSTS.map((p) => p.category)))];
+import { useSanityBlogPosts } from "@/hooks/useSanityBlogPosts";
 
 export default function BlogPage() {
+  const { data: BLOG_POSTS = [] } = useSanityBlogPosts();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
+
+  const CATEGORIES = useMemo(() => ["All", ...Array.from(new Set(BLOG_POSTS.map((p) => p.category)))], [BLOG_POSTS]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -27,7 +28,7 @@ export default function BlogPage() {
         p.excerpt.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });
-  }, [query, category]);
+  }, [query, category, BLOG_POSTS]);
 
   return (
     <div className="min-h-screen bg-background">

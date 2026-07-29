@@ -21,6 +21,9 @@ dist-ssr
 !.env.example
 studio/.env
 
+# Migration script cache
+scripts/migrate-to-sanity/.asset-map.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
