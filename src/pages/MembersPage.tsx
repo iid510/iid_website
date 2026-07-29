@@ -58,7 +58,7 @@ export default function MembersPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-3 text-primary-foreground/70 max-w-xl text-sm sm:text-base leading-relaxed"
           >
-            IID Omo Orimolusi in Diaspora members — united across the UK and beyond, rooted in Ijebu-Igbo.
+            IID Omo Orimolusi in Diaspora members — united across the diaspora worldwide, rooted in Ijebu-Igbo.
           </motion.p>
         </div>
       </section>

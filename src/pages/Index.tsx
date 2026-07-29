@@ -22,13 +22,13 @@ const ORG_JSONLD = {
   name: "Ijebu Igbo Descendants in Diaspora",
   alternateName: [
     "IID Omo Orimolusi in Diaspora",
-    "Ijebu Igbo Descendants Omo Orimolusi (UK)",
+    "Ijebu Igbo Descendants Omo Orimolusi",
     "Awa Omo Orimolusi Worldwide",
   ],
   url: "https://ijebuigbodescendants.org",
   logo: "https://ijebuigbodescendants.org/logo.png",
   description:
-    "A leading Ijebu Igbo NGO uniting UK diaspora and Nigeria-based descendants of Ijebu-Igbo, a Yoruba town in Ogun State, Nigeria — promoting culture, welfare and hometown development.",
+    "A leading Ijebu Igbo NGO uniting diaspora and Nigeria-based descendants of Ijebu-Igbo, a Yoruba town in Ogun State, Nigeria — promoting culture, welfare and hometown development.",
   foundingDate: "2007",
   areaServed: ["United Kingdom", "Nigeria", "Worldwide"],
   sameAs: ["https://www.ijebuigbodescendants.org/"],

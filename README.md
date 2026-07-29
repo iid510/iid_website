@@ -1,73 +1,57 @@
-# Welcome to your Lovable project
+# Ijebu-Igbo Development (IID)
 
-## Project info
+The official website for Ijebu-Igbo Development — a community and heritage
+platform for the Ijebu-Igbo people, covering the town's history, royal
+lineages, culture, tourism, news, and community initiatives.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## About the project
 
-## How can I edit this code?
+The site brings together:
 
-There are several ways of editing your application.
+- **Quarters / kingdoms** — dedicated pages for each of the town's royal
+  quarters (Atikori, Aparaki, Imope-Ijebu, Japara, Ojowo, Oke-Agbo,
+  Oke-Sopen), including history, oriki, councils, and photo galleries.
+- **Heritage & tourism** — history, landmarks, travel guide, and a video
+  archive.
+- **Community** — team, members, events, announcements, scholarships, and a
+  local business directory.
+- **News & blog** — news is CMS-backed via Sanity; the blog is a static,
+  independently maintained SEO content set.
+- **Support** — donation and "join" pages for community involvement.
 
-**Use Lovable**
+## Tech stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- [Vite](https://vitejs.dev/)
+- [React](https://react.dev/) + TypeScript
+- [shadcn-ui](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/)
+- [Sanity](https://www.sanity.io/) (headless CMS for the News section)
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting started
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Requires Node.js & npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
+# Install dependencies
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Copy env vars and fill in your Sanity project details
+cp .env.example .env
+
+# Start the dev server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Scripts
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `npm run dev` — start the local dev server
+- `npm run build` — production build (also generates per-page OG/meta HTML)
+- `npm run build:dev` — development-mode build
+- `npm run preview` — preview a production build locally
+- `npm run lint` — run ESLint
+- `npm test` — run the test suite (Vitest)
 
-**Use GitHub Codespaces**
+## Deployment
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The build output is a static SPA. `public/.htaccess` is included for
+Apache-based shared hosting: it falls back client-side routes to
+`index.html` and sets caching/compression for static assets.

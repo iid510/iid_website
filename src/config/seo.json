@@ -6,11 +6,11 @@
   "routes": {
     "/": {
       "title": "Ijebu Igbo Descendants — Omo Orimolusi in Diaspora",
-      "description": "IID Omo Orimolusi unites Ijebu-Igbo descendants in the UK & worldwide — heritage, events, community projects, and ways to join or donate."
+      "description": "IID Omo Orimolusi unites Ijebu-Igbo descendants worldwide — heritage, events, community projects, and ways to join or donate."
     },
     "/about": {
-      "title": "About IID — Ijebu Igbo Descendants UK Association",
-      "description": "Ijebu Igbo Descendants (Awa Omo Orimolusi) Worldwide is a UK diaspora community promoting the culture, welfare and development of Ijebu-Igbo, a Yoruba town in Ogun State."
+      "title": "About IID — Ijebu Igbo Descendants Association",
+      "description": "Ijebu Igbo Descendants (Awa Omo Orimolusi) Worldwide is a diaspora community promoting the culture, welfare and development of Ijebu-Igbo, a Yoruba town in Ogun State."
     },
     "/impact": {
       "title": "Our Impact — Ijebu Igbo Community Projects | IID",
@@ -18,7 +18,7 @@
     },
     "/team": {
       "title": "Our Team — IID Executive | Ijebu Igbo Descendants",
-      "description": "Meet the executive committee leading Ijebu Igbo Descendants in Diaspora (IID Omo Orimolusi), serving the Ijebu-Igbo community in the UK and worldwide."
+      "description": "Meet the executive committee leading Ijebu Igbo Descendants in Diaspora (IID Omo Orimolusi), serving the Ijebu-Igbo community worldwide."
     },
     "/heritage": {
       "title": "Ijebu Igbo Heritage: Orimolusi, Kings & History",
@@ -30,11 +30,11 @@
     },
     "/gallery": {
       "title": "Gallery — Ijebu Igbo Community & Events | IID",
-      "description": "Photos from Ijebu-Igbo cultural celebrations, Ojude Oba, AGMs and IID diaspora gatherings across the UK and the homeland."
+      "description": "Photos from Ijebu-Igbo cultural celebrations, Ojude Oba, AGMs and IID diaspora gatherings across the diaspora and the homeland."
     },
     "/contact": {
-      "title": "Contact IID — Ijebu Igbo Descendants UK",
-      "description": "Get in touch with Ijebu Igbo Descendants in Diaspora (Omo Orimolusi UK) — membership, partnership, events and general enquiries."
+      "title": "Contact IID — Ijebu Igbo Descendants",
+      "description": "Get in touch with Ijebu Igbo Descendants in Diaspora (Omo Orimolusi) — membership, partnership, events and general enquiries."
     },
     "/news": {
       "title": "Ijebu Igbo News & Community Updates | IID",
@@ -101,12 +101,12 @@
       "description": "Watch recordings of IID events, AGMs, Ojude Oba, and Ijebu-Igbo cultural celebrations from the Omo Orimolusi diaspora community."
     },
     "/join": {
-      "title": "Join Ijebu Igbo Descendants UK | IID Membership",
-      "description": "Become a member of Ijebu Igbo Descendants in Diaspora (Omo Orimolusi UK). Connect with your roots, community and hometown projects."
+      "title": "Join Ijebu Igbo Descendants | IID Membership",
+      "description": "Become a member of Ijebu Igbo Descendants in Diaspora (Omo Orimolusi). Connect with your roots, community and hometown projects."
     },
     "/businesses": {
       "title": "Ijebu Igbo Business Directory — Diaspora | IID",
-      "description": "Find and support Ijebu-Igbo businesses and entrepreneurs across the UK and diaspora in the IID community business directory."
+      "description": "Find and support Ijebu-Igbo businesses and entrepreneurs across the diaspora in the IID community business directory."
     }
   }
 }
