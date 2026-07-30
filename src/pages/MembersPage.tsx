@@ -12,7 +12,7 @@ import AnimatedCounter from "@/components/AnimatedCounter";
 import { useSanityMembers } from "@/hooks/useSanityMembers";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { MEMBERS_PAGE } from "@/data/pageContent";
-import type { Member } from "@/data/members";
+import { CURRENT_EXEC_ORDER, type Member } from "@/data/members";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -55,8 +55,12 @@ function labelFor(country: string): string {
 // Always offered in the country filter, even before a member from that country is added.
 const SUPPORTED_COUNTRIES = ["United Kingdom", "USA", "Canada", "Nigeria", "Ghana"];
 
-function isExecutive(role?: string): boolean {
-  return !!role && role !== "In Loving Memory";
+// Ground truth: only the sitting executive committee counts as "Current Executive".
+// Former officers, President Emeritus, Legal Officer, etc. are all "Other Members".
+const CURRENT_EXECUTIVE_IDS = new Set(CURRENT_EXEC_ORDER);
+
+function isCurrentExecutive(id: string): boolean {
+  return CURRENT_EXECUTIVE_IDS.has(id);
 }
 
 const PAGE_SIZE = 24;
@@ -172,14 +176,18 @@ function ListRow({ member, index }: { member: Member; index: number }) {
 }
 
 /* ── Section (grid or list of members, with a heading) ──────────── */
-function MemberSection({ title, members, view }: { title: string; members: Member[]; view: "grid" | "list" }) {
+function MemberSection({
+  title, members, view, totalCount,
+}: {
+  title: string; members: Member[]; view: "grid" | "list"; totalCount?: number;
+}) {
   if (members.length === 0) return null;
   return (
     <div className="mb-10">
       <div className="flex items-center gap-3 mb-4">
         <h3 className="font-display font-bold text-foreground text-lg sm:text-xl">{title}</h3>
         <span className="text-xs font-semibold text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
-          {members.length}
+          {totalCount ?? members.length}
         </span>
       </div>
       {view === "grid" ? (
@@ -203,7 +211,7 @@ export default function MembersPage() {
   const joinCta = findSection(page?.sections, "members-cta") ?? findSection(MEMBERS_PAGE.sections, "members-cta");
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("All");
-  const [category, setCategory] = useState<"All" | "Executive" | "Non-Executive">("All");
+  const [category, setCategory] = useState<"All" | "Current Executive" | "Non-Executive">("All");
   const [view, setView] = useState<"grid" | "list">("grid");
   const [pageNum, setPageNum] = useState(1);
 
@@ -218,15 +226,15 @@ export default function MembersPage() {
       const matchesCountry = country === "All" || countryOf(m.location) === country;
       const matchesCategory =
         category === "All" ||
-        (category === "Executive" ? isExecutive(m.role) : !isExecutive(m.role));
+        (category === "Current Executive" ? isCurrentExecutive(m.id) : !isCurrentExecutive(m.id));
       const matchesQuery = !q || m.name.toLowerCase().includes(q) || (m.location ?? "").toLowerCase().includes(q);
       return matchesCountry && matchesCategory && matchesQuery;
     });
   }, [query, country, category, MEMBERS]);
 
-  // Executives are always shown in full (small list); only "Other Members" is paginated.
-  const execMembers = useMemo(() => filtered.filter((m) => isExecutive(m.role)), [filtered]);
-  const nonExecMembers = useMemo(() => filtered.filter((m) => !isExecutive(m.role)), [filtered]);
+  // Current executives are always shown in full (small list); only "Other Members" is paginated.
+  const execMembers = useMemo(() => filtered.filter((m) => isCurrentExecutive(m.id)), [filtered]);
+  const nonExecMembers = useMemo(() => filtered.filter((m) => !isCurrentExecutive(m.id)), [filtered]);
 
   const pageCount = Math.max(1, Math.ceil(nonExecMembers.length / PAGE_SIZE));
 
@@ -320,7 +328,7 @@ export default function MembersPage() {
               className="px-4 py-2.5 bg-card border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50"
             >
               <option value="All">All Members</option>
-              <option value="Executive">Executive</option>
+              <option value="Current Executive">Current Executive</option>
               <option value="Non-Executive">Non-Executive</option>
             </select>
             <select
@@ -385,8 +393,8 @@ export default function MembersPage() {
             </div>
           ) : (
             <>
-              <MemberSection title="Executives" members={execMembers} view={view} />
-              <MemberSection title="Other Members" members={paginatedNonExec} view={view} />
+              <MemberSection title="Current Executives" members={execMembers} view={view} />
+              <MemberSection title="Other Members" members={paginatedNonExec} view={view} totalCount={nonExecMembers.length} />
             </>
           )}
 

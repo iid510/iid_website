@@ -168,7 +168,7 @@ const MEMBERS_LIST: Omit<Member, "order">[] = [
 ];
 
 // Current Executive block: the sitting executive committee, listed first.
-const CURRENT_EXEC_ORDER: string[] = [
+export const CURRENT_EXEC_ORDER: string[] = [
   "member-chief-toyin-odueyungbo",
   "member-pastor-franklin-babaranti-okunowo",
   "member-ms-adetutu-ogunsanwo",
