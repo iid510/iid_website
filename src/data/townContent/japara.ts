@@ -98,6 +98,21 @@ const japara: TownSeed = {
           name: "Dr. Babatunde Babatomiwa Rowaiye",
           title: "Otunba Odosigboro Japara & Mayegun of Ijebu-Igbo",
         },
+        {
+          photo: "/images/japara/chief-adedotun-olukorede-fasanya-otunba-odokotolori-japara.webp",
+          name: "Otunba Adedotun Olukorede Fasanya",
+          title: "Otunba Odokotolori IV of Japara, Ijebu-Igbo",
+        },
+        {
+          photo: "/images/japara/chief-ademola-adewumi-dayo-olori-omoba-japara.webp",
+          name: "Chief Ademola Adewumi Dayo",
+          title: "Olori Omoba Japara, Ijebu-Igbo",
+        },
+        {
+          photo: "/images/japara/chief-olayinka-olanrewaju-oni-asiwaju-japara.webp",
+          name: "Otunba Olayinka Olanrewaju Oni",
+          title: "Asiwaju of Japara, Ijebu-Igbo",
+        },
       ],
     },
     {

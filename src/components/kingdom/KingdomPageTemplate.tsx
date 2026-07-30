@@ -596,7 +596,7 @@ export default function KingdomPageTemplate({ slug }: { slug: string }) {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}
               className="text-center mb-10">
               <h2 className="label-accent mb-2">Gallery</h2>
-              <h3 className="heading-section">{town.name} in Pictures</h3>
+              <h3 className="heading-section">Gallery</h3>
             </motion.div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {town.galleryCaptions.map((g, i) => (
