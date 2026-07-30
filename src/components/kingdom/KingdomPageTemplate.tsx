@@ -77,6 +77,28 @@ function PersonGrid({
   );
 }
 
+function PortraitGrid({
+  members, photoStartIdx, onOpenPhoto,
+}: {
+  members: { name: string; title?: string; photo?: string }[];
+  photoStartIdx: number;
+  onOpenPhoto: (idx: number) => void;
+}) {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
+      {members.map((m, i) => (
+        <div key={i} className="text-center">
+          <div className="relative rounded-2xl overflow-hidden shadow-lg border-4 border-white aspect-[3/4] mb-3">
+            <ZoomableImage src={m.photo!} alt={m.name} onClick={() => onOpenPhoto(photoStartIdx + i)} />
+          </div>
+          <h4 className="font-display font-bold text-foreground text-sm leading-tight">{m.name}</h4>
+          {m.title && <p className="text-accent font-semibold text-xs mt-1">{m.title}</p>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function BioCard({
   photo, name, title, bio, onOpenImage,
 }: { photo?: string; name: string; title?: string; bio?: string[]; onOpenImage?: () => void }) {
@@ -194,6 +216,42 @@ export default function KingdomPageTemplate({ slug }: { slug: string }) {
                 </div>
               )}
             </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* Chief Groups */}
+      {town.chiefGroups && town.chiefGroups.length > 0 && (
+        <section className="section-padding bg-muted/30">
+          <div className="container-main max-w-4xl space-y-8">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}
+              className="text-center mb-6">
+              <h2 className="label-accent mb-2">Leadership</h2>
+              <h3 className="heading-section">Chiefs &amp; Councils of {town.name}</h3>
+            </motion.div>
+            {town.chiefGroups.map((g, i) => {
+              const priorPhotoCount = town.chiefGroups!.slice(0, i).flatMap((pg) => pg.members ?? []).filter((m) => m.photo).length;
+              const groupPhotoStart = chiefPhotoStartIdx + priorPhotoCount;
+              const allHavePhotos = (g.members?.length ?? 0) > 0 && g.members!.every((m) => m.photo);
+              if (allHavePhotos) {
+                return (
+                  <div key={i}>
+                    <h4 className="font-display font-bold text-foreground text-base mb-4">{g.groupLabel}</h4>
+                    <PortraitGrid members={g.members!} photoStartIdx={groupPhotoStart} onOpenPhoto={open} />
+                  </div>
+                );
+              }
+              return (g.members?.length ?? 0) <= 10 ? (
+                <div key={i}>
+                  <h4 className="font-display font-bold text-foreground text-base mb-3">{g.groupLabel}</h4>
+                  <PersonGrid members={g.members ?? []} photoStartIdx={groupPhotoStart} onOpenPhoto={open} />
+                </div>
+              ) : (
+                <AccordionList key={i} title={g.groupLabel} subtitle={`${g.members?.length ?? 0} listed`}>
+                  <PersonGrid members={g.members ?? []} photoStartIdx={groupPhotoStart} onOpenPhoto={open} />
+                </AccordionList>
+              );
+            })}
           </div>
         </section>
       )}
@@ -393,33 +451,6 @@ export default function KingdomPageTemplate({ slug }: { slug: string }) {
                 </div>
               </AccordionList>
             ))}
-          </div>
-        </section>
-      )}
-
-      {/* Chief Groups */}
-      {town.chiefGroups && town.chiefGroups.length > 0 && (
-        <section className="section-padding bg-muted/30">
-          <div className="container-main max-w-4xl space-y-5">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}
-              className="text-center mb-6">
-              <h2 className="label-accent mb-2">Leadership</h2>
-              <h3 className="heading-section">Chiefs &amp; Councils of {town.name}</h3>
-            </motion.div>
-            {town.chiefGroups.map((g, i) => {
-              const priorPhotoCount = town.chiefGroups!.slice(0, i).flatMap((pg) => pg.members ?? []).filter((m) => m.photo).length;
-              const groupPhotoStart = chiefPhotoStartIdx + priorPhotoCount;
-              return (g.members?.length ?? 0) <= 10 ? (
-                <div key={i}>
-                  <h4 className="font-display font-bold text-foreground text-base mb-3">{g.groupLabel}</h4>
-                  <PersonGrid members={g.members ?? []} photoStartIdx={groupPhotoStart} onOpenPhoto={open} />
-                </div>
-              ) : (
-                <AccordionList key={i} title={g.groupLabel} subtitle={`${g.members?.length ?? 0} listed`}>
-                  <PersonGrid members={g.members ?? []} photoStartIdx={groupPhotoStart} onOpenPhoto={open} />
-                </AccordionList>
-              );
-            })}
           </div>
         </section>
       )}
