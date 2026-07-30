@@ -13,7 +13,7 @@ const USA = "USA";
 
 // Listed in the exact order of the official IID Membership List, starting with the President and executives.
 const MEMBERS_LIST: Omit<Member, "order">[] = [
-  { id: "member-otunba-olayinka-busari", name: "Otunba Olayinka Busari", role: "Former President" },
+  { id: "member-otunba-olayinka-busari", name: "Otunba Olayinka Busari", role: "P.R.O" },
   { id: "member-prince-olufemi-sijuade", name: "Prince Olufemi Sijuade", role: "Former Vice President" },
   { id: "member-ms-olufunke-okuneye", name: "Ms Olufunke Okuneye", role: "Former General Secretary" },
   { id: "member-mrs-bisi-ajayi-odubanjo", name: "Mrs Bisi Ajayi Odubanjo", role: "Former Assistant General Secretary" },
@@ -22,7 +22,7 @@ const MEMBERS_LIST: Omit<Member, "order">[] = [
   { id: "member-ms-abiodun-okuyemi", name: "Ms Abiodun Okuyemi", role: "Former Training & Development Officer" },
   { id: "member-chief-mrs-olabisi-kazeem", name: "Chief Mrs Olabisi Kazeem", role: "Former Social Secretary" },
   { id: "member-olori-modupe-bashorun", name: "Olori Modupe Bashorun", role: "Former Cultural Officer" },
-  { id: "member-ms-adetutu-ogunsanwo", name: "Ms Adetutu Ogunsanwo", role: "General Secretary" },
+  { id: "member-ms-adetutu-ogunsanwo", name: "Ms Adetutu Ogunsanwo", role: "General Secretary", photo: "/team/ms-adetutu-ogunsanwo.webp" },
   { id: "member-chief-rafiu-a-adejobi", name: "Chief Rafiu A. Adejobi", role: "Welfare Officer" },
   { id: "member-mrs-lara-haruna-ishola", name: "Mrs Lara Haruna-Ishola", role: "Former Women Affairs Officer" },
   { id: "member-alhaji-musibau-olanrewaju-amusa", name: "Alhaji Musibau Olanrewaju Amusa", role: "Former Chief Whip" },
@@ -36,9 +36,8 @@ const MEMBERS_LIST: Omit<Member, "order">[] = [
   { id: "member-dr-thomas-olaide-osinowo", name: "Dr Thomas Olaide Osinowo", location: USA, role: "Former USA Chairman" },
   // Current executives not otherwise matched to an existing membership-list entry
   { id: "member-alhaji-lanre-amusa", name: "Alhaji Lanre Amusa", role: "Financial Secretary" },
-  { id: "member-chief-mrs-bisi-kazeem", name: "Chief Mrs Bisi Kazeem", role: "Treasurer" },
-  { id: "member-alh-sadekunle-hamzat-maja", name: "Alh Sadekunle Hamzat-Maja", role: "Chief Whip" },
-  { id: "member-otunba-ola-busari", name: "Otunba Ola Busari", role: "PRO" },
+  { id: "member-chief-mrs-bisi-kazeem", name: "Chief Mrs Bisi Kazeem", role: "Treasurer", photo: "/team/chief-mrs-bisi-kazeem.webp" },
+  { id: "member-alh-sadekunle-hamzat-maja", name: "Alh Sadekunle Hamzat-Maja", role: "Chief Whip", photo: "/team/alh-sadekunle-hamzat-maja.webp" },
   { id: "member-alhaji-sakiru-adekunle-hamzat", name: "Alhaji Sakiru Adekunle Hamzat", role: "Internal Auditor (by Appointment)" },
   { id: "member-alhaji-chief-sunny-sobowale", name: "Alhaji Chief Sunny Sobowale", location: NORTHAMPTON, role: "Northampton Branch Chairman" },
   { id: "member-alhaji-kazeem-haruna-ishola", name: "Alhaji Kazeem Haruna Ishola", role: "President Emeritus" },
@@ -51,10 +50,10 @@ const MEMBERS_LIST: Omit<Member, "order">[] = [
   { id: "member-mrs-funleyi-amudipe", name: "Mrs Funleyi Amudipe" },
   { id: "member-mr-olusegun-adeleye", name: "Mr Olusegun Adeleye" },
   { id: "member-mr-kunle-osofodunrin", name: "Mr Kunle Osofodunrin" },
-  { id: "member-chief-toyin-odueyungbo", name: "Chief Toyin Odueyungbo", role: "President" },
+  { id: "member-chief-toyin-odueyungbo", name: "Chief Toyin Odueyungbo", role: "President", photo: "/team/chief-toyin-odueyungbo.webp" },
   { id: "member-chief-mrs-ola-sharomi", name: "Chief Mrs Ola Sharomi" },
   { id: "member-prince-ademola-gbadebo", name: "Prince Ademola Gbadebo" },
-  { id: "member-pastor-franklin-babaranti-okunowo", name: "Pastor Franklin Babaranti Okunowo", role: "Vice President" },
+  { id: "member-pastor-franklin-babaranti-okunowo", name: "Pastor Franklin Babaranti Okunowo", role: "Vice President", photo: "/team/evd-franklin-okunowo.webp" },
   { id: "member-dr-femi-adebajo", name: "Dr Femi Adebajo" },
   { id: "member-alhaja-sikirat-sobowale", name: "Alhaja Sikirat Sobowale" },
   { id: "member-mrs-elizabeth-adenuga", name: "Mrs Elizabeth Adenuga" },
@@ -177,7 +176,7 @@ const CURRENT_EXEC_ORDER: string[] = [
   "member-chief-mrs-bisi-kazeem",
   "member-princess-kemi-sijuade",
   "member-alh-sadekunle-hamzat-maja",
-  "member-otunba-ola-busari",
+  "member-otunba-olayinka-busari",
   "member-alhaji-sakiru-adekunle-hamzat",
   "member-chief-rafiu-a-adejobi",
   "member-alhaji-chief-sunny-sobowale",
@@ -188,7 +187,6 @@ const CURRENT_EXEC_ORDER: string[] = [
 // tagged former/emeritus entries. Everyone else follows in the original PDF
 // order, with the two "In Loving Memory" entries pinned to the very end.
 const LEADERSHIP_ORDER: string[] = [
-  "member-otunba-olayinka-busari",
   "member-prince-olufemi-sijuade",
   "member-ms-olufunke-okuneye",
   "member-mrs-bisi-ajayi-odubanjo",

@@ -26,8 +26,6 @@ const communityLinks = [
   { label: "List Your Business", href: "/businesses" },
 ];
 
-const WHATSAPP_COMMUNITY = "https://wa.me/447496933887?text=Hello%2C%20I%27d%20like%20to%20join%20the%20IID%20community.";
-
 function NewsletterSignup() {
   const [name, setName] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -79,7 +77,15 @@ export default function Footer() {
         <div className="lg:hidden">
           {/* Brand header */}
           <div className="flex items-center gap-3 mb-6">
-            <img src="/logo-tp.webp" alt="IID Logo" className="w-16 h-16" />
+            <motion.img
+              src="/logo-tp.webp"
+              alt="IID Logo"
+              className="w-24 h-24"
+              initial={{ scale: 1.6, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            />
             <div>
               <h3 className="font-display font-bold text-sm leading-tight">
                 Ijebu Igbo Descendants
@@ -129,18 +135,6 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-
-          {/* WhatsApp community */}
-          <a
-            href={WHATSAPP_COMMUNITY}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 py-3 rounded-2xl bg-[#25D366]/15 active:bg-[#25D366]/30 transition-colors touch-manipulation mb-6"
-            aria-label="Join our WhatsApp community"
-          >
-            <MessageCircle size={20} className="text-[#25D366]" />
-            <span className="text-sm font-semibold text-primary-foreground/80">Join WhatsApp Community</span>
-          </a>
 
           {/* Website link */}
           <a
@@ -227,18 +221,6 @@ export default function Footer() {
                 Uniting Ijebu Igbo descendants across the diaspora through culture,
                 development, and community pride. Proudly rooted in Ijebu Igbo, Nigeria.
               </p>
-
-              {/* WhatsApp community */}
-              <a
-                href={WHATSAPP_COMMUNITY}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Join our WhatsApp community"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 transition-colors duration-300 mb-6"
-              >
-                <MessageCircle size={16} className="text-[#25D366]" />
-                <span className="text-sm font-semibold text-primary-foreground/80">WhatsApp Community</span>
-              </a>
 
               {/* Join CTA */}
               <Link
@@ -416,7 +398,7 @@ export default function Footer() {
             transition={{ duration: 0.8 }}
             whileHover={{ scale: 1.02 }}
           >
-            Crafted by the son of the soil,{" "}
+            Designed and Developed by the son of the soil,{" "}
             <span className="font-bold text-white underline underline-offset-2 decoration-accent/60">
               Azeez Agbona
             </span>

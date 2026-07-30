@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Users, Search, MapPin, ChevronRight, LayoutGrid, List } from "lucide-react";
+import { Users, Search, MapPin, ChevronRight, ChevronLeft, LayoutGrid, List } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
@@ -50,6 +50,8 @@ function labelFor(country: string): string {
   return COUNTRY_LABELS[country] ?? country;
 }
 
+const PAGE_SIZE = 24;
+
 export default function MembersPage() {
   const { data: MEMBERS = [] } = useSanityMembers();
   const { data: page } = useSanityPage("members", MEMBERS_PAGE);
@@ -59,6 +61,7 @@ export default function MembersPage() {
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("All");
   const [view, setView] = useState<"grid" | "list">("grid");
+  const [pageNum, setPageNum] = useState(1);
 
   const countries = useMemo(() => {
     const known = MEMBERS.map((m) => countryOf(m.location)).filter((c): c is string => !!c);
@@ -73,6 +76,23 @@ export default function MembersPage() {
       return matchesCountry && matchesQuery;
     });
   }, [query, country, MEMBERS]);
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+
+  // Reset to page 1 whenever the result set changes (new search/filter)
+  useEffect(() => {
+    setPageNum(1);
+  }, [query, country]);
+
+  const paginated = useMemo(() => {
+    const start = (pageNum - 1) * PAGE_SIZE;
+    return filtered.slice(start, start + PAGE_SIZE);
+  }, [filtered, pageNum]);
+
+  const goToPage = (p: number) => {
+    setPageNum(Math.min(Math.max(1, p), pageCount));
+    document.getElementById("members-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -159,6 +179,7 @@ export default function MembersPage() {
           </div>
 
           {/* Members grid or empty state */}
+          <div id="members-results" />
           {MEMBERS.length === 0 ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -183,7 +204,7 @@ export default function MembersPage() {
             </div>
           ) : view === "grid" ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {filtered.map((member, i) => (
+              {paginated.map((member, i) => (
                 <motion.div
                   key={member.id}
                   initial={{ opacity: 0, y: 16 }}
@@ -241,7 +262,7 @@ export default function MembersPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              {filtered.map((member, i) => (
+              {paginated.map((member, i) => (
                 <motion.div
                   key={member.id}
                   initial={{ opacity: 0, x: -8 }}
@@ -282,6 +303,53 @@ export default function MembersPage() {
                   )}
                 </motion.div>
               ))}
+            </div>
+          )}
+
+          {/* Pagination */}
+          {filtered.length > PAGE_SIZE && (
+            <div className="flex items-center justify-center gap-2 mt-10">
+              <button
+                type="button"
+                onClick={() => goToPage(pageNum - 1)}
+                disabled={pageNum === 1}
+                aria-label="Previous page"
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-border bg-card text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+              >
+                <ChevronLeft size={16} />
+              </button>
+
+              {Array.from({ length: pageCount }, (_, i) => i + 1)
+                .filter((p) => p === 1 || p === pageCount || Math.abs(p - pageNum) <= 1)
+                .map((p, i, arr) => (
+                  <span key={p} className="flex items-center gap-2">
+                    {i > 0 && arr[i - 1] !== p - 1 && (
+                      <span className="text-muted-foreground text-sm px-1">…</span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => goToPage(p)}
+                      aria-current={p === pageNum ? "page" : undefined}
+                      className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
+                        p === pageNum
+                          ? "bg-accent text-white"
+                          : "border border-border bg-card text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      {p}
+                    </button>
+                  </span>
+                ))}
+
+              <button
+                type="button"
+                onClick={() => goToPage(pageNum + 1)}
+                disabled={pageNum === pageCount}
+                aria-label="Next page"
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-border bg-card text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+              >
+                <ChevronRight size={16} />
+              </button>
             </div>
           )}
 

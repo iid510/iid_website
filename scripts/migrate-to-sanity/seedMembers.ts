@@ -1,7 +1,9 @@
 import { client } from "./client";
+import { uploadImages, imageRef } from "./uploadImages";
 import { MEMBERS } from "../../src/data/members";
 
 async function seedMembers() {
+  const assetMap = await uploadImages();
   let count = 0;
   for (const member of MEMBERS) {
     await client.createOrReplace({
@@ -11,6 +13,7 @@ async function seedMembers() {
       location: member.location,
       role: member.role,
       order: member.order,
+      photo: imageRef(assetMap, member.photo),
     });
     count++;
   }
