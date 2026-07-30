@@ -103,6 +103,7 @@ export const EVENT_VIDEOS_QUERY = `
     title,
     description,
     "src": select(defined(videoFile) => videoFile.asset->url, localSrc),
+    "thumbnail": thumbnail.asset->url,
     youtubeId,
     date,
     credit,

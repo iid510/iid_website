@@ -5,6 +5,7 @@ export interface EventVideo {
   title: string;
   description: string;
   src?: string;
+  thumbnail?: string;
   youtubeId?: string;
   date: string;
   credit?: string;
@@ -28,6 +29,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "Royal Welcome — Alayeluwa Oba Aderemi Adewale Ogunye (Part 1)",
     description: "Alayeluwa Oba Aderemi Adewale Ogunye, The Kotolori-Ojuule I, Abijaparako of Japara, receives a royal welcome by IID Omo Orimolusi in Diaspora members in London.",
     src: "/videos/events/oba-royal-welcome-london1.mp4",
+    thumbnail: "/videos/thumbs/oba-royal-welcome-london1.webp",
     date: "London, United Kingdom",
     tag: "Royal Visit",
   },
@@ -36,6 +38,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "Royal Welcome — Alayeluwa Oba Aderemi Adewale Ogunye (Part 2)",
     description: "Continuation of the royal welcome ceremony hosted by IID Omo Orimolusi in Diaspora in London.",
     src: "/videos/events/oba-royal-welcome-london2.mp4",
+    thumbnail: "/videos/thumbs/oba-royal-welcome-london2.webp",
     date: "London, United Kingdom",
     tag: "Royal Visit",
   },
@@ -44,6 +47,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "A Royal Gift for Ojude Oba Orimolusi 2026",
     description: "Kabiyesi HRM Oba Jaiyeoba Adebajo is presented with a magnificent new horse — a powerful symbol of royalty, honour, and cultural heritage.",
     src: "/videos/events/kabiyesi-horse-gift-ojude-oba-2026.mp4",
+    thumbnail: "/videos/thumbs/kabiyesi-horse-gift-ojude-oba-2026.webp",
     date: "Ojude Oba Orimolusi 2026",
     tag: "Ojude Oba",
   },
@@ -52,6 +56,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "Otunba Atunlunto of Ilugun Graces Ojude Oba 2026",
     description: "Otunba Atunlunto alongside his family and friends from Brazil graces Ojude Oba Orimolusi 2026 in magnificent style.",
     src: "/videos/events/ojude-oba-2026-otunba-atunlunto.mp4",
+    thumbnail: "/videos/thumbs/ojude-oba-2026-otunba-atunlunto.webp",
     date: "Ojude Oba Orimolusi 2026",
     tag: "Ojude Oba",
   },
@@ -60,6 +65,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "Nollywood Stars Grace Ojude Oba Orimolusi 2026",
     description: "Nollywood stars grace Ojude Oba Orimolusi 2026 in magnificent grand style, adding glamour, culture, and prestige.",
     src: "/videos/events/ojude-oba-2026-nollywood-stars.mp4",
+    thumbnail: "/videos/thumbs/ojude-oba-2026-nollywood-stars.webp",
     date: "Ojude Oba Orimolusi 2026",
     tag: "Performance",
   },
@@ -68,6 +74,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "Saheed Osupa Thrills at Ojude Oba Orimolusi 2026",
     description: "Fuji music star Saheed Osupa thrills the people of Ijebu Igbo with melodious music and unforgettable moments of dance.",
     src: "/videos/events/ojude-oba-2026-saheed-osupa.mp4",
+    thumbnail: "/videos/thumbs/ojude-oba-2026-saheed-osupa.webp",
     date: "Ojude Oba Orimolusi 2026",
     credit: "MarvelTvUpdates",
     tag: "Performance",
@@ -77,6 +84,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "IID Carnival 2025",
     description: "Members of IID Omo Orimolusi in Diaspora come alive at IID Carnival 2025 — a vibrant celebration of culture, colour, music, and community spirit.",
     src: "/videos/events/iid-carnival-2025.mp4",
+    thumbnail: "/videos/thumbs/iid-carnival-2025.webp",
     date: "IID Omo Orimolusi in Diaspora, 2025",
     tag: "Carnival",
   },
@@ -85,6 +93,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "IID Carnival 2025 (Part 2)",
     description: "More highlights from IID Carnival 2025 — continuing the celebration of culture, colour, music, and community spirit.",
     src: "/videos/events/iid-carnival-2025-2.mp4",
+    thumbnail: "/videos/thumbs/iid-carnival-2025-2.webp",
     date: "IID Omo Orimolusi in Diaspora, 2025",
     tag: "Carnival",
   },
@@ -93,6 +102,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "IID Carnival 2025 (Part 3)",
     description: "Further highlights from IID Carnival 2025 — more moments of culture, colour, music, and community celebration.",
     src: "/videos/events/iid-carnival-3.mp4",
+    thumbnail: "/videos/thumbs/iid-carnival-3.webp",
     date: "IID Omo Orimolusi in Diaspora, 2025",
     tag: "Carnival",
   },
@@ -101,6 +111,7 @@ export const EVENT_VIDEOS: EventVideo[] = [
     title: "IID New Year Party",
     description: "Members of IID Omo Orimolusi in Diaspora come together to celebrate the new year in style — a joyful evening of music, culture, and community.",
     src: "/videos/events/iid-new-year-party.mp4",
+    thumbnail: "/videos/thumbs/iid-new-year-party.webp",
     date: "IID Omo Orimolusi in Diaspora",
     tag: "Community",
   },

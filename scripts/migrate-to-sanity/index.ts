@@ -25,7 +25,7 @@ async function main() {
   await seedTeamMembers(assetMap);
   await seedEvents();
   await seedGalleryImages(assetMap);
-  await seedEventVideos();
+  await seedEventVideos(assetMap);
 
   console.log("\n=== Step 3: Seed new schemas ===");
   await seedTowns(assetMap);

@@ -74,6 +74,7 @@ export async function uploadImages(opts: { force?: boolean } = {}): Promise<Asse
   const allFiles = [
     ...walkImages(path.join(PUBLIC_DIR, "images")),
     ...walkImages(path.join(PUBLIC_DIR, "team")),
+    ...walkImages(path.join(PUBLIC_DIR, "videos", "thumbs")),
   ];
   const files = dedupeByBasename(allFiles);
 
