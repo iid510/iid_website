@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Users, Search, MapPin, ChevronRight, ChevronLeft, LayoutGrid, List } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Users, Search, MapPin, ChevronRight, ChevronLeft, LayoutGrid, List, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
@@ -70,7 +70,7 @@ function initialsOf(name: string) {
 }
 
 /* ── Grid card ────────────────────────────────────────────────── */
-function GridCard({ member, index }: { member: Member; index: number }) {
+function GridCard({ member, index, onPhotoClick }: { member: Member; index: number; onPhotoClick: (m: Member) => void }) {
   const country = countryOf(member.location);
   const city = cityOf(member.location);
   return (
@@ -91,12 +91,23 @@ function GridCard({ member, index }: { member: Member; index: number }) {
         </span>
       )}
 
-      <ImageWithSkeleton
-        src={member.photo ?? null}
-        alt={member.name}
-        className="w-full aspect-square"
-        imgClassName="object-cover"
-        fallback={
+      <div
+        className={member.photo ? "cursor-zoom-in group/photo relative" : undefined}
+        onClick={() => member.photo && onPhotoClick(member)}
+      >
+        {member.photo && (
+          <div className="absolute inset-0 z-[5] bg-black/0 group-hover/photo:bg-black/20 transition-colors duration-300 flex items-center justify-center pointer-events-none">
+            <span className="opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300 text-white text-xs font-semibold bg-black/50 px-3 py-1.5 rounded-full">
+              View Photo
+            </span>
+          </div>
+        )}
+        <ImageWithSkeleton
+          src={member.photo ?? null}
+          alt={member.name}
+          className="w-full aspect-square"
+          imgClassName="object-cover"
+          fallback={
           <div
             className="relative w-full h-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary via-primary to-primary/80"
             style={{
@@ -111,8 +122,9 @@ function GridCard({ member, index }: { member: Member; index: number }) {
               </span>
             </div>
           </div>
-        }
-      />
+          }
+        />
+      </div>
       <div className="p-3">
         <p className="font-semibold text-foreground text-base leading-snug">{member.name}</p>
         {member.role && (
@@ -130,7 +142,7 @@ function GridCard({ member, index }: { member: Member; index: number }) {
 }
 
 /* ── List row ─────────────────────────────────────────────────── */
-function ListRow({ member, index }: { member: Member; index: number }) {
+function ListRow({ member, index, onPhotoClick }: { member: Member; index: number; onPhotoClick: (m: Member) => void }) {
   const country = countryOf(member.location);
   const city = cityOf(member.location);
   return (
@@ -141,19 +153,24 @@ function ListRow({ member, index }: { member: Member; index: number }) {
       transition={{ duration: 0.3, delay: Math.min(index * 0.02, 0.5), ease }}
       className="flex items-center gap-4 px-4 py-3 bg-card border border-border rounded-xl hover:bg-muted/50 hover:border-accent/40 transition-colors"
     >
-      <ImageWithSkeleton
-        src={member.photo ?? null}
-        alt={member.name}
-        className="w-12 h-12 rounded-full shrink-0"
-        imgClassName="object-cover rounded-full"
-        fallback={
-          <div className="w-12 h-12 rounded-full bg-primary/90 border-2 border-accent flex items-center justify-center shrink-0">
-            <span className="font-display font-black text-primary-foreground text-sm">
-              {initialsOf(member.name)}
-            </span>
-          </div>
-        }
-      />
+      <div
+        className={member.photo ? "cursor-zoom-in shrink-0" : "shrink-0"}
+        onClick={() => member.photo && onPhotoClick(member)}
+      >
+        <ImageWithSkeleton
+          src={member.photo ?? null}
+          alt={member.name}
+          className="w-12 h-12 rounded-full shrink-0"
+          imgClassName="object-cover rounded-full"
+          fallback={
+            <div className="w-12 h-12 rounded-full bg-primary/90 border-2 border-accent flex items-center justify-center shrink-0">
+              <span className="font-display font-black text-primary-foreground text-sm">
+                {initialsOf(member.name)}
+              </span>
+            </div>
+          }
+        />
+      </div>
       <div className="flex-1 min-w-0 text-left">
         <p className="font-semibold text-foreground text-base leading-snug truncate">{member.name}</p>
         {member.role && (
@@ -177,9 +194,9 @@ function ListRow({ member, index }: { member: Member; index: number }) {
 
 /* ── Section (grid or list of members, with a heading) ──────────── */
 function MemberSection({
-  title, members, view, totalCount,
+  title, members, view, totalCount, onPhotoClick,
 }: {
-  title: string; members: Member[]; view: "grid" | "list"; totalCount?: number;
+  title: string; members: Member[]; view: "grid" | "list"; totalCount?: number; onPhotoClick: (m: Member) => void;
 }) {
   if (members.length === 0) return null;
   return (
@@ -192,14 +209,55 @@ function MemberSection({
       </div>
       {view === "grid" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {members.map((m, i) => <GridCard key={m.id} member={m} index={i} />)}
+          {members.map((m, i) => <GridCard key={m.id} member={m} index={i} onPhotoClick={onPhotoClick} />)}
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-          {members.map((m, i) => <ListRow key={m.id} member={m} index={i} />)}
+          {members.map((m, i) => <ListRow key={m.id} member={m} index={i} onPhotoClick={onPhotoClick} />)}
         </div>
       )}
     </div>
+  );
+}
+
+/* ── Photo lightbox ───────────────────────────────────────────── */
+function PhotoLightbox({ member, onClose }: { member: Member; onClose: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.85, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.85, opacity: 0 }}
+        transition={{ duration: 0.25, ease }}
+        className="relative max-w-sm w-full bg-card rounded-2xl overflow-hidden shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+        >
+          <X size={16} />
+        </button>
+        <ImageWithSkeleton
+          src={member.photo ?? null}
+          alt={member.name}
+          className="w-full max-h-[70vh]"
+          imgClassName="object-cover"
+          loading="eager"
+        />
+        <div className="p-4">
+          <h4 className="font-display font-bold text-foreground text-base">{member.name}</h4>
+          {member.role && <p className="text-accent font-semibold text-sm mt-1">{member.role}</p>}
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -212,8 +270,9 @@ export default function MembersPage() {
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("All");
   const [category, setCategory] = useState<"All" | "Current Executive" | "Non-Executive">("All");
-  const [view, setView] = useState<"grid" | "list">("grid");
+  const [view, setView] = useState<"grid" | "list">("list");
   const [pageNum, setPageNum] = useState(1);
+  const [lightboxMember, setLightboxMember] = useState<Member | null>(null);
 
   const countries = useMemo(() => {
     const known = MEMBERS.map((m) => countryOf(m.location)).filter((c): c is string => !!c);
@@ -393,8 +452,8 @@ export default function MembersPage() {
             </div>
           ) : (
             <>
-              <MemberSection title="Current Executives" members={execMembers} view={view} />
-              <MemberSection title="Other Members" members={paginatedNonExec} view={view} totalCount={nonExecMembers.length} />
+              <MemberSection title="Current Executives" members={execMembers} view={view} onPhotoClick={setLightboxMember} />
+              <MemberSection title="Other Members" members={paginatedNonExec} view={view} totalCount={nonExecMembers.length} onPhotoClick={setLightboxMember} />
             </>
           )}
 
@@ -468,6 +527,10 @@ export default function MembersPage() {
       <Footer />
       <FloatingContact />
       <BackToTop />
+
+      <AnimatePresence>
+        {lightboxMember && <PhotoLightbox member={lightboxMember} onClose={() => setLightboxMember(null)} />}
+      </AnimatePresence>
     </div>
   );
 }
