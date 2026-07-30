@@ -13,6 +13,9 @@ export interface SiteSettings {
   heroPhrases: string[];
   clans: ClanEntry[];
   culturalPillars: Card[];
+  impactEyebrow?: string;
+  impactHeading?: string;
+  impactIntro?: string;
   impactCards: Card[];
   testimonials: Testimonial[];
   faqs: FaqEntry[];
@@ -48,9 +51,12 @@ const FALLBACK_SITE_SETTINGS: SiteSettings = {
     { icon: "Heart", title: "IID — Support", description: "Ijebu Igbo Descendants give support to hometown projects and other related causes." },
     { icon: "Crown", title: "IID — We Represent", description: "One of our visions is to represent our most respected town — Ijebu Igbo — well in character, diversity and prosperity." },
   ],
+  impactEyebrow: "Global Community",
+  impactHeading: "Ọmọ Alárè Across the World",
+  impactIntro: "From Nigeria to the United Kingdom, the United States, Canada, and beyond, Ijebu Igbo descendants continue to connect, support one another, and contribute to the development of our hometown.",
   impactCards: [
     { icon: "Globe", title: "Community Development", description: "Infrastructural projects targeting clean water, roads, and renewable energy in Ijebu Igbo." },
-    { icon: "BookOpen", title: "Education Support", description: "Scholarship funds and digital literacy programs empowering local youth for global opportunities." },
+    { icon: "BookOpen", title: "Education Support", description: "Scholarship funds and digital literacy programmes empowering local youth for global opportunities." },
     { icon: "Heart", title: "Cultural Preservation", description: "Documenting oral histories, supporting the annual Ojude Oba festival, and preserving Ijebu traditions." },
     { icon: "Users", title: "Diaspora Networking", description: "A professional bridge connecting experts abroad with local opportunities back home." },
   ],

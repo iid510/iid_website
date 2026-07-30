@@ -497,10 +497,6 @@ const japara: TownSeed = {
       caption: "Current Pampa (Lawusi, Owogbegi, Kileyo, Odokotolori) and Osugbos of Japara",
     },
     {
-      image: "/images/japara/japara-skills-empowerment-health-talk.webp",
-      caption: "Japara community health talk and skills empowerment programme, organised with U.I Internal and Medical Consultants Specialist Hospital & Maternity",
-    },
-    {
       image: "/images/japara/japara-projects-achievements-1.webp",
       caption: "Japara community projects, page 1",
     },

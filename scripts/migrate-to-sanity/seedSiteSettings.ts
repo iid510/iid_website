@@ -11,9 +11,13 @@ const FOOTER_STATS = [
   { icon: "Flag", value: "1", label: "Hometown" },
 ];
 
+const IMPACT_EYEBROW = "Global Community";
+const IMPACT_HEADING = "Ọmọ Alárè Across the World";
+const IMPACT_INTRO = "From Nigeria to the United Kingdom, the United States, Canada, and beyond, Ijebu Igbo descendants continue to connect, support one another, and contribute to the development of our hometown.";
+
 const IMPACT_CARDS = [
   { icon: "Globe", title: "Community Development", description: "Infrastructural projects targeting clean water, roads, and renewable energy in Ijebu Igbo." },
-  { icon: "BookOpen", title: "Education Support", description: "Scholarship funds and digital literacy programs empowering local youth for global opportunities." },
+  { icon: "BookOpen", title: "Education Support", description: "Scholarship funds and digital literacy programmes empowering local youth for global opportunities." },
   { icon: "Heart", title: "Cultural Preservation", description: "Documenting oral histories, supporting the annual Ojude Oba festival, and preserving Ijebu traditions." },
   { icon: "Users", title: "Diaspora Networking", description: "A professional bridge connecting experts abroad with local opportunities back home." },
 ];
@@ -84,7 +88,7 @@ const FAQS = [
 ];
 
 const SATELLITE_TOWNS = ["Agunboye", "Odo-Alamo", "Asigidi"];
-const GRADE1_DESCRIPTION = "The supreme traditional ruler of Ijebu-Igbo, presiding over all five quarters and their communities.";
+const GRADE1_DESCRIPTION = "The supreme traditional ruler of Ijebu-Igbo, presiding over all seven quarters and their communities.";
 
 const ELIGIBILITY = [
   "Must be of Ijebu-Igbo descent (parent or grandparent from Ijebu-Igbo)",
@@ -156,6 +160,9 @@ export async function seedSiteSettings(assetMap: AssetMap) {
     heroPhrases: HERO_PHRASES,
     clans: CLANS,
     culturalPillars: CULTURAL_PILLARS,
+    impactEyebrow: IMPACT_EYEBROW,
+    impactHeading: IMPACT_HEADING,
+    impactIntro: IMPACT_INTRO,
     impactCards: IMPACT_CARDS,
     testimonials: TESTIMONIALS,
     faqs: FAQS,
