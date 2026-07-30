@@ -291,21 +291,26 @@ export default function MembersPage() {
     });
   }, [query, country, category, MEMBERS]);
 
-  // Current executives are always shown in full (small list); only "Other Members" is paginated.
-  const execMembers = useMemo(() => filtered.filter((m) => isCurrentExecutive(m.id)), [filtered]);
-  const nonExecMembers = useMemo(() => filtered.filter((m) => !isCurrentExecutive(m.id)), [filtered]);
+  // Total counts (for section badges) — current executives always sort first within `filtered`.
+  const execCount = useMemo(() => filtered.filter((m) => isCurrentExecutive(m.id)).length, [filtered]);
+  const nonExecCount = filtered.length - execCount;
 
-  const pageCount = Math.max(1, Math.ceil(nonExecMembers.length / PAGE_SIZE));
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
 
   // Reset to page 1 whenever the result set changes (new search/filter)
   useEffect(() => {
     setPageNum(1);
   }, [query, country, category]);
 
-  const paginatedNonExec = useMemo(() => {
+  // Pagination runs across ALL matching members together (executives first, then everyone
+  // else, since that's already the sort order) — "Next" always advances the full list.
+  const paginated = useMemo(() => {
     const start = (pageNum - 1) * PAGE_SIZE;
-    return nonExecMembers.slice(start, start + PAGE_SIZE);
-  }, [nonExecMembers, pageNum]);
+    return filtered.slice(start, start + PAGE_SIZE);
+  }, [filtered, pageNum]);
+
+  const paginatedExec = useMemo(() => paginated.filter((m) => isCurrentExecutive(m.id)), [paginated]);
+  const paginatedNonExec = useMemo(() => paginated.filter((m) => !isCurrentExecutive(m.id)), [paginated]);
 
   const goToPage = (p: number) => {
     setPageNum(Math.min(Math.max(1, p), pageCount));
@@ -452,13 +457,13 @@ export default function MembersPage() {
             </div>
           ) : (
             <>
-              <MemberSection title="Current Executives" members={execMembers} view={view} onPhotoClick={setLightboxMember} />
-              <MemberSection title="Other Members" members={paginatedNonExec} view={view} totalCount={nonExecMembers.length} onPhotoClick={setLightboxMember} />
+              <MemberSection title="Current Executives" members={paginatedExec} view={view} totalCount={execCount} onPhotoClick={setLightboxMember} />
+              <MemberSection title="Other Members" members={paginatedNonExec} view={view} totalCount={nonExecCount} onPhotoClick={setLightboxMember} />
             </>
           )}
 
-          {/* Pagination — applies to the "Other Members" section */}
-          {nonExecMembers.length > PAGE_SIZE && (
+          {/* Pagination — runs across all matching members */}
+          {filtered.length > PAGE_SIZE && (
             <div className="flex items-center justify-center gap-2 mt-2">
               <button
                 type="button"
