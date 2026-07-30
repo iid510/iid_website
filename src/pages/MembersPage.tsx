@@ -8,6 +8,7 @@ import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
 import ImageWithSkeleton from "@/components/ImageWithSkeleton";
+import AnimatedCounter from "@/components/AnimatedCounter";
 import { useSanityMembers } from "@/hooks/useSanityMembers";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { MEMBERS_PAGE } from "@/data/pageContent";
@@ -102,28 +103,49 @@ export default function MembersPage() {
       {/* Hero */}
       <section className="relative min-h-[38vh] flex items-end pb-10 pt-24 bg-primary overflow-hidden">
         <AnimatedHeroBg />
-        <div className="container-main relative z-10">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="label-accent mb-2"
-          >
-            {hero.eyebrow}
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-primary-foreground leading-tight"
-          >
-            {hero.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-3 text-primary-foreground/70 max-w-xl text-sm sm:text-base leading-relaxed"
-          >
-            {hero.subtitle}
-          </motion.p>
+        <div className="container-main relative z-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="label-accent mb-2"
+            >
+              {hero.eyebrow}
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-primary-foreground leading-tight"
+            >
+              {hero.title}
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-3 text-primary-foreground/70 max-w-xl text-sm sm:text-base leading-relaxed"
+            >
+              {hero.subtitle}
+            </motion.p>
+          </div>
+
+          {MEMBERS.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex items-center gap-3 bg-primary-foreground/10 border border-accent/30 rounded-2xl px-6 py-4 self-start lg:self-end"
+            >
+              <Users className="text-accent" size={28} />
+              <div>
+                <AnimatedCounter
+                  value={MEMBERS.length}
+                  className="font-display font-black text-3xl sm:text-4xl text-white leading-none"
+                />
+                <p className="text-primary-foreground/60 text-xs sm:text-sm font-semibold uppercase tracking-wide mt-1">
+                  Members Strong
+                </p>
+              </div>
+            </motion.div>
+          )}
         </div>
       </section>
 

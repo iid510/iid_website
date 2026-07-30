@@ -93,7 +93,7 @@ export default function BusinessProfile() {
   // SEO: document title + meta tags
   useEffect(() => {
     if (!business) return;
-    const title = `${business.name} | Ijebu Igbo Business Directory — Connect Ijebu Roots`;
+    const title = `${business.name} | Ijebu Igbo Descendants in Diaspora`;
     const desc  = business.tagline
       ? `${business.tagline} — ${business.description.slice(0, 140)}...`
       : business.description.slice(0, 160);
@@ -120,7 +120,7 @@ export default function BusinessProfile() {
     setMeta('meta[name="twitter:image"]',          "content", image);
 
     return () => {
-      document.title = "Connect Ijebu Roots";
+      document.title = "Ijebu Igbo Descendants in Diaspora";
       document.querySelectorAll("[data-biz-seo]").forEach((el) => {
         const orig = el.getAttribute("data-biz-original");
         if (orig !== null) el.setAttribute("content", orig);

@@ -121,9 +121,9 @@ function VideoCard({
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative rounded-2xl overflow-hidden border border-white/8
-                  bg-white/4 hover:border-accent/50 transition-all duration-300
-                  flex flex-col hover:shadow-[0_0_40px_rgba(180,140,60,0.15)]
+      className={`group relative rounded-2xl overflow-hidden border border-border
+                  bg-card hover:border-accent/50 transition-all duration-300
+                  flex flex-col shadow-sm hover:shadow-[0_0_40px_rgba(180,140,60,0.15)]
                   ${wide ? "sm:col-span-2" : ""}`}
     >
       {/* Thumbnail / player */}
@@ -235,16 +235,16 @@ function VideoCard({
             {TAG_FILTER_ICONS[video.tag]}
             {video.tag}
           </span>
-          <span className="text-[10px] text-white/35 ml-auto">{video.date}</span>
+          <span className="text-[10px] text-muted-foreground ml-auto">{video.date}</span>
         </div>
-        <h3 className="font-display font-bold text-white text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-accent/90 transition-colors duration-200">
+        <h3 className="font-display font-bold text-foreground text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-accent/90 transition-colors duration-200">
           {video.title}
         </h3>
-        <p className="text-white/50 text-xs leading-relaxed line-clamp-2 flex-1">
+        <p className="text-muted-foreground text-xs leading-relaxed line-clamp-2 flex-1">
           {video.description}
         </p>
         {video.credit && (
-          <p className="text-[10px] text-white/25 mt-1">Courtesy: {video.credit}</p>
+          <p className="text-[10px] text-muted-foreground/70 mt-1">Courtesy: {video.credit}</p>
         )}
       </div>
     </motion.div>
@@ -262,14 +262,14 @@ function FeaturedCard({ video }: { video: EventVideo }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="rounded-3xl overflow-hidden border border-white/10 bg-white/4
+      className="rounded-3xl overflow-hidden border border-border bg-card shadow-sm
                  hover:border-accent/40 transition-all duration-300
                  hover:shadow-[0_0_60px_rgba(180,140,60,0.12)]"
     >
       <div className="grid grid-cols-1 lg:grid-cols-5">
         {/* Left: info panel */}
         <div className="lg:col-span-2 p-7 sm:p-10 flex flex-col justify-center
-                        bg-gradient-to-br from-white/5 to-transparent">
+                        bg-gradient-to-br from-muted/60 to-transparent">
           {/* Live badge */}
           <div className="flex items-center gap-2 mb-5">
             <span className="flex items-center gap-1.5 text-xs font-black text-red-400 uppercase tracking-widest">
@@ -282,14 +282,14 @@ function FeaturedCard({ video }: { video: EventVideo }) {
             </span>
           </div>
 
-          <h2 className="font-display font-black text-white text-xl sm:text-2xl lg:text-3xl leading-tight mb-3">
+          <h2 className="font-display font-black text-foreground text-xl sm:text-2xl lg:text-3xl leading-tight mb-3">
             {video.title}
           </h2>
-          <p className="text-white/55 text-sm leading-relaxed mb-5">
+          <p className="text-muted-foreground text-sm leading-relaxed mb-5">
             {video.description}
           </p>
 
-          <div className="flex flex-col gap-1.5 mb-6 text-xs text-white/40 font-medium">
+          <div className="flex flex-col gap-1.5 mb-6 text-xs text-muted-foreground font-medium">
             <span>📅 {video.date}</span>
             {video.credit && <span>🎥 Courtesy: {video.credit}</span>}
           </div>
@@ -363,17 +363,7 @@ export default function EventVideos() {
   }, {});
 
   return (
-    <section className="relative bg-[#080808] border-t border-white/8 py-16 px-4 overflow-hidden">
-      {/* Subtle noise/grain background */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "128px",
-        }}
-      />
-
+    <section className="relative bg-background border-t border-border py-16 px-4 overflow-hidden">
       {/* Ambient glow blobs */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
@@ -395,10 +385,10 @@ export default function EventVideos() {
               <Film size={12} />
               Video Archive
             </div>
-            <h2 className="font-display font-black text-white text-3xl sm:text-4xl md:text-5xl leading-tight">
+            <h2 className="font-display font-black text-foreground text-3xl sm:text-4xl md:text-5xl leading-tight">
               Relive the <span className="text-accent">Moments</span>
             </h2>
-            <p className="text-white/45 text-sm mt-2.5 max-w-lg leading-relaxed">
+            <p className="text-muted-foreground text-sm mt-2.5 max-w-lg leading-relaxed">
               Royal visits, cultural festivals, carnival celebrations — captured and preserved for generations to come.
             </p>
           </div>
@@ -409,12 +399,12 @@ export default function EventVideos() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="shrink-0 inline-flex items-center gap-2 border border-white/10
-                       rounded-2xl px-4 py-2.5 bg-white/4 backdrop-blur-sm"
+            className="shrink-0 inline-flex items-center gap-2 border border-border
+                       rounded-2xl px-4 py-2.5 bg-card backdrop-blur-sm"
           >
             <Film size={14} className="text-accent" />
-            <span className="text-white font-black text-lg leading-none">{EVENT_VIDEOS.length}</span>
-            <span className="text-white/40 text-xs font-semibold">videos</span>
+            <span className="text-foreground font-black text-lg leading-none">{EVENT_VIDEOS.length}</span>
+            <span className="text-muted-foreground text-xs font-semibold">videos</span>
           </motion.div>
         </motion.div>
 
@@ -427,9 +417,9 @@ export default function EventVideos() {
 
         {/* ── Divider ── */}
         <div className="flex items-center gap-4 mb-7">
-          <div className="flex-1 h-px bg-white/8" />
-          <span className="text-white/25 text-xs font-bold uppercase tracking-widest">More Videos</span>
-          <div className="flex-1 h-px bg-white/8" />
+          <div className="flex-1 h-px bg-border" />
+          <span className="text-muted-foreground text-xs font-bold uppercase tracking-widest">More Videos</span>
+          <div className="flex-1 h-px bg-border" />
         </div>
 
         {/* ── Filter tabs ── */}
@@ -440,7 +430,7 @@ export default function EventVideos() {
             className={`text-xs font-bold px-4 py-1.5 rounded-full border transition-all duration-200 ${
               activeTag === "All"
                 ? "bg-accent text-black border-accent shadow-[0_0_12px_rgba(180,140,60,0.4)]"
-                : "border-white/15 text-white/50 hover:border-white/35 hover:text-white"
+                : "border-border text-muted-foreground hover:border-accent/50 hover:text-foreground"
             }`}
           >
             All ({rest.length})
@@ -454,13 +444,13 @@ export default function EventVideos() {
                           rounded-full border transition-all duration-200 ${
                             activeTag === tag
                               ? "bg-accent text-black border-accent shadow-[0_0_12px_rgba(180,140,60,0.4)]"
-                              : "border-white/15 text-white/50 hover:border-white/35 hover:text-white"
+                              : "border-border text-muted-foreground hover:border-accent/50 hover:text-foreground"
                           }`}
             >
               {TAG_FILTER_ICONS[tag]}
               {tag}
               <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${
-                activeTag === tag ? "bg-black/20" : "bg-white/10"
+                activeTag === tag ? "bg-black/20" : "bg-muted"
               }`}>
                 {tagCounts[tag]}
               </span>
@@ -482,9 +472,9 @@ export default function EventVideos() {
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
-                <Film size={44} className="mx-auto mb-4 text-white/15" />
+                <Film size={44} className="mx-auto mb-4 text-muted-foreground/40" />
               </motion.div>
-              <p className="font-semibold text-white/40 mb-2">No videos in this category yet</p>
+              <p className="font-semibold text-muted-foreground mb-2">No videos in this category yet</p>
               <button
                 onClick={() => setActiveTag("All")}
                 className="text-sm text-accent hover:underline flex items-center gap-1 mx-auto"

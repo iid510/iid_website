@@ -34,7 +34,7 @@ export default function KingProfile() {
   return (
     <div className="min-h-screen bg-[#f8f6f1]">
       <Seo
-        title={`${king.name}${king.subtitle ? ` — ${king.subtitle}` : ""} | Ijebu Igbo Heritage`}
+        title={`${king.name}${king.subtitle ? ` — ${king.subtitle}` : ""} | Ijebu Igbo Descendants in Diaspora`}
         description={`${king.name}, ${king.subtitle ?? "an Orimolusi of Ijebu-Igbo"}. Read the history, reign and legacy of this Ijebu-Igbo king.`.slice(0, 155)}
         image={king.photo}
         type="article"

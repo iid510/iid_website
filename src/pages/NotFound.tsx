@@ -19,13 +19,13 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    document.title = "Page Not Found | Connect Ijebu Roots";
+    document.title = "Page Not Found | Ijebu Igbo Descendants in Diaspora";
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
   }, [location.pathname]);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Seo title="Page Not Found | Connect Ijebu Roots" description="The page you are looking for does not exist." canonicalPath={location.pathname} />
+      <Seo title="Page Not Found | Ijebu Igbo Descendants in Diaspora" description="The page you are looking for does not exist." canonicalPath={location.pathname} />
       <Navbar />
 
       <main className="flex-1 flex items-center justify-center section-padding pt-32 pb-20">

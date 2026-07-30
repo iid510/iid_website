@@ -284,7 +284,7 @@ export default function Businesses() {
   const cta = findSection(page?.sections, "businesses-cta") ?? findSection(BUSINESSES_PAGE.sections, "businesses-cta");
 
   useEffect(() => {
-    const title = "Business Directory | Ijebu Igbo Descendants — Connect Ijebu Roots";
+    const title = "Business Directory — Ijebu Igbo Descendants in Diaspora";
     const desc  = "Browse businesses owned by Ijebu Igbo descendants in Nigeria and across the diaspora.";
     document.title = title;
     const setMeta = (sel: string, val: string) => {
@@ -296,7 +296,7 @@ export default function Businesses() {
     setMeta('meta[property="og:description"]',  desc);
     setMeta('meta[name="twitter:title"]',       title);
     setMeta('meta[name="twitter:description"]', desc);
-    return () => { document.title = "Connect Ijebu Roots"; };
+    return () => { document.title = "Ijebu Igbo Descendants in Diaspora"; };
   }, []);
 
   const [search, setSearch] = useState("");

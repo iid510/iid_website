@@ -37,7 +37,7 @@ export default function NewsPost() {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title={`${article.title} | Ijebu Igbo News — IID`}
+        title={`${article.title} | Ijebu Igbo Descendants in Diaspora`}
         description={(article.excerpt ?? "").slice(0, 155) || "Latest news from the Ijebu Igbo Descendants in Diaspora (Omo Orimolusi) community."}
         image={article.featuredImage}
         type="article"

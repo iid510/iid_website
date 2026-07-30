@@ -1,116 +1,116 @@
 {
-  "siteName": "Connect Ijebu Roots — IID Omo Orimolusi in Diaspora",
+  "siteName": "Ijebu Igbo Descendants in Diaspora (IID Omo Orimolusi)",
   "siteUrl": "https://ijebuigbodescendants.org",
   "defaultImage": "/logo.png",
   "twitterCard": "summary_large_image",
   "routes": {
     "/": {
-      "title": "Ijebu Igbo Descendants — Omo Orimolusi in Diaspora",
+      "title": "Ijebu Igbo Descendants in Diaspora — Omo Orimolusi Worldwide",
       "description": "IID Omo Orimolusi unites Ijebu-Igbo descendants worldwide — heritage, events, community projects, and ways to join or donate."
     },
     "/about": {
-      "title": "About IID — Ijebu Igbo Descendants Association",
-      "description": "Ijebu Igbo Descendants (Awa Omo Orimolusi) Worldwide is a diaspora community promoting the culture, welfare and development of Ijebu-Igbo, a Yoruba town in Ogun State."
+      "title": "About Us — Ijebu Igbo Descendants in Diaspora",
+      "description": "Ijebu Igbo Descendants (Awa Omo Orimolusi) in Diaspora is a worldwide community promoting the culture, welfare and development of Ijebu-Igbo, a Yoruba town in Ogun State."
     },
     "/impact": {
-      "title": "Our Impact — Ijebu Igbo Community Projects | IID",
-      "description": "See how IID Omo Orimolusi drives development in Ijebu-Igbo — community projects, scholarships, and diaspora-funded initiatives in the homeland."
+      "title": "Our Impact — Ijebu Igbo Descendants in Diaspora",
+      "description": "See how Ijebu Igbo Descendants in Diaspora drives development in Ijebu-Igbo — community projects, scholarships, and diaspora-funded initiatives in the homeland."
     },
     "/team": {
-      "title": "Our Team — IID Executive | Ijebu Igbo Descendants",
+      "title": "Our Team & Executive Committee — Ijebu Igbo Descendants in Diaspora",
       "description": "Meet the executive committee leading Ijebu Igbo Descendants in Diaspora (IID Omo Orimolusi), serving the Ijebu-Igbo community worldwide."
     },
     "/heritage": {
-      "title": "Ijebu Igbo Heritage: Orimolusi, Kings & History",
-      "description": "Explore Ijebu-Igbo history, the Orimolusi paramount ruler, and the five quarters and kings of this Yoruba town in Ogun State, Nigeria."
+      "title": "Heritage: Orimolusi, Kings & History — Ijebu Igbo Descendants in Diaspora",
+      "description": "Explore Ijebu-Igbo history, the Orimolusi paramount ruler, and the towns and kings of this Yoruba kingdom in Ogun State, Nigeria."
     },
     "/events": {
-      "title": "Ojude Oba & Ijebu Igbo Events | IID Diaspora",
+      "title": "Events & Ojude Oba — Ijebu Igbo Descendants in Diaspora",
       "description": "Ojude Oba festival, AGM and Ijebu-Igbo community events — dates, regberegbe age groups, and how the diaspora celebrates Ijebu heritage."
     },
     "/gallery": {
-      "title": "Gallery — Ijebu Igbo Community & Events | IID",
-      "description": "Photos from Ijebu-Igbo cultural celebrations, Ojude Oba, AGMs and IID diaspora gatherings across the diaspora and the homeland."
+      "title": "Photo Gallery — Ijebu Igbo Descendants in Diaspora",
+      "description": "Photos from Ijebu-Igbo cultural celebrations, Ojude Oba, AGMs and diaspora gatherings across the diaspora and the homeland."
     },
     "/contact": {
-      "title": "Contact IID — Ijebu Igbo Descendants",
+      "title": "Contact Us — Ijebu Igbo Descendants in Diaspora",
       "description": "Get in touch with Ijebu Igbo Descendants in Diaspora (Omo Orimolusi) — membership, partnership, events and general enquiries."
     },
     "/news": {
-      "title": "Ijebu Igbo News & Community Updates | IID",
-      "description": "Latest news from Ijebu-Igbo and the IID Omo Orimolusi diaspora — Orimolusi updates, community announcements, and event reports."
+      "title": "News & Community Updates — Ijebu Igbo Descendants in Diaspora",
+      "description": "Latest news from Ijebu-Igbo and the diaspora community — Orimolusi updates, community announcements, and event reports."
     },
     "/blog": {
-      "title": "Ijebu Igbo Blog — History, Kingship, Culture & Travel | IID",
+      "title": "Blog — History, Kingship & Culture — Ijebu Igbo Descendants in Diaspora",
       "description": "100+ articles on Ijebu-Igbo's history, the Orimolusi and Town Obas, oriki and culture, the diaspora community, and travel guides for the UK–Nigeria journey."
     },
     "/tourism": {
-      "title": "Visit Ijebu Igbo: Attractions & Landmarks",
+      "title": "Visit Ijebu Igbo: Attractions & Landmarks — Ijebu Igbo Descendants in Diaspora",
       "description": "Things to do in Ijebu-Igbo, Ogun State — top landmarks, heritage sites, and tourism tips for diaspora visitors returning home."
     },
     "/ojowo": {
-      "title": "Ojowo, Ijebu Igbo — Olokine of Ojowo | Heritage",
+      "title": "Ojowo, Ijebu Igbo — Olokine of Ojowo | Ijebu Igbo Descendants in Diaspora",
       "description": "Discover Ojowo, one of the towns of Ijebu-Igbo (Orimolusi Kingdom), its Olokine ruler, chiefs and Baales within the Orimolusi traditional council."
     },
     "/japara": {
-      "title": "Japara, Ijebu Igbo — Abijaparako of Japara | Heritage",
+      "title": "Japara, Ijebu Igbo — Abijaparako of Japara | Ijebu Igbo Descendants in Diaspora",
       "description": "Discover Japara, one of the towns of Ijebu-Igbo (Orimolusi Kingdom), its Abijaparako ruler, history, chiefs and Ituns within the Orimolusi traditional council."
     },
     "/atikori": {
-      "title": "Atikori, Ijebu Igbo — Keegbo of Atikori | Heritage",
+      "title": "Atikori, Ijebu Igbo — Keegbo of Atikori | Ijebu Igbo Descendants in Diaspora",
       "description": "Discover Atikori, one of the towns of Ijebu-Igbo (Orimolusi Kingdom), its Keegbo ruler, eight Itun agba, heritage places and anthem within the Orimolusi traditional council."
     },
     "/oke-sopen": {
-      "title": "Oke-Sopen, Ijebu Igbo — Sopenlukale of Oke-Sopen | Heritage",
+      "title": "Oke-Sopen, Ijebu Igbo — Sopenlukale of Oke-Sopen | Ijebu Igbo Descendants in Diaspora",
       "description": "Discover Oke-Sopen, one of the towns of Ijebu-Igbo (Orimolusi Kingdom), its Sopenlukale ruler and the full history of past rulers since 1886."
     },
     "/oke-agbo": {
-      "title": "Oke-Agbo, Ijebu Igbo — Bejeroku of Oke-Agbo | Heritage",
+      "title": "Oke-Agbo, Ijebu Igbo — Bejeroku of Oke-Agbo | Ijebu Igbo Descendants in Diaspora",
       "description": "Discover Oke-Agbo, one of the towns of Ijebu-Igbo (Orimolusi Kingdom), its Bejeroku ruler and the Baales of its constituent villages."
     },
     "/imope-ijebu": {
-      "title": "Imope-Ijebu — Onimope of Imope-Ijebu | Heritage",
+      "title": "Imope-Ijebu — Onimope of Imope-Ijebu | Ijebu Igbo Descendants in Diaspora",
       "description": "Discover Imope-Ijebu, one of the towns of Ijebu-Igbo (Orimolusi Kingdom), and its Onimope ruler."
     },
     "/aparaki": {
-      "title": "Aparaki — Alaparaki of Aparaki | Heritage",
+      "title": "Aparaki — Alaparaki of Aparaki | Ijebu Igbo Descendants in Diaspora",
       "description": "Discover Aparaki, one of the towns of Ijebu-Igbo (Orimolusi Kingdom), and its Alaparaki ruler."
     },
     "/donate": {
-      "title": "Donate to Ijebu Igbo — Unity House Fund | IID",
+      "title": "Donate — Unity House Fund | Ijebu Igbo Descendants in Diaspora",
       "description": "Support Ijebu-Igbo hometown projects and the Unity House fund. Your donation helps build community development and scholarships."
     },
     "/announcements": {
-      "title": "Announcements — Ijebu Igbo Community | IID",
-      "description": "Births, obituaries, congratulations and notices from the Ijebu Igbo Descendants (Omo Orimolusi) diaspora community."
+      "title": "Announcements — Ijebu Igbo Descendants in Diaspora",
+      "description": "Births, obituaries, congratulations and notices from the Ijebu Igbo Descendants in Diaspora (Omo Orimolusi) community."
     },
     "/members": {
-      "title": "Members — Ijebu Igbo Descendants Directory | IID",
-      "description": "The Ijebu Igbo Descendants in Diaspora member directory — connect with Omo Orimolusi members across clans and locations worldwide."
+      "title": "Members — Ijebu Igbo Descendants in Diaspora",
+      "description": "Meet the executive committee, branch leaders and general membership of Ijebu Igbo Descendants in Diaspora (Omo Orimolusi) — connect with members across the UK, USA and beyond."
     },
     "/scholarship": {
-      "title": "Ijebu Igbo Scholarship Fund | IID Omo Orimolusi",
+      "title": "Scholarship Fund — Ijebu Igbo Descendants in Diaspora",
       "description": "The IID scholarship supports students of Ijebu-Igbo descent. Learn eligibility, how to apply, and how to support Ijebu-Igbo education."
     },
     "/travel": {
-      "title": "UK to Ijebu Igbo Travel Guide (via Lagos)",
+      "title": "UK to Ijebu Igbo Travel Guide — Ijebu Igbo Descendants in Diaspora",
       "description": "Step-by-step travel guide from the UK to Ijebu-Igbo — London to Lagos flights, Lagos to Ijebu-Igbo routes, distance, and local tips."
     },
     "/videos": {
-      "title": "Video Archive — Ijebu Igbo Events | IID",
-      "description": "Watch recordings of IID events, AGMs, Ojude Oba, and Ijebu-Igbo cultural celebrations from the Omo Orimolusi diaspora community."
+      "title": "Video Archive — Ijebu Igbo Descendants in Diaspora",
+      "description": "Watch recordings of IID events, AGMs, Ojude Oba, and Ijebu-Igbo cultural celebrations from the diaspora community."
     },
     "/join": {
-      "title": "Join Ijebu Igbo Descendants | IID Membership",
+      "title": "Join Us — Ijebu Igbo Descendants in Diaspora",
       "description": "Become a member of Ijebu Igbo Descendants in Diaspora (Omo Orimolusi). Connect with your roots, community and hometown projects."
     },
     "/businesses": {
-      "title": "Ijebu Igbo Business Directory — Diaspora | IID",
+      "title": "Business Directory — Ijebu Igbo Descendants in Diaspora",
       "description": "Find and support Ijebu-Igbo businesses and entrepreneurs across the diaspora in the IID community business directory."
     },
     "/honour-roll": {
-      "title": "Honour Roll — IID Foundation Members | Ijebu Igbo Descendants",
-      "description": "Honouring the pioneer executive committee and founding members who established IID Omo Orimolusi in Diaspora in 2006–2009."
+      "title": "Honour Roll — Founding Members | Ijebu Igbo Descendants in Diaspora",
+      "description": "Honouring the pioneer executive committee and founding members who established Ijebu Igbo Descendants in Diaspora (Omo Orimolusi) in 2006–2009."
     }
   }
 }
