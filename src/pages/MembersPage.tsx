@@ -12,6 +12,7 @@ import AnimatedCounter from "@/components/AnimatedCounter";
 import { useSanityMembers } from "@/hooks/useSanityMembers";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { MEMBERS_PAGE } from "@/data/pageContent";
+import type { Member } from "@/data/members";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -51,7 +52,148 @@ function labelFor(country: string): string {
   return COUNTRY_LABELS[country] ?? country;
 }
 
+// Always offered in the country filter, even before a member from that country is added.
+const SUPPORTED_COUNTRIES = ["United Kingdom", "USA", "Canada", "Nigeria", "Ghana"];
+
+function isExecutive(role?: string): boolean {
+  return !!role && role !== "In Loving Memory";
+}
+
 const PAGE_SIZE = 24;
+
+function initialsOf(name: string) {
+  return name.split(" ").slice(0, 2).map((w) => w[0]).join("");
+}
+
+/* ── Grid card ────────────────────────────────────────────────── */
+function GridCard({ member, index }: { member: Member; index: number }) {
+  const country = countryOf(member.location);
+  const city = cityOf(member.location);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.6), ease }}
+      className="relative bg-card border border-border rounded-2xl overflow-hidden text-center hover:shadow-lg hover:border-accent/40 transition-all duration-300"
+    >
+      {/* Country flag badge — only shown when the list explicitly states a location */}
+      {country && (
+        <span
+          className="absolute top-2 right-2 z-10 w-10 h-10 rounded-full bg-card/90 shadow-md flex items-center justify-center text-2xl leading-none"
+          title={labelFor(country)}
+        >
+          {flagOf(country)}
+        </span>
+      )}
+
+      <ImageWithSkeleton
+        src={member.photo ?? null}
+        alt={member.name}
+        className="w-full aspect-square"
+        imgClassName="object-cover"
+        fallback={
+          <div
+            className="relative w-full h-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary via-primary to-primary/80"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0), linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)) 60%, hsl(var(--accent)/0.35))",
+              backgroundSize: "16px 16px, 100% 100%",
+            }}
+          >
+            <div className="relative w-16 h-16 rounded-full bg-primary/90 border-2 border-accent flex items-center justify-center shadow-lg ring-4 ring-primary-foreground/10">
+              <span className="font-display font-black text-primary-foreground text-lg">
+                {initialsOf(member.name)}
+              </span>
+            </div>
+          </div>
+        }
+      />
+      <div className="p-3">
+        <p className="font-semibold text-foreground text-base leading-snug">{member.name}</p>
+        {member.role && (
+          <p className="text-accent text-sm font-semibold mt-1">{member.role}</p>
+        )}
+        {city && (
+          <div className="flex items-center justify-center gap-1 text-muted-foreground text-sm mt-1.5">
+            <MapPin size={12} />
+            <span>{city}</span>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── List row ─────────────────────────────────────────────────── */
+function ListRow({ member, index }: { member: Member; index: number }) {
+  const country = countryOf(member.location);
+  const city = cityOf(member.location);
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -8 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3, delay: Math.min(index * 0.02, 0.5), ease }}
+      className="flex items-center gap-4 px-4 py-3 bg-card border border-border rounded-xl hover:bg-muted/50 hover:border-accent/40 transition-colors"
+    >
+      <ImageWithSkeleton
+        src={member.photo ?? null}
+        alt={member.name}
+        className="w-12 h-12 rounded-full shrink-0"
+        imgClassName="object-cover rounded-full"
+        fallback={
+          <div className="w-12 h-12 rounded-full bg-primary/90 border-2 border-accent flex items-center justify-center shrink-0">
+            <span className="font-display font-black text-primary-foreground text-sm">
+              {initialsOf(member.name)}
+            </span>
+          </div>
+        }
+      />
+      <div className="flex-1 min-w-0 text-left">
+        <p className="font-semibold text-foreground text-base leading-snug truncate">{member.name}</p>
+        {member.role && (
+          <p className="text-accent text-sm font-semibold">{member.role}</p>
+        )}
+      </div>
+      {city && (
+        <div className="hidden sm:flex items-center gap-1 text-muted-foreground text-sm shrink-0">
+          <MapPin size={12} />
+          <span>{city}</span>
+        </div>
+      )}
+      {country && (
+        <span className="text-xl leading-none shrink-0" title={labelFor(country)}>
+          {flagOf(country)}
+        </span>
+      )}
+    </motion.div>
+  );
+}
+
+/* ── Section (grid or list of members, with a heading) ──────────── */
+function MemberSection({ title, members, view }: { title: string; members: Member[]; view: "grid" | "list" }) {
+  if (members.length === 0) return null;
+  return (
+    <div className="mb-10">
+      <div className="flex items-center gap-3 mb-4">
+        <h3 className="font-display font-bold text-foreground text-lg sm:text-xl">{title}</h3>
+        <span className="text-xs font-semibold text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
+          {members.length}
+        </span>
+      </div>
+      {view === "grid" ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          {members.map((m, i) => <GridCard key={m.id} member={m} index={i} />)}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          {members.map((m, i) => <ListRow key={m.id} member={m} index={i} />)}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function MembersPage() {
   const { data: MEMBERS = [] } = useSanityMembers();
@@ -61,34 +203,42 @@ export default function MembersPage() {
   const joinCta = findSection(page?.sections, "members-cta") ?? findSection(MEMBERS_PAGE.sections, "members-cta");
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("All");
+  const [category, setCategory] = useState<"All" | "Executive" | "Non-Executive">("All");
   const [view, setView] = useState<"grid" | "list">("grid");
   const [pageNum, setPageNum] = useState(1);
 
   const countries = useMemo(() => {
     const known = MEMBERS.map((m) => countryOf(m.location)).filter((c): c is string => !!c);
-    return ["All", ...Array.from(new Set(known)).sort()];
+    return ["All", ...Array.from(new Set([...SUPPORTED_COUNTRIES, ...known])).sort()];
   }, [MEMBERS]);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase();
     return MEMBERS.filter((m) => {
       const matchesCountry = country === "All" || countryOf(m.location) === country;
+      const matchesCategory =
+        category === "All" ||
+        (category === "Executive" ? isExecutive(m.role) : !isExecutive(m.role));
       const matchesQuery = !q || m.name.toLowerCase().includes(q) || (m.location ?? "").toLowerCase().includes(q);
-      return matchesCountry && matchesQuery;
+      return matchesCountry && matchesCategory && matchesQuery;
     });
-  }, [query, country, MEMBERS]);
+  }, [query, country, category, MEMBERS]);
 
-  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  // Executives are always shown in full (small list); only "Other Members" is paginated.
+  const execMembers = useMemo(() => filtered.filter((m) => isExecutive(m.role)), [filtered]);
+  const nonExecMembers = useMemo(() => filtered.filter((m) => !isExecutive(m.role)), [filtered]);
+
+  const pageCount = Math.max(1, Math.ceil(nonExecMembers.length / PAGE_SIZE));
 
   // Reset to page 1 whenever the result set changes (new search/filter)
   useEffect(() => {
     setPageNum(1);
-  }, [query, country]);
+  }, [query, country, category]);
 
-  const paginated = useMemo(() => {
+  const paginatedNonExec = useMemo(() => {
     const start = (pageNum - 1) * PAGE_SIZE;
-    return filtered.slice(start, start + PAGE_SIZE);
-  }, [filtered, pageNum]);
+    return nonExecMembers.slice(start, start + PAGE_SIZE);
+  }, [nonExecMembers, pageNum]);
 
   const goToPage = (p: number) => {
     setPageNum(Math.min(Math.max(1, p), pageCount));
@@ -165,6 +315,15 @@ export default function MembersPage() {
               />
             </div>
             <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value as typeof category)}
+              className="px-4 py-2.5 bg-card border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50"
+            >
+              <option value="All">All Members</option>
+              <option value="Executive">Executive</option>
+              <option value="Non-Executive">Non-Executive</option>
+            </select>
+            <select
               value={country}
               onChange={(e) => setCountry(e.target.value)}
               className="px-4 py-2.5 bg-card border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50"
@@ -200,7 +359,7 @@ export default function MembersPage() {
             </div>
           </div>
 
-          {/* Members grid or empty state */}
+          {/* Members sections or empty state */}
           <div id="members-results" />
           {MEMBERS.length === 0 ? (
             <motion.div
@@ -224,113 +383,16 @@ export default function MembersPage() {
             <div className="text-center py-16 border border-dashed border-border rounded-2xl">
               <p className="text-muted-foreground text-sm">No members match your search.</p>
             </div>
-          ) : view === "grid" ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {paginated.map((member, i) => (
-                <motion.div
-                  key={member.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.04, ease }}
-                  className="relative bg-card border border-border rounded-2xl overflow-hidden text-center hover:shadow-lg hover:border-accent/40 transition-all duration-300"
-                >
-                  {/* Country flag badge — only shown when the list explicitly states a location */}
-                  {countryOf(member.location) && (
-                    <span
-                      className="absolute top-2 right-2 z-10 w-10 h-10 rounded-full bg-card/90 shadow-md flex items-center justify-center text-2xl leading-none"
-                      title={labelFor(countryOf(member.location)!)}
-                    >
-                      {flagOf(countryOf(member.location)!)}
-                    </span>
-                  )}
-
-                  <ImageWithSkeleton
-                    src={member.photo ?? null}
-                    alt={member.name}
-                    className="w-full aspect-square"
-                    imgClassName="object-cover"
-                    fallback={
-                      <div
-                        className="relative w-full h-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary via-primary to-primary/80"
-                        style={{
-                          backgroundImage:
-                            "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0), linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)) 60%, hsl(var(--accent)/0.35))",
-                          backgroundSize: "16px 16px, 100% 100%",
-                        }}
-                      >
-                        <div className="relative w-16 h-16 rounded-full bg-primary/90 border-2 border-accent flex items-center justify-center shadow-lg ring-4 ring-primary-foreground/10">
-                          <span className="font-display font-black text-primary-foreground text-lg">
-                            {member.name.split(" ").slice(0, 2).map((w) => w[0]).join("")}
-                          </span>
-                        </div>
-                      </div>
-                    }
-                  />
-                  <div className="p-3">
-                    <p className="font-semibold text-foreground text-base leading-snug">{member.name}</p>
-                    {member.role && (
-                      <p className="text-accent text-sm font-semibold mt-1">{member.role}</p>
-                    )}
-                    {cityOf(member.location) && (
-                      <div className="flex items-center justify-center gap-1 text-muted-foreground text-sm mt-1.5">
-                        <MapPin size={12} />
-                        <span>{cityOf(member.location)}</span>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              {paginated.map((member, i) => (
-                <motion.div
-                  key={member.id}
-                  initial={{ opacity: 0, x: -8 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: Math.min(i * 0.02, 0.5), ease }}
-                  className="flex items-center gap-4 px-4 py-3 bg-card border border-border rounded-xl hover:bg-muted/50 hover:border-accent/40 transition-colors"
-                >
-                  <ImageWithSkeleton
-                    src={member.photo ?? null}
-                    alt={member.name}
-                    className="w-12 h-12 rounded-full shrink-0"
-                    imgClassName="object-cover rounded-full"
-                    fallback={
-                      <div className="w-12 h-12 rounded-full bg-primary/90 border-2 border-accent flex items-center justify-center shrink-0">
-                        <span className="font-display font-black text-primary-foreground text-sm">
-                          {member.name.split(" ").slice(0, 2).map((w) => w[0]).join("")}
-                        </span>
-                      </div>
-                    }
-                  />
-                  <div className="flex-1 min-w-0 text-left">
-                    <p className="font-semibold text-foreground text-base leading-snug truncate">{member.name}</p>
-                    {member.role && (
-                      <p className="text-accent text-sm font-semibold">{member.role}</p>
-                    )}
-                  </div>
-                  {cityOf(member.location) && (
-                    <div className="hidden sm:flex items-center gap-1 text-muted-foreground text-sm shrink-0">
-                      <MapPin size={12} />
-                      <span>{cityOf(member.location)}</span>
-                    </div>
-                  )}
-                  {countryOf(member.location) && (
-                    <span className="text-xl leading-none shrink-0" title={labelFor(countryOf(member.location)!)}>
-                      {flagOf(countryOf(member.location)!)}
-                    </span>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+            <>
+              <MemberSection title="Executives" members={execMembers} view={view} />
+              <MemberSection title="Other Members" members={paginatedNonExec} view={view} />
+            </>
           )}
 
-          {/* Pagination */}
-          {filtered.length > PAGE_SIZE && (
-            <div className="flex items-center justify-center gap-2 mt-10">
+          {/* Pagination — applies to the "Other Members" section */}
+          {nonExecMembers.length > PAGE_SIZE && (
+            <div className="flex items-center justify-center gap-2 mt-2">
               <button
                 type="button"
                 onClick={() => goToPage(pageNum - 1)}
