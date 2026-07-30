@@ -157,7 +157,7 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-4 gap-4 mb-14 border border-primary-foreground/10 rounded-2xl p-6 bg-primary-foreground/5"
+            className="grid grid-cols-3 gap-4 mb-14 border border-primary-foreground/10 rounded-2xl p-6 bg-primary-foreground/5"
           >
             {stats.map((s) => {
               const Icon = resolveIcon(s.icon);
@@ -386,7 +386,12 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-primary-foreground/10">
         <div className="container-main py-5 md:py-6 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4 text-xs md:text-sm text-primary-foreground/40 text-center md:text-left">
-          <p>&copy; {new Date().getFullYear()} Ijebu Igbo Descendants in Diaspora. All rights reserved.</p>
+          <div>
+            <p>&copy; {new Date().getFullYear()} Ijebu Igbo Descendants in Diaspora. All rights reserved.</p>
+            <p className="mt-0.5 text-primary-foreground/35">
+              Registered Charity — UK: 06408579 · Nigeria: 9684235
+            </p>
+          </div>
           <motion.a
             href="https://azeezagbona.com"
             target="_blank"

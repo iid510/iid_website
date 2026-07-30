@@ -21,6 +21,8 @@ export interface SiteSettings {
 
 const FALLBACK_SITE_SETTINGS: SiteSettings = {
   footerStats: [
+    { icon: "ShieldCheck", value: "06408579", label: "UK Charity Reg. No." },
+    { icon: "ShieldCheck", value: "9684235", label: "Nigeria Reg. No." },
     { icon: "Users", value: "200+", label: "Members" },
     { icon: "CalendarDays", value: "2017", label: "Est." },
     { icon: "Globe", value: "3", label: "Countries" },

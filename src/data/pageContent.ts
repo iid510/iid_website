@@ -34,6 +34,14 @@ export const HOME_PAGE: PageContent = {
       body: ["We see to the welfare of our community and our people, both in Ijebu Igbo and in the Diaspora. We do this by complementing the efforts of the Government with whatever resources we have."],
     },
     {
+      sectionId: "about-charityStatus", heading: "Charity Registration",
+      body: [
+        "Ijebu Igbo Descendants Omo Orimolusi in Diaspora is a registered Charity Organisation both in UK and Nigeria.",
+        "UK Registration Number: 06408579",
+        "Nigeria Registration Number: 9684235",
+      ],
+    },
+    {
       sectionId: "about-clansHeader", heading: "The Seven Clans of Ijebu Igbo",
       body: ["United under Orímólúsí, our town stands on seven foundational quarters"],
     },
@@ -76,10 +84,6 @@ export const HOME_PAGE: PageContent = {
       body: ["Trace the remarkable journey of Ijebu Igbo people from our ancestral homeland to the diaspora"],
     },
     { sectionId: "timeline-cta", body: ["Be part of our living history"] },
-    {
-      sectionId: "cta-main", heading: "Together We Can Build a Greater Ijebu Igbo",
-      body: ["Your expertise, your resources, and your passion can help transform our homeland. Join us in making a lasting difference."],
-    },
     { sectionId: "news-header", eyebrow: "Latest Updates", heading: "News & Announcements" },
     {
       sectionId: "gallery-header", eyebrow: "Gallery", heading: "Moments That Matter",

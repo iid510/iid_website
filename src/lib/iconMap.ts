@@ -2,6 +2,7 @@ import {
   Phone, Mail, Globe, MessageCircle, Send, Clock, CheckCircle,
   MapPin, ArrowRight, Users, CalendarDays, Flag, BookOpen, Heart,
   Megaphone, Crown, Shirt, Sun, AlertCircle, Building2, Wrench,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -9,6 +10,7 @@ export const ICON_MAP: Record<string, LucideIcon> = {
   Phone, Mail, Globe, MessageCircle, Send, Clock, CheckCircle,
   MapPin, ArrowRight, Users, CalendarDays, Flag, BookOpen, Heart,
   Megaphone, Crown, Shirt, Sun, AlertCircle, Building2, Wrench,
+  ShieldCheck,
 };
 
 export function resolveIcon(name: string | undefined | null): LucideIcon {

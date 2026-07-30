@@ -11,7 +11,6 @@ import News from "@/components/News";
 import Gallery from "@/components/Gallery";
 import OrimolusiSection from "@/components/OrimolusiSection";
 import FAQ from "@/components/FAQ";
-import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
@@ -62,7 +61,6 @@ const Index = () => {
       <News />
       <Gallery />
       <FAQ limit={2} />
-      <CTA />
       <Footer />
       <FloatingContact />
       <BackToTop />

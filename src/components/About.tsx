@@ -21,6 +21,7 @@ export default function About() {
   const proverb = findSection(sections, "about-proverb");
   const whoWeAre = findSection(sections, "about-whoWeAre");
   const whatWeDo = findSection(sections, "about-whatWeDo");
+  const charityStatus = findSection(sections, "about-charityStatus");
   const clansHeader = findSection(sections, "about-clansHeader");
   const pillarsHeader = findSection(sections, "about-pillarsHeader");
   const callout = findSection(sections, "about-callout");
@@ -120,6 +121,16 @@ export default function About() {
               <p className="text-body text-sm sm:text-base leading-relaxed">
                 {whatWeDo?.body?.[0]}
               </p>
+            </div>
+
+            {/* Charity Registration */}
+            <div className="pt-2 border-t border-border/60">
+              <h4 className="font-display font-bold text-sm text-foreground/80 mb-1.5">{charityStatus?.heading}</h4>
+              {charityStatus?.body?.map((line, i) => (
+                <p key={i} className="text-foreground/55 text-xs sm:text-sm leading-relaxed">
+                  {line}
+                </p>
+              ))}
             </div>
           </motion.div>
         </div>
