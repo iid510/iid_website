@@ -7,7 +7,8 @@ export type Category =
   | "Technology"
   | "Health & Wellness"
   | "Retail & Trade"
-  | "Education";
+  | "Education"
+  | "Events & Venues";
 
 export interface BusinessHours {
   day: string;
@@ -90,6 +91,7 @@ export const CATEGORIES: Category[] = [
   "Health & Wellness",
   "Retail & Trade",
   "Education",
+  "Events & Venues",
 ];
 
 export const CATEGORY_COLORS: Record<string, string> = {
@@ -101,6 +103,7 @@ export const CATEGORY_COLORS: Record<string, string> = {
   "Health & Wellness": "bg-green-100 text-green-800 border-green-200",
   "Retail & Trade": "bg-yellow-100 text-yellow-800 border-yellow-200",
   "Education": "bg-indigo-100 text-indigo-800 border-indigo-200",
+  "Events & Venues": "bg-red-100 text-red-800 border-red-200",
 };
 
 export const CATEGORY_GRADIENTS: Record<string, string> = {
@@ -112,6 +115,7 @@ export const CATEGORY_GRADIENTS: Record<string, string> = {
   "Health & Wellness": "from-teal-400 to-green-500",
   "Retail & Trade": "from-yellow-400 to-amber-500",
   "Education": "from-indigo-500 to-blue-700",
+  "Events & Venues": "from-red-500 to-amber-600",
 };
 
 export const BUSINESSES: Business[] = [
@@ -971,6 +975,87 @@ export const BUSINESSES: Business[] = [
       "WhatsApp: +44 7496 933887 or +44 7946 654111",
       "Follow @tkitchen_xo on Instagram",
       "Based in the UK — serving the Nigerian diaspora community",
+    ],
+  },
+  {
+    id: 12,
+    slug: "de-royale-classic-hall",
+    name: "De-Royale Classic Hall",
+    category: "Events & Venues",
+    tagline: "Spacious. Serene. Secure. Now Open in Ijebu Igbo",
+    description:
+      "De-Royale Classic Hall is a newly opened event centre in Oke-Sopen, Ijebu Igbo, offering a spacious, air-conditioned hall in a serene environment with ample parking and full security. With seating capacity for up to 800 guests, it's a premier venue for weddings, parties, conferences, and other gatherings.",
+    location: "Oke Oba Road, Opp. VIO Office, Oke-Sopen, Ijebu Igbo",
+    phone: "+234 805 259 3350",
+    whatsapp: "+2348052593350",
+    flyer: "/images/businesses/de-royale-classic-hall/flyer.webp",
+    region: "Nigeria",
+
+    serviceCategories: [
+      {
+        name: "Hall Features",
+        items: [
+          "Spacious Hall",
+          "Air Conditioned",
+          "Serene Environment",
+          "Ample Parking Space",
+          "Full Security",
+        ],
+      },
+    ],
+
+    benefits: [
+      "Seating capacity of up to 800 guests",
+      "Air-conditioned, spacious hall",
+      "Serene environment with ample parking",
+      "Full security on site",
+      "Contact: 08052593350, 09043437256, 09069386181",
+    ],
+  },
+  {
+    id: 13,
+    slug: "m-royale-events-center",
+    name: "M'Royale Events Center",
+    category: "Events & Venues",
+    tagline: "Where Class Meets Comfort",
+    description:
+      "M'Royale Events Center (Owolowo House) is a newly opened, elegant event venue in Oke-Sopen, Ijebu Igbo — perfect for weddings, birthday parties, anniversaries, conferences, seminars and more. The spacious hall offers air-conditioned comfort, steady power supply, ample parking, and friendly, professional service, backed by full security. Experience Royalty. Celebrate in Style!",
+    location: "Agbowa Street, Oke-Sopen, Ijebu Igbo",
+    phone: "+234 805 259 3350",
+    whatsapp: "+2348052593350",
+    flyer: "/images/businesses/m-royale-events-center/flyer.webp",
+    region: "Nigeria",
+
+    serviceCategories: [
+      {
+        name: "Hall Features",
+        items: [
+          "Spacious & elegant hall for all occasions",
+          "Air-conditioned comfort",
+          "Steady power supply",
+          "Ample parking space",
+          "Friendly & professional services",
+        ],
+      },
+      {
+        name: "Perfect For",
+        items: [
+          "Weddings",
+          "Birthday Parties",
+          "Anniversaries",
+          "Conferences",
+          "Seminars",
+          "And More",
+        ],
+      },
+    ],
+
+    benefits: [
+      "Elegant hall — where class meets comfort",
+      "Air-conditioned with steady power supply",
+      "Full security guaranteed",
+      "Friendly & professional service",
+      "Contact: 08052593350, 09043437256, 09069386181",
     ],
   },
 ];

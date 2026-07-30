@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 const CATEGORIES = [
   "Food & Catering", "Fashion & Beauty", "Real Estate",
   "Professional Services", "Technology", "Health & Wellness",
-  "Retail & Trade", "Education",
+  "Retail & Trade", "Education", "Events & Venues",
 ];
 
 export default defineType({
