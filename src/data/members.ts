@@ -13,7 +13,7 @@ const USA = "USA";
 
 // Listed in the exact order of the official IID Membership List, starting with the President and executives.
 const MEMBERS_LIST: Omit<Member, "order">[] = [
-  { id: "member-otunba-olayinka-busari", name: "Otunba Olayinka Busari", role: "P.R.O" },
+  { id: "member-otunba-olayinka-busari", name: "Otunba Olayinka Busari", role: "P.R.O", photo: "/team/otunba-ola-busari.webp" },
   { id: "member-prince-olufemi-sijuade", name: "Prince Olufemi Sijuade", role: "Former Vice President" },
   { id: "member-ms-olufunke-okuneye", name: "Ms Olufunke Okuneye", role: "Former General Secretary" },
   { id: "member-mrs-bisi-ajayi-odubanjo", name: "Mrs Bisi Ajayi Odubanjo", role: "Former Assistant General Secretary" },

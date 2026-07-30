@@ -39,14 +39,14 @@ export const TEAM_DATA: TeamData = {
     { name: "Chief Mrs Bisi Kazeem", role: "Treasurer", photo: "/team/chief-mrs-bisi-kazeem.webp", group: "currentExecutive" },
     { name: "Princess Kemi Sijuade", role: "Social Secretary", photo: null, group: "currentExecutive" },
     { name: "Alh Sadekunle Hamzat-Maja", role: "Auditor", photo: "/team/alh-sadekunle-hamzat-maja.webp", group: "currentExecutive" },
-    { name: "Otunba Ola Busari", role: "PRO", photo: null, group: "currentExecutive" },
+    { name: "Otunba Ola Busari", role: "PRO", photo: "/team/otunba-ola-busari.webp", group: "currentExecutive" },
     { name: "Chief Rafiu Adejobi", role: "Welfare Officer", photo: null, group: "currentExecutive" },
     { name: "Alhaji Chief Sunny Sobowale", role: "Northampton Branch Chairman", photo: null, group: "currentExecutive" },
   ],
   pastPresidents: [
     { name: "Alhaji Adebowale Kazeem Haruna Ishola", role: "1st President", photo: null, group: "pastPresident" },
     { name: "Barrister Michael Popoola Sojirin", role: "2nd President", photo: "/team/barr-popoola-sojirin.webp", group: "pastPresident" },
-    { name: "Otunba Ola Busari", role: "3rd President", photo: null, group: "pastPresident" },
+    { name: "Otunba Ola Busari", role: "3rd President", photo: "/team/otunba-ola-busari.webp", group: "pastPresident" },
     { name: "Prince Femi Sijuade", role: "4th President", photo: null, group: "pastPresident" },
   ],
   pastExecutiveTeam: [
