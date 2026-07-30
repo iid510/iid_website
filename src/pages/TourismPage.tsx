@@ -11,7 +11,7 @@ import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 import { useSanityPlaces } from "@/hooks/useSanityPlaces";
 import type { Place } from "@/data/places";
 import { useSanityTownBySlug } from "@/hooks/useSanityTowns";
-import { useSanityPage } from "@/hooks/useSanityPage";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { TOURISM_PAGE } from "@/data/pageContent";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -103,6 +103,7 @@ export default function TourismPage() {
   const { data: atikori } = useSanityTownBySlug("atikori");
   const { data: page } = useSanityPage("tourism", TOURISM_PAGE);
   const hero = page?.hero ?? TOURISM_PAGE.hero!;
+  const anthemHeader = findSection(page?.sections, "anthem-header") ?? findSection(TOURISM_PAGE.sections, "anthem-header");
   const anthemVerses = atikori?.anthem ?? [];
   const quarters = atikori?.subdivisionGroups?.[0]?.items ?? [];
 
@@ -162,9 +163,9 @@ export default function TourismPage() {
             transition={{ duration: 0.6, ease }}
             className="text-center mb-8"
           >
-            <p className="label-accent mb-2">Ọmọ Atikori</p>
+            <p className="label-accent mb-2">{anthemHeader?.eyebrow}</p>
             <h2 className="font-display text-3xl sm:text-4xl font-black text-primary-foreground">
-              Atikori Anthem
+              {anthemHeader?.heading}
             </h2>
           </motion.div>
 

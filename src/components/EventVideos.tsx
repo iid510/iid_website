@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSanityEventVideos, type EventVideo, type VideoTag } from "@/hooks/useSanityEventVideos";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { VIDEOS_PAGE } from "@/data/pageContent";
 import {
   Play, Pause, Volume2, VolumeX, Maximize,
   Film, ChevronRight, Mic2, Users, Globe,
@@ -390,6 +392,8 @@ function FeaturedCard({ video }: { video: EventVideo }) {
 /* ── Main export ─────────────────────────────────────────────── */
 export default function EventVideos() {
   const { data: EVENT_VIDEOS = [] } = useSanityEventVideos();
+  const { data: page } = useSanityPage("videos", VIDEOS_PAGE);
+  const archiveHeader = findSection(page?.sections, "archive-header") ?? findSection(VIDEOS_PAGE.sections, "archive-header");
   const [activeTag, setActiveTag] = useState<VideoTag | "All">("All");
 
   const featured = EVENT_VIDEOS.find((v) => v.featured);
@@ -425,13 +429,13 @@ export default function EventVideos() {
                             text-accent text-xs font-black px-3 py-1.5 rounded-full mb-4
                             tracking-[0.15em] uppercase">
               <Film size={12} />
-              Video Archive
+              {archiveHeader?.eyebrow}
             </div>
             <h2 className="font-display font-black text-foreground text-3xl sm:text-4xl md:text-5xl leading-tight">
-              Relive the <span className="text-accent">Moments</span>
+              {archiveHeader?.heading}
             </h2>
             <p className="text-muted-foreground text-sm mt-2.5 max-w-lg leading-relaxed">
-              Royal visits, cultural festivals, carnival celebrations — captured and preserved for generations to come.
+              {archiveHeader?.body?.[0]}
             </p>
           </div>
 

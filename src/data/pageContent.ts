@@ -209,6 +209,7 @@ export const JOIN_PAGE: PageContent = {
       sectionId: "join-beforeApply", heading: "Before You Apply — Please Read",
       body: ["Please ensure you have read and understood the Constitution and Code of Conduct before submitting your application."],
     },
+    { sectionId: "join-formHeader", heading: "Membership Application Form" },
   ],
 };
 
@@ -219,6 +220,12 @@ export const VIDEOS_PAGE: PageContent = {
     title: "Video Archive",
     subtitle: "Watch recordings of IID events, AGMs, cultural celebrations, and homeland updates.",
   },
+  sections: [
+    {
+      sectionId: "archive-header", eyebrow: "Video Archive", heading: "Relive the Moments",
+      body: ["Royal visits, cultural festivals, carnival celebrations — captured and preserved for generations to come."],
+    },
+  ],
 };
 
 export const ANNOUNCEMENTS_PAGE: PageContent = {
@@ -262,6 +269,9 @@ export const TOURISM_PAGE: PageContent = {
     title: "Notable Places of Interest",
     subtitle: "Discover the landmarks, heritage sites, and community projects that define the spirit and identity of Ijebu-Igbo — past, present, and future.",
   },
+  sections: [
+    { sectionId: "anthem-header", eyebrow: "Ọmọ Atikori", heading: "Atikori Anthem" },
+  ],
 };
 
 export const HONOUR_ROLL_PAGE: PageContent = {

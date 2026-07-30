@@ -61,6 +61,7 @@ export default function JoinPage() {
   const { data: page } = useSanityPage("join", JOIN_PAGE);
   const hero = page?.hero ?? JOIN_PAGE.hero!;
   const beforeApply = findSection(page?.sections, "join-beforeApply") ?? findSection(JOIN_PAGE.sections, "join-beforeApply");
+  const formHeader = findSection(page?.sections, "join-formHeader") ?? findSection(JOIN_PAGE.sections, "join-formHeader");
   const joinFaqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -176,7 +177,7 @@ export default function JoinPage() {
             onSubmit={handleSubmit}
             className="bg-white rounded-2xl border border-border p-6 sm:p-8 shadow-sm space-y-6"
           >
-            <h2 className="font-display font-bold text-foreground text-lg">Membership Application Form</h2>
+            <h2 className="font-display font-bold text-foreground text-lg">{formHeader?.heading ?? "Membership Application Form"}</h2>
 
             {/* Name */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
