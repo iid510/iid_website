@@ -39,20 +39,40 @@ function AccordionList({
   );
 }
 
-function PersonGrid({ members }: { members: { name: string; title?: string; note?: string; quarter?: string }[] }) {
+function PersonGrid({
+  members, photoStartIdx, onOpenPhoto,
+}: {
+  members: { name: string; title?: string; note?: string; quarter?: string; photo?: string }[];
+  photoStartIdx?: number;
+  onOpenPhoto?: (idx: number) => void;
+}) {
+  let photoCursor = photoStartIdx ?? -1;
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-      {members.map((m, i) => (
-        <div key={i} className="flex items-start gap-3 p-3 bg-background rounded-xl border border-border">
-          <span className="text-xs font-black text-accent/60 w-5 shrink-0 mt-0.5">{i + 1}.</span>
-          <div>
-            <p className={`text-sm font-semibold leading-tight ${m.name === "Vacant" ? "text-muted-foreground italic" : "text-foreground"}`}>
-              {m.name}{m.note && <span className="text-accent font-normal"> ({m.note})</span>}
-            </p>
-            {(m.title || m.quarter) && <p className="text-xs text-accent font-medium mt-0.5">{m.title || m.quarter}</p>}
+      {members.map((m, i) => {
+        const idx = m.photo && photoCursor >= 0 ? photoCursor++ : -1;
+        return (
+          <div key={i} className={`flex gap-3 p-3 bg-background rounded-xl border border-border ${m.photo ? "items-center" : "items-start"}`}>
+            {m.photo ? (
+              <ZoomableImage
+                src={m.photo}
+                alt={m.name}
+                className="w-11 h-11 rounded-full overflow-hidden shrink-0 border border-border"
+                imgClassName="w-full h-full object-cover"
+                onClick={() => idx >= 0 && onOpenPhoto?.(idx)}
+              />
+            ) : (
+              <span className="text-xs font-black text-accent/60 w-5 shrink-0 mt-0.5">{i + 1}.</span>
+            )}
+            <div className="min-w-0">
+              <p className={`text-sm font-semibold leading-tight ${m.name === "Vacant" ? "text-muted-foreground italic" : "text-foreground"}`}>
+                {m.name}{m.note && <span className="text-accent font-normal"> ({m.note})</span>}
+              </p>
+              {(m.title || m.quarter) && <p className="text-xs text-accent font-medium mt-0.5">{m.title || m.quarter}</p>}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -102,6 +122,7 @@ export default function KingdomPageTemplate({ slug }: { slug: string }) {
   const galleryImages = [
     town?.rulerPhoto && { src: town.rulerPhoto, alt: `${town.rulerName || town.rulerTitle}` },
     town?.consortPhoto && { src: town.consortPhoto, alt: town.consortName || "Consort" },
+    ...(town?.chiefGroups ?? []).flatMap((g) => g.members ?? []).filter((m) => m.photo).map((m) => ({ src: m.photo!, alt: m.name })),
     ...(town?.notableProfiles ?? []).filter((p) => p.photo).map((p) => ({ src: p.photo!, alt: p.name })),
     ...(town?.heritagePlaces ?? []).filter((p) => p.image).map((p) => ({ src: p.image!, alt: p.name })),
     ...(town?.aroundTown ?? []).filter((p) => p.image).map((p) => ({ src: p.image!, alt: p.name })),
@@ -116,11 +137,15 @@ export default function KingdomPageTemplate({ slug }: { slug: string }) {
   let imgCursor = 0;
   const rulerPhotoIdx = town.rulerPhoto ? imgCursor++ : -1;
   const consortPhotoIdx = town.consortPhoto ? imgCursor++ : -1;
+  const chiefPhotoStartIdx = imgCursor;
+  imgCursor += (town.chiefGroups ?? []).flatMap((g) => g.members ?? []).filter((m) => m.photo).length;
   const notableStartIdx = imgCursor;
   imgCursor += (town.notableProfiles ?? []).filter((p) => p.photo).length;
   const heritageStartIdx = imgCursor;
   imgCursor += (town.heritagePlaces ?? []).filter((p) => p.image).length;
   const aroundStartIdx = imgCursor;
+  imgCursor += (town.aroundTown ?? []).filter((p) => p.image).length;
+  const captionsStartIdx = imgCursor;
 
   return (
     <div className="min-h-screen bg-background">
@@ -381,18 +406,20 @@ export default function KingdomPageTemplate({ slug }: { slug: string }) {
               <h2 className="label-accent mb-2">Leadership</h2>
               <h3 className="heading-section">Chiefs &amp; Councils of {town.name}</h3>
             </motion.div>
-            {town.chiefGroups.map((g, i) => (
-              (g.members?.length ?? 0) <= 10 ? (
+            {town.chiefGroups.map((g, i) => {
+              const priorPhotoCount = town.chiefGroups!.slice(0, i).flatMap((pg) => pg.members ?? []).filter((m) => m.photo).length;
+              const groupPhotoStart = chiefPhotoStartIdx + priorPhotoCount;
+              return (g.members?.length ?? 0) <= 10 ? (
                 <div key={i}>
                   <h4 className="font-display font-bold text-foreground text-base mb-3">{g.groupLabel}</h4>
-                  <PersonGrid members={g.members ?? []} />
+                  <PersonGrid members={g.members ?? []} photoStartIdx={groupPhotoStart} onOpenPhoto={open} />
                 </div>
               ) : (
                 <AccordionList key={i} title={g.groupLabel} subtitle={`${g.members?.length ?? 0} listed`}>
-                  <PersonGrid members={g.members ?? []} />
+                  <PersonGrid members={g.members ?? []} photoStartIdx={groupPhotoStart} onOpenPhoto={open} />
                 </AccordionList>
-              )
-            ))}
+              );
+            })}
           </div>
         </section>
       )}
@@ -526,6 +553,35 @@ export default function KingdomPageTemplate({ slug }: { slug: string }) {
                   </motion.div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Captioned Gallery */}
+      {town.galleryCaptions && town.galleryCaptions.length > 0 && (
+        <section className="section-padding bg-background">
+          <div className="container-main max-w-6xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}
+              className="text-center mb-10">
+              <h2 className="label-accent mb-2">Gallery</h2>
+              <h3 className="heading-section">{town.name} in Pictures</h3>
+            </motion.div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {town.galleryCaptions.map((g, i) => (
+                <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: (i % 8) * 0.05, ease }}
+                  className="bg-card rounded-2xl overflow-hidden border border-border shadow-sm">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <ZoomableImage src={g.image} alt={g.caption || town.name} onClick={() => open(captionsStartIdx + i)} />
+                  </div>
+                  {g.caption && (
+                    <div className="p-3">
+                      <p className="text-xs text-muted-foreground leading-relaxed">{g.caption}</p>
+                    </div>
+                  )}
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
