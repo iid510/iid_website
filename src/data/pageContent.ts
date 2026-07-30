@@ -23,7 +23,7 @@ export const HOME_PAGE: PageContent = {
     },
     {
       sectionId: "about-proverb", heading: "Ọmọ tí a kò kọ́, ni yóò ta ilé tí a kọ́",
-      body: ["The child we do not teach will sell the house we built — we invest in our future."],
+      body: ["The child we do not train will sell the house we built — we invest in our future."],
     },
     {
       sectionId: "about-whoWeAre", heading: "Who We Are",
@@ -88,6 +88,10 @@ export const HOME_PAGE: PageContent = {
     {
       sectionId: "team-header", eyebrow: "Leadership", heading: "Our People",
       body: ["Dedicated individuals driving the mission of unity, development, and cultural pride for Ijebu Igbo descendants worldwide."],
+    },
+    {
+      sectionId: "impact-intro", eyebrow: "Global Community", heading: "Ọmọ Alárè Across the World",
+      body: ["From Nigeria to the United Kingdom, the United States, Canada, and beyond, Ijebu Igbo descendants continue to connect, support one another, and contribute to the development of our hometown."],
     },
   ],
   timeline: [

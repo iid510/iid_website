@@ -11,10 +11,6 @@ const FOOTER_STATS = [
   { icon: "Flag", value: "1", label: "Hometown" },
 ];
 
-const IMPACT_EYEBROW = "Global Community";
-const IMPACT_HEADING = "Ọmọ Alárè Across the World";
-const IMPACT_INTRO = "From Nigeria to the United Kingdom, the United States, Canada, and beyond, Ijebu Igbo descendants continue to connect, support one another, and contribute to the development of our hometown.";
-
 const IMPACT_CARDS = [
   { icon: "Globe", title: "Community Development", description: "Infrastructural projects targeting clean water, roads, and renewable energy in Ijebu Igbo." },
   { icon: "BookOpen", title: "Education Support", description: "Scholarship funds and digital literacy programmes empowering local youth for global opportunities." },
@@ -160,9 +156,6 @@ export async function seedSiteSettings(assetMap: AssetMap) {
     heroPhrases: HERO_PHRASES,
     clans: CLANS,
     culturalPillars: CULTURAL_PILLARS,
-    impactEyebrow: IMPACT_EYEBROW,
-    impactHeading: IMPACT_HEADING,
-    impactIntro: IMPACT_INTRO,
     impactCards: IMPACT_CARDS,
     testimonials: TESTIMONIALS,
     faqs: FAQS,

@@ -1,23 +1,27 @@
 import { motion } from "framer-motion";
 import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { HOME_PAGE } from "@/data/pageContent";
 import { resolveIcon } from "@/lib/iconMap";
 
 export default function Impact() {
   const { data: siteSettings } = useSanitySiteSettings();
   const impacts = siteSettings?.impactCards ?? [];
+  const { data: page } = useSanityPage("home", HOME_PAGE);
+  const intro = findSection(page?.sections, "impact-intro") ?? findSection(HOME_PAGE.sections, "impact-intro");
 
   return (
     <section id="impact" className="section-padding bg-background">
       <div className="container-main">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 sm:mb-16 lg:mb-20 gap-4 sm:gap-6 lg:gap-8">
           <div className="max-w-2xl">
-            <h2 className="label-accent">{siteSettings?.impactEyebrow ?? "Global Community"}</h2>
+            <h2 className="label-accent">{intro?.eyebrow}</h2>
             <h3 className="heading-section">
-              {siteSettings?.impactHeading ?? "Ọmọ Alárè Across the World"}
+              {intro?.heading}
             </h3>
           </div>
           <p className="text-body max-w-sm text-sm sm:text-base lg:pb-2">
-            {siteSettings?.impactIntro ?? "From Nigeria to the United Kingdom, the United States, Canada, and beyond, Ijebu Igbo descendants continue to connect, support one another, and contribute to the development of our hometown."}
+            {intro?.body?.[0]}
           </p>
         </div>
 
