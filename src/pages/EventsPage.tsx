@@ -10,6 +10,8 @@ import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import EventVideos from "@/components/EventVideos";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { EVENTS_PAGE } from "@/data/pageContent";
 
 // ── Event data ──────────────────────────────────────────────────────────────
 
@@ -409,6 +411,9 @@ function CalendarView({ events }: { events: Event[] }) {
 
 // ── Main page ───────────────────────────────────────────────────────────────
 export default function EventsPage() {
+  const { data: page } = useSanityPage("events", EVENTS_PAGE);
+  const hero = page?.hero ?? EVENTS_PAGE.hero!;
+  const cta = findSection(page?.sections, "events-cta") ?? findSection(EVENTS_PAGE.sections, "events-cta");
   const [activeType, setActiveType] = useState<EventType | "All">("All");
   const [showVirtualOnly, setShowVirtualOnly] = useState(false);
   const [view, setView] = useState<"list" | "calendar">("list");
@@ -442,15 +447,14 @@ export default function EventsPage() {
             <div className="inline-flex items-center gap-2 bg-accent/20 border border-accent/30
                             text-accent text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
               <Calendar size={14} />
-              Community Calendar
+              {hero.eyebrow}
             </div>
             <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white
                            mb-4 leading-tight">
-              Community <span className="text-accent">Events</span>
+              {hero.title}
             </h1>
             <p className="text-white/70 text-base sm:text-lg max-w-xl mx-auto">
-              Stay connected through cultural celebrations, community meetings,
-              networking galas, and educational initiatives.
+              {hero.subtitle}
             </p>
           </motion.div>
         </div>
@@ -579,11 +583,10 @@ export default function EventsPage() {
       <section className="bg-primary/5 border-t border-border py-14 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="font-display font-bold text-2xl sm:text-3xl text-foreground mb-3">
-            Organising a Community Event?
+            {cta?.heading}
           </h2>
           <p className="text-muted-foreground text-sm sm:text-base mb-6">
-            Submit your event to be featured in our community calendar.
-            We promote cultural, educational, and professional events by and for the Ijebu Igbo community.
+            {cta?.body?.[0]}
           </p>
           <a
             href="mailto:softlineazeez123@gmail.com?subject=Event%20Submission&body=Event%20Title%3A%0ADate%20%26%20Time%3A%0ALocation%3A%0AType%20(Cultural%2FMeeting%2FNetworking%2FEducation%2FVirtual)%3A%0ADescription%3A%0ARegistration%20Link%20(if%20any)%3A%0AOrganiser%20Name%3A%0AContact%20Email%3A"

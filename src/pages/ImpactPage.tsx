@@ -5,8 +5,13 @@ import Footer from "@/components/Footer";
 import Impact from "@/components/Impact";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import { motion } from "framer-motion";
+import { useSanityPage } from "@/hooks/useSanityPage";
+import { IMPACT_PAGE } from "@/data/pageContent";
 
 export default function ImpactPage() {
+  const { data: page } = useSanityPage("impact", IMPACT_PAGE);
+  const hero = page?.hero ?? IMPACT_PAGE.hero!;
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -24,13 +29,13 @@ export default function ImpactPage() {
             className="relative z-10 text-center px-4"
           >
             <span className="text-white/60 text-xs font-bold tracking-[0.2em] uppercase block mb-2">
-              Connect Ijebu Roots
+              {hero.eyebrow}
             </span>
             <h1 className="font-display font-black text-white text-4xl sm:text-5xl">
-              Our Impact
+              {hero.title}
             </h1>
             <p className="text-white/70 text-sm sm:text-base mt-2 max-w-lg mx-auto">
-              From community development to diaspora networking — how we're making a difference.
+              {hero.subtitle}
             </p>
           </motion.div>
         </div>

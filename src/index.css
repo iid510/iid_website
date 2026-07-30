@@ -9,6 +9,7 @@
   html {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
+    font-size: 125%; /* bump base type scale (client feedback: text reads too small) */
   }
 
   body {

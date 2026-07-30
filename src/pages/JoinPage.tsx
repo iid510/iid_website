@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import FAQ from "@/components/FAQ";
 import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { JOIN_PAGE } from "@/data/pageContent";
 
 const IJEBU_AREAS = [
   "Oke-Sopen",
@@ -56,6 +58,9 @@ const empty: FormData = {
 
 export default function JoinPage() {
   const { data: siteSettings } = useSanitySiteSettings();
+  const { data: page } = useSanityPage("join", JOIN_PAGE);
+  const hero = page?.hero ?? JOIN_PAGE.hero!;
+  const beforeApply = findSection(page?.sections, "join-beforeApply") ?? findSection(JOIN_PAGE.sections, "join-beforeApply");
   const joinFaqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -117,13 +122,13 @@ export default function JoinPage() {
           >
             <div className="inline-flex items-center gap-2 bg-accent/20 border border-accent/30 text-accent text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
               <Users size={14} />
-              Membership
+              {hero.eyebrow}
             </div>
             <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white mb-4 leading-tight">
-              Become a <span className="text-accent">Member</span>
+              {hero.title}
             </h1>
             <p className="text-white/70 text-base sm:text-lg max-w-xl mx-auto">
-              Join IID Omo Orimolusi in Diaspora — open to all Ijebu Igbo descendants worldwide, wherever you are.
+              {hero.subtitle}
             </p>
           </motion.div>
         </div>
@@ -140,7 +145,7 @@ export default function JoinPage() {
         >
           <h2 className="font-display font-bold text-foreground text-lg mb-4 flex items-center gap-2">
             <FileText size={18} className="text-accent" />
-            Before You Apply — Please Read
+            {beforeApply?.heading}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
@@ -158,7 +163,7 @@ export default function JoinPage() {
             ))}
           </div>
           <p className="text-xs text-muted-foreground mt-3">
-            Please ensure you have read and understood the Constitution and Code of Conduct before submitting your application.
+            {beforeApply?.body?.[0]}
           </p>
         </motion.div>
 

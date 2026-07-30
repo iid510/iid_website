@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 const QUICK_LINKS = [
   { label: "Home",      href: "/" },
   { label: "Events",    href: "/events" },
-  { label: "News",      href: "/news" },
+  { label: "Blog",      href: "/blog" },
   { label: "Gallery",   href: "/gallery" },
   { label: "Directory", href: "/businesses" },
   { label: "Contact",   href: "/contact" },

@@ -9,7 +9,25 @@ const SINGLETONS = [
   { id: "contactPage", type: "contactPage", title: "Contact Page" },
 ];
 
-const SINGLETON_TYPES = new Set(SINGLETONS.map((s) => s.type));
+const PAGE_ENTRIES: { key: string; title: string }[] = [
+  { key: "home", title: "Home" },
+  { key: "about", title: "About" },
+  { key: "impact", title: "Impact" },
+  { key: "team", title: "Team" },
+  { key: "heritage", title: "Heritage" },
+  { key: "events", title: "Events" },
+  { key: "gallery", title: "Gallery" },
+  { key: "news", title: "News" },
+  { key: "businesses", title: "Business Directory" },
+  { key: "join", title: "Join" },
+  { key: "videos", title: "Video Archive" },
+  { key: "announcements", title: "Announcements" },
+  { key: "members", title: "Members" },
+  { key: "tourism", title: "Tourism" },
+  { key: "honourRoll", title: "Honour Roll" },
+];
+
+const SINGLETON_TYPES = new Set([...SINGLETONS.map((s) => s.type), "page"]);
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -20,14 +38,20 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.list()
             .title("Site Pages")
-            .items(
-              SINGLETONS.map((s) =>
+            .items([
+              ...SINGLETONS.map((s) =>
                 S.listItem()
                   .id(s.id)
                   .title(s.title)
                   .child(S.document().schemaType(s.type).documentId(s.id))
-              )
-            )
+              ),
+              ...PAGE_ENTRIES.map((p) =>
+                S.listItem()
+                  .id(`page-${p.key}`)
+                  .title(p.title)
+                  .child(S.document().schemaType("page").documentId(`page-${p.key}`))
+              ),
+            ])
         ),
       S.divider(),
       ...S.documentTypeListItems().filter(

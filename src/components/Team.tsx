@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, X, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
+import { User, X, ChevronDown, ArrowRight } from "lucide-react";
 import { useSanityTeam } from "@/hooks/useSanityTeam";
+import { useSanityMembers } from "@/hooks/useSanityMembers";
 import ImageWithSkeleton from "@/components/ImageWithSkeleton";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { HOME_PAGE } from "@/data/pageContent";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-type Member = { name: string; role: string; photo?: string | null };
+type Member = { name: string; role?: string; photo?: string | null };
+
+const MEMBERS_PREVIEW_COUNT = 20;
 
 /* ── Lightbox ─────────────────────────────────────────────────── */
 function PhotoLightbox({ member, onClose }: { member: Member; onClose: () => void }) {
@@ -42,7 +48,7 @@ function PhotoLightbox({ member, onClose }: { member: Member; onClose: () => voi
           />
           <div className="p-4">
             <h4 className="font-display font-bold text-foreground text-base">{member.name}</h4>
-            <p className="text-accent font-semibold text-sm mt-1">{member.role}</p>
+            {member.role && <p className="text-accent font-semibold text-sm mt-1">{member.role}</p>}
           </div>
         </motion.div>
       </motion.div>
@@ -81,7 +87,7 @@ function MemberCard({ member, index, onPhotoClick }: { member: Member; index: nu
       </div>
       <div className="p-4">
         <h4 className="font-display font-bold text-foreground text-sm sm:text-base leading-tight">{member.name}</h4>
-        <p className="text-accent font-semibold text-xs sm:text-sm mt-1">{member.role}</p>
+        {member.role && <p className="text-accent font-semibold text-xs sm:text-sm mt-1">{member.role}</p>}
       </div>
     </motion.div>
   );
@@ -227,14 +233,20 @@ function CollapsibleSection({ members }: { members: Member[] }) {
 }
 
 /* ── Main Component ──────────────────────────────────────────── */
-export default function Team() {
+export default function Team({ startCollapsed = false }: { startCollapsed?: boolean }) {
   const { data } = useSanityTeam();
   const patronMatron = data?.patronMatron ?? [];
   const advisers = data?.advisers ?? [];
   const currentExecutives = data?.currentExecutives ?? [];
   const pastPresidents = data?.pastPresidents ?? [];
   const pastExecutiveTeam = data?.pastExecutiveTeam ?? [];
-  const generalMembers = data?.generalMembers ?? [];
+  const { data: communityMembers = [] } = useSanityMembers();
+  const memberPreview: Member[] = communityMembers
+    .slice(0, MEMBERS_PREVIEW_COUNT)
+    .map((m) => ({ name: m.name, role: m.role, photo: m.photo }));
+  const { data: page } = useSanityPage("home", HOME_PAGE);
+  const header = findSection(page?.sections, "team-header");
+  const defaultOpen = !startCollapsed;
 
   return (
     <section id="team" className="section-padding bg-background">
@@ -248,37 +260,36 @@ export default function Team() {
           transition={{ duration: 0.7, ease }}
           className="text-center max-w-2xl mx-auto mb-10 sm:mb-14"
         >
-          <h2 className="label-accent">Leadership</h2>
-          <h3 className="heading-section">Our People</h3>
+          <h2 className="label-accent">{header?.eyebrow}</h2>
+          <h3 className="heading-section">{header?.heading}</h3>
           <p className="text-body mt-2 sm:mt-3">
-            Dedicated individuals driving the mission of unity, development, and cultural pride
-            for Ijebu Igbo descendants worldwide.
+            {header?.body?.[0]}
           </p>
         </motion.div>
 
         {/* ── Level 1: Patron & Matron ── */}
-        <Level label="Patron & Matron" sublabel="Honorary Leadership" index={1}>
+        <Level label="Patron & Matron" sublabel="Honorary Leadership" index={1} defaultOpen={defaultOpen}>
           <MemberGrid members={patronMatron} />
         </Level>
 
         <Arrow />
 
         {/* ── Level 2: Advisers ── */}
-        <Level label="Advisers" sublabel="Strategic Guidance" index={2}>
+        <Level label="Advisers" sublabel="Strategic Guidance" index={2} defaultOpen={defaultOpen}>
           <MemberGrid members={advisers} />
         </Level>
 
         <Arrow />
 
         {/* ── Level 3: Current Executive ── */}
-        <Level label="Current Executive" sublabel="Active Leadership" index={3}>
+        <Level label="Current Executive" sublabel="Active Leadership" index={3} defaultOpen={defaultOpen}>
           <MemberGrid members={currentExecutives} />
         </Level>
 
         <Arrow />
 
         {/* ── Level 4: Past & Emeritus Presidents ── */}
-        <Level label="Past & Emeritus Presidents" sublabel="Former Presidency" index={4}>
+        <Level label="Past & Emeritus Presidents" sublabel="Former Presidency" index={4} defaultOpen={defaultOpen}>
           <MemberGrid members={pastPresidents} />
           <div className="mt-6">
             <CollapsibleSection members={pastExecutiveTeam} />
@@ -288,13 +299,24 @@ export default function Team() {
         <Arrow />
 
         {/* ── Level 5: Members ── */}
-        <Level label="Members" sublabel="IID Omo Orimolusi in Diaspora" index={5}>
-          {generalMembers.length === 0 ? (
+        <Level label="Members" sublabel="IID Omo Orimolusi in Diaspora" index={5} defaultOpen={defaultOpen}>
+          {memberPreview.length === 0 ? (
             <p className="text-center text-muted-foreground text-sm py-12 border border-dashed border-border rounded-2xl">
               Members coming soon.
             </p>
           ) : (
-            <MemberGrid members={generalMembers} />
+            <>
+              <MemberGrid members={memberPreview} />
+              <div className="text-center mt-8">
+                <Link
+                  to="/members"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-semibold"
+                >
+                  See All Members
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </>
           )}
         </Level>
 

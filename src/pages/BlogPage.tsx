@@ -9,17 +9,56 @@ import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import { useSanityBlogPosts } from "@/hooks/useSanityBlogPosts";
+import { useSanityNews } from "@/hooks/useSanityNews";
+
+interface UnifiedPost {
+  key: string;
+  title: string;
+  category: string;
+  excerpt: string;
+  image: string;
+  date: string;
+  href: string;
+  keyword: string;
+}
+
+const NEWS_CATEGORY = "Community News";
 
 export default function BlogPage() {
-  const { data: BLOG_POSTS = [] } = useSanityBlogPosts();
+  const { data: RAW_BLOG_POSTS = [] } = useSanityBlogPosts();
+  const { data: NEWS_ARTICLES = [] } = useSanityNews();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
 
-  const CATEGORIES = useMemo(() => ["All", ...Array.from(new Set(BLOG_POSTS.map((p) => p.category)))], [BLOG_POSTS]);
+  const ALL_POSTS = useMemo<UnifiedPost[]>(() => {
+    const news: UnifiedPost[] = NEWS_ARTICLES.map((a) => ({
+      key: `news-${a.id}`,
+      title: a.title,
+      category: NEWS_CATEGORY,
+      excerpt: a.excerpt,
+      image: a.featuredImage,
+      date: a.date,
+      href: `/news/${a.id}`,
+      keyword: a.title,
+    }));
+    const blog: UnifiedPost[] = RAW_BLOG_POSTS.map((p) => ({
+      key: `blog-${p.slug}`,
+      title: p.title,
+      category: p.category,
+      excerpt: p.excerpt,
+      image: p.image,
+      date: p.date,
+      href: `/blog/${p.slug}`,
+      keyword: p.keyword,
+    }));
+    return [...news, ...blog];
+  }, [NEWS_ARTICLES, RAW_BLOG_POSTS]);
+
+  const CATEGORIES = useMemo(() => ["All", ...Array.from(new Set(ALL_POSTS.map((p) => p.category)))], [ALL_POSTS]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return BLOG_POSTS.filter((p) => {
+    return ALL_POSTS.filter((p) => {
       const matchesCategory = category === "All" || p.category === category;
       const matchesQuery =
         !q ||
@@ -28,7 +67,7 @@ export default function BlogPage() {
         p.excerpt.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });
-  }, [query, category, BLOG_POSTS]);
+  }, [query, category, ALL_POSTS]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -48,7 +87,7 @@ export default function BlogPage() {
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-3 text-primary-foreground/70 max-w-xl">
-            {BLOG_POSTS.length} articles on Ijebu-Igbo's history, kingship, culture, travel and diaspora community.
+            {ALL_POSTS.length} articles on Ijebu-Igbo's history, kingship, culture, travel and diaspora community news.
           </motion.p>
         </div>
       </section>
@@ -93,7 +132,7 @@ export default function BlogPage() {
       <section className="section-padding">
         <div className="container-main">
           <p className="text-sm text-muted-foreground mb-6">
-            Showing {filtered.length} of {BLOG_POSTS.length} articles
+            Showing {filtered.length} of {ALL_POSTS.length} articles
           </p>
           {filtered.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground">
@@ -103,14 +142,14 @@ export default function BlogPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((post, index) => (
                 <motion.article
-                  key={post.slug}
+                  key={post.key}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: (index % 12) * 0.05 }}
                   className="group overflow-hidden rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-400 border border-border"
                 >
-                  <Link to={`/blog/${post.slug}`} className="block">
+                  <Link to={post.href} className="block">
                     <div className="relative h-44 overflow-hidden">
                       <img
                         src={post.image}

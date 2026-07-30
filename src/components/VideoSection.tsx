@@ -1,9 +1,13 @@
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { useState } from "react";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { HOME_PAGE } from "@/data/pageContent";
 
 export default function VideoSection() {
   const [playing, setPlaying] = useState(false);
+  const { data: page } = useSanityPage("home", HOME_PAGE);
+  const intro = findSection(page?.sections, "video-intro");
 
   return (
     <section className="section-padding bg-surface">
@@ -15,12 +19,10 @@ export default function VideoSection() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <h2 className="label-accent">Our Heritage</h2>
-          <h3 className="heading-section">Celebrating Our Heritage</h3>
+          <h2 className="label-accent">{intro?.eyebrow}</h2>
+          <h3 className="heading-section">{intro?.heading}</h3>
           <p className="text-body mt-4">
-            The story of Ijebu Igbo is one of resilience, enterprise, and deep
-            cultural pride. Through generations, our people have built a legacy
-            that spans continents.
+            {intro?.body?.[0]}
           </p>
         </motion.div>
 

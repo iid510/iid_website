@@ -4,8 +4,13 @@ import Footer from "@/components/Footer";
 import About from "@/components/About";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import { motion } from "framer-motion";
+import { useSanityPage } from "@/hooks/useSanityPage";
+import { ABOUT_PAGE } from "@/data/pageContent";
 
 export default function AboutPage() {
+  const { data: page } = useSanityPage("about", ABOUT_PAGE);
+  const hero = page?.hero ?? ABOUT_PAGE.hero!;
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -23,13 +28,13 @@ export default function AboutPage() {
             className="relative z-10 text-center px-4"
           >
             <span className="text-white/60 text-xs font-bold tracking-[0.2em] uppercase block mb-2">
-              Connect Ijebu Roots
+              {hero.eyebrow}
             </span>
             <h1 className="font-display font-black text-white text-4xl sm:text-5xl">
-              About Us
+              {hero.title}
             </h1>
             <p className="text-white/70 text-sm sm:text-base mt-2 max-w-lg mx-auto">
-              Who we are, what we stand for, and the seven clans that define us.
+              {hero.subtitle}
             </p>
           </motion.div>
         </div>

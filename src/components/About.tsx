@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import aboutImg from "@/assets/about-culture.jpg";
 import ClanNetwork from "@/components/ClanNetwork";
 import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { resolveIcon } from "@/lib/iconMap";
+import { HOME_PAGE } from "@/data/pageContent";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -10,6 +12,18 @@ export default function About() {
   const { data: siteSettings } = useSanitySiteSettings();
   const clans = siteSettings?.clans ?? [];
   const culturalPillars = siteSettings?.culturalPillars ?? [];
+  const { data: page } = useSanityPage("home", HOME_PAGE);
+  const sections = page?.sections ?? HOME_PAGE.sections;
+
+  const intro = findSection(sections, "about-intro");
+  const badge = findSection(sections, "about-badge");
+  const proudly = findSection(sections, "about-proudlyOmoAlare");
+  const proverb = findSection(sections, "about-proverb");
+  const whoWeAre = findSection(sections, "about-whoWeAre");
+  const whatWeDo = findSection(sections, "about-whatWeDo");
+  const clansHeader = findSection(sections, "about-clansHeader");
+  const pillarsHeader = findSection(sections, "about-pillarsHeader");
+  const callout = findSection(sections, "about-callout");
 
   return (
     <section id="about" className="section-padding bg-background overflow-hidden">
@@ -23,14 +37,13 @@ export default function About() {
           className="text-center mb-8 sm:mb-12"
         >
           <p className="text-accent font-semibold text-xs sm:text-base tracking-wider uppercase mb-1 sm:mb-2">
-            Ẹ̀yin Ọmọ Orímólúsí
+            {intro?.eyebrow}
           </p>
           <h2 className="heading-section mb-2 sm:mb-3">
-            Our Heritage, Our Identity
+            {intro?.heading}
           </h2>
           <p className="text-body max-w-2xl mx-auto">
-            From the ancient kingdom of Ijebu to communities across the globe, we are the proud descendants 
-            of Orímólúsí — carriers of a legacy built on enterprise, honour, and unwavering unity.
+            {intro?.body?.[0]}
           </p>
         </motion.div>
 
@@ -54,10 +67,10 @@ export default function About() {
               <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6">
                 <div className="bg-primary/90 backdrop-blur-sm rounded-xl p-4 sm:p-5 border border-accent/20">
                   <p className="text-accent font-display font-bold text-lg sm:text-xl mb-1">
-                    Ọmọ Orímólúsí
+                    {badge?.heading}
                   </p>
                   <p className="text-primary-foreground/80 text-sm sm:text-base">
-                    Children of Orímólúsí, founder of Ijebu Igbo
+                    {badge?.body?.[0]}
                   </p>
                 </div>
               </div>
@@ -76,38 +89,36 @@ export default function About() {
             className="space-y-5 sm:space-y-6">
             <div>
               <h3 className="font-display font-bold text-lg sm:text-xl md:text-2xl text-foreground mb-2 sm:mb-3">
-                Proudly Ọmọ Alárè
+                {proudly?.heading}
               </h3>
               <p className="text-body leading-relaxed">
-                Being an Ọmọ Alárè is more than a title — it is a heritage of resilience, enterprise, 
-                and community. From the markets of Ijebu Igbo to cities around the world, our sons 
-                and daughters carry the pride, culture, and values of our homeland wherever they go.
+                {proudly?.body?.[0]}
               </p>
             </div>
 
             {/* Yoruba Proverb */}
             <div className="bg-accent/10 border-l-4 border-accent rounded-r-xl p-3 sm:p-4">
               <p className="text-foreground font-display text-sm sm:text-base md:text-lg italic mb-1 sm:mb-2">
-                "Ọmọ tí a kò kọ́, ni yóò ta ilé tí a kọ́"
+                "{proverb?.heading}"
               </p>
               <p className="text-foreground/70 text-sm">
-                The child we do not teach will sell the house we built — we invest in our future.
+                {proverb?.body?.[0]}
               </p>
             </div>
 
             {/* Who We Are */}
             <div>
-              <h4 className="font-display font-bold text-lg text-foreground mb-2">Who We Are</h4>
+              <h4 className="font-display font-bold text-lg text-foreground mb-2">{whoWeAre?.heading}</h4>
               <p className="text-body text-sm sm:text-base leading-relaxed">
-                IID (Ijebu Igbo Descendants Omo Orimolusi in Diaspora) is a non-profit organisation that comes together to raise awareness about what is happening in Ijebu Igbo. This organisation is open to all Ijebu Igbo Descendants in Diaspora — wherever in the world they may be.
+                {whoWeAre?.body?.[0]}
               </p>
             </div>
 
             {/* What We Do */}
             <div>
-              <h4 className="font-display font-bold text-lg text-foreground mb-2">What We Do</h4>
+              <h4 className="font-display font-bold text-lg text-foreground mb-2">{whatWeDo?.heading}</h4>
               <p className="text-body text-sm sm:text-base leading-relaxed">
-                We see to the welfare of our community and our people, both in Ijebu Igbo and in the Diaspora. We do this by complementing the efforts of the Government with whatever resources we have.
+                {whatWeDo?.body?.[0]}
               </p>
             </div>
           </motion.div>
@@ -123,10 +134,10 @@ export default function About() {
         >
           <div className="text-center mb-6 sm:mb-8">
             <h3 className="font-display font-bold text-xl sm:text-2xl text-foreground mb-2">
-              The Seven Clans of Ijebu Igbo
+              {clansHeader?.heading}
             </h3>
             <p className="text-body">
-              United under Orímólúsí, our town stands on seven foundational quarters
+              {clansHeader?.body?.[0]}
             </p>
           </div>
 
@@ -151,10 +162,10 @@ export default function About() {
         >
           <div className="text-center mb-6 sm:mb-8">
             <h3 className="font-display font-bold text-xl sm:text-2xl text-foreground mb-2">
-              What We Stand For
+              {pillarsHeader?.heading}
             </h3>
             <p className="text-body text-sm sm:text-base">
-              The four pillars that guide everything IID does for our community
+              {pillarsHeader?.body?.[0]}
             </p>
           </div>
 
@@ -194,11 +205,10 @@ export default function About() {
           className="mt-12 sm:mt-16 bg-primary rounded-2xl p-6 sm:p-8 text-center"
         >
           <p className="text-accent font-display font-bold text-xl sm:text-2xl mb-2">
-            Ijebu Igbo kì í ṣofo
+            {callout?.heading}
           </p>
           <p className="text-primary-foreground/80 text-sm sm:text-base max-w-2xl mx-auto">
-            "Ijebu Igbo never runs dry" — Wherever we are in the world, the spirit of our homeland lives on.
-            Together, we uplift our town. Together, we preserve our legacy.
+            {callout?.body?.[0]}
           </p>
         </motion.div>
       </div>

@@ -10,6 +10,9 @@ import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 import { useSanityPlaces } from "@/hooks/useSanityPlaces";
 import type { Place } from "@/data/places";
+import { useSanityTownBySlug } from "@/hooks/useSanityTowns";
+import { useSanityPage } from "@/hooks/useSanityPage";
+import { TOURISM_PAGE } from "@/data/pageContent";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -97,6 +100,11 @@ function PlaceCard({ place, index }: { place: Place; index: number }) {
 
 export default function TourismPage() {
   const { data: places = [] } = useSanityPlaces();
+  const { data: atikori } = useSanityTownBySlug("atikori");
+  const { data: page } = useSanityPage("tourism", TOURISM_PAGE);
+  const hero = page?.hero ?? TOURISM_PAGE.hero!;
+  const anthemVerses = atikori?.anthem ?? [];
+  const quarters = atikori?.subdivisionGroups?.[0]?.items ?? [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -113,7 +121,7 @@ export default function TourismPage() {
             transition={{ duration: 0.5 }}
             className="label-accent mb-2"
           >
-            Ijebu-Igbo
+            {hero.eyebrow}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
@@ -121,7 +129,7 @@ export default function TourismPage() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-primary-foreground leading-tight"
           >
-            Notable Places of Interest
+            {hero.title}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -129,8 +137,7 @@ export default function TourismPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-3 text-primary-foreground/70 max-w-xl text-sm sm:text-base leading-relaxed"
           >
-            Discover the landmarks, heritage sites, and community projects that define
-            the spirit and identity of Ijebu-Igbo — past, present, and future.
+            {hero.subtitle}
           </motion.p>
         </div>
       </section>
@@ -168,42 +175,38 @@ export default function TourismPage() {
             transition={{ duration: 0.7, ease, delay: 0.1 }}
             className="bg-primary-foreground/5 border border-primary-foreground/15 rounded-2xl p-6 sm:p-10 backdrop-blur-sm"
           >
-            <p className="font-display text-base sm:text-lg text-primary-foreground/90 leading-loose text-center whitespace-pre-line italic">
-              {`Atikori ilu mi
-Ilu Olola Olokiki
-Ng o gbe o leke okan mi
-Ng o ma wa ilosiwaju re
-Keegbo eni gba
-Keegba eni juse
-Olorun Oba ranmi lowo
-Lati gbe Atikori soke
-Konibaje lowo mi`}
-            </p>
+            {anthemVerses[0] && (
+              <p className="font-display text-base sm:text-lg text-primary-foreground/90 leading-loose text-center whitespace-pre-line italic">
+                {anthemVerses[0]}
+              </p>
+            )}
 
-            <div className="my-7 flex items-center justify-center gap-3">
-              <span className="h-px w-12 bg-accent/50" />
-              <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase">The Quarters</span>
-              <span className="h-px w-12 bg-accent/50" />
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-7">
-              {["Bogije", "Etitale", "Oriwu", "Oridan", "Igodo", "Aboyin", "Oke-Moje", "Itun-Tapa"].map((q) => (
-                <div
-                  key={q}
-                  className="bg-primary-foreground/10 border border-primary-foreground/10 rounded-xl py-2.5 px-2 text-center"
-                >
-                  <span className="font-display font-bold text-primary-foreground text-sm uppercase tracking-wide">{q}</span>
+            {quarters.length > 0 && (
+              <>
+                <div className="my-7 flex items-center justify-center gap-3">
+                  <span className="h-px w-12 bg-accent/50" />
+                  <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase">The Quarters</span>
+                  <span className="h-px w-12 bg-accent/50" />
                 </div>
-              ))}
-            </div>
 
-            <p className="font-display text-base sm:text-lg text-primary-foreground/90 leading-loose text-center whitespace-pre-line italic">
-              {`Parapo dokan soso
-Eje ka jose koda
-Awa larole Kegbo
-Tanrin Larinkoye
-Kajose kodara.`}
-            </p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-7">
+                  {quarters.map((q) => (
+                    <div
+                      key={q}
+                      className="bg-primary-foreground/10 border border-primary-foreground/10 rounded-xl py-2.5 px-2 text-center"
+                    >
+                      <span className="font-display font-bold text-primary-foreground text-sm uppercase tracking-wide">{q}</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {anthemVerses[1] && (
+              <p className="font-display text-base sm:text-lg text-primary-foreground/90 leading-loose text-center whitespace-pre-line italic">
+                {anthemVerses[1]}
+              </p>
+            )}
           </motion.div>
         </div>
       </section>

@@ -1,56 +1,16 @@
 import { motion, useScroll } from "framer-motion";
 import { useRef } from "react";
 import { Calendar, Crown, Globe, Ship, Users, Heart } from "lucide-react";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { HOME_PAGE } from "@/data/pageContent";
 
-const timelineEvents = [
-  {
-    era: "Ancient Times",
-    year: "Pre-1500s",
-    title: "The Seven Clans Unite",
-    description: "The seven foundational clans—Oke-Sopen, Japara, Oke-Agbo, Atikori, Ojowo, Imope-Ijebu, and Aparaki—establish Ijebu Igbo under the Orímólúsí dynasty.",
-    icon: Crown,
-    color: "from-yellow-600 to-amber-700",
-  },
-  {
-    era: "Kingdom Era",
-    year: "1500s-1800s",
-    title: "Flourishing Kingdom",
-    description: "Ijebu Igbo becomes a prosperous trading center, known for its rich culture, craftsmanship, and the legendary Ojude Oba festival.",
-    icon: Users,
-    color: "from-blue-600 to-indigo-700",
-  },
-  {
-    era: "Colonial Period",
-    year: "1800s-1960",
-    title: "Resilience Through Change",
-    description: "Our ancestors preserve cultural identity and traditions despite colonial influence, maintaining the spirit of 'Ijebu Igbo kì í ṣofo.'",
-    icon: Heart,
-    color: "from-red-600 to-rose-700",
-  },
-  {
-    era: "Independence",
-    year: "1960-1980s",
-    title: "Nigerian Independence",
-    description: "Post-independence era sees Ijebu Igbo sons and daughters contribute significantly to the building of modern Nigeria.",
-    icon: Calendar,
-    color: "from-green-600 to-emerald-700",
-  },
-  {
-    era: "Diaspora Begins",
-    year: "1980s-2000s",
-    title: "Migration to the West",
-    description: "First wave of migration as our people seek opportunities abroad, establishing communities in the UK, USA, and beyond.",
-    icon: Ship,
-    color: "from-purple-600 to-violet-700",
-  },
-  {
-    era: "Global Community",
-    year: "2000s-Present",
-    title: "Ijebu Igbo Descendants in Diaspora",
-    description: "Formation of organized diaspora communities like IID, connecting generations and preserving our heritage for the future.",
-    icon: Globe,
-    color: "from-accent to-primary",
-  },
+const TIMELINE_STYLE = [
+  { icon: Crown, color: "from-yellow-600 to-amber-700" },
+  { icon: Users, color: "from-blue-600 to-indigo-700" },
+  { icon: Heart, color: "from-red-600 to-rose-700" },
+  { icon: Calendar, color: "from-green-600 to-emerald-700" },
+  { icon: Ship, color: "from-purple-600 to-violet-700" },
+  { icon: Globe, color: "from-accent to-primary" },
 ];
 
 export default function Timeline() {
@@ -59,6 +19,13 @@ export default function Timeline() {
     target: containerRef,
     offset: ["start end", "end start"],
   });
+  const { data: page } = useSanityPage("home", HOME_PAGE);
+  const timelineEvents = (page?.timeline ?? HOME_PAGE.timeline ?? []).map((milestone, i) => ({
+    ...milestone,
+    ...TIMELINE_STYLE[i % TIMELINE_STYLE.length],
+  }));
+  const intro = findSection(page?.sections, "timeline-intro");
+  const cta = findSection(page?.sections, "timeline-cta");
 
   return (
     <section id="timeline" className="section-padding bg-background relative overflow-hidden">
@@ -79,13 +46,12 @@ export default function Timeline() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16 sm:mb-20"
         >
-          <span className="label-accent">Our Journey</span>
+          <span className="label-accent">{intro?.eyebrow}</span>
           <h2 className="heading-section mt-3">
-            From Ancient Roots to{" "}
-            <span className="text-primary">Global Community</span>
+            {intro?.heading}
           </h2>
           <p className="text-body max-w-2xl mx-auto mt-4">
-            Trace the remarkable journey of Ijebu Igbo people from our ancestral homeland to the diaspora
+            {intro?.body?.[0]}
           </p>
         </motion.div>
 
@@ -208,7 +174,7 @@ export default function Timeline() {
           className="text-center mt-16 sm:mt-20"
         >
           <p className="text-lg sm:text-xl text-foreground/80 mb-6 font-display">
-            Be part of our living history
+            {cta?.body?.[0]}
           </p>
           <a
             href="#"

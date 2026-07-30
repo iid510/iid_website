@@ -22,7 +22,7 @@ const PAGES: SearchResult[] = [
   { type: "page", title: "Business Directory", subtitle: "Ijebu Igbo businesses in the diaspora", href: "/businesses" },
   { type: "page", title: "Gallery", subtitle: "Photos and memories", href: "/gallery" },
   { type: "page", title: "Contact Us", subtitle: "Get in touch with IID", href: "/contact" },
-  { type: "page", title: "News", subtitle: "Community news and updates", href: "/news" },
+  { type: "page", title: "Blog", subtitle: "Community news, culture and heritage articles", href: "/blog" },
 ];
 
 const EVENTS: SearchResult[] = [

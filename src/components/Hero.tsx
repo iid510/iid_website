@@ -3,12 +3,28 @@ import heroBg from "@/assets/hero-bg.jpg";
 import JoinModal from "@/components/JoinModal";
 import ClanNetwork from "@/components/ClanNetwork";
 import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { HOME_PAGE } from "@/data/pageContent";
 
 const ease = [0.16, 1, 0.3, 1] as const;
+
+function highlightDescendants(title: string) {
+  const parts = title.split(/(descendants)/i);
+  return parts.map((part, i) =>
+    /descendants/i.test(part) ? (
+      <span key={i} className="text-accent">{part}</span>
+    ) : (
+      part
+    )
+  );
+}
 
 export default function Hero() {
   const { data: siteSettings } = useSanitySiteSettings();
   const culturalPhrases = siteSettings?.heroPhrases ?? [];
+  const { data: page } = useSanityPage("home", HOME_PAGE);
+  const hero = page?.hero ?? HOME_PAGE.hero!;
+  const welcomeNote = findSection(page?.sections, "welcomeNote")?.body?.[0] ?? findSection(HOME_PAGE.sections, "welcomeNote")?.body?.[0];
 
   return (
     <section className="relative min-h-[100svh] lg:h-screen flex flex-col justify-between overflow-hidden bg-charcoal pt-14 md:pt-16">
@@ -55,20 +71,18 @@ export default function Hero() {
               className="mb-3 sm:mb-5"
             >
               <span className="text-accent text-base sm:text-xl md:text-2xl font-display italic">
-                Ẹ̀ wẹ̀ sọ̀ọ́ Ọmọ Alárè
+                {hero.eyebrow}
               </span>
               <p className="text-primary-foreground/70 text-xs sm:text-sm md:text-base mt-0.5 sm:mt-1">
-                Welcome, proud sons and daughters of Ijebu Igbo.
+                {welcomeNote}
               </p>
             </motion.div>
 
             <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold text-primary-foreground leading-[1.15] mb-3 sm:mb-5 tracking-tight">
-              Connecting Ijebu Igbo{" "}
-              <span className="text-accent">Descendants</span>{" "}
-              Across the World
+              {highlightDescendants(hero.title)}
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-primary-foreground/85 font-sans max-w-xl mx-auto lg:mx-0 mb-4 sm:mb-7 leading-relaxed">
-              Uniting Ijebu Igbo descendants wherever they are in the world — from our ancestral homeland to every corner of the diaspora.
+              {hero.subtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">

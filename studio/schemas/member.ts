@@ -11,13 +11,17 @@ export default defineType({
   type: "document",
   fields: [
     defineField({ name: "name", title: "Name", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "clan", title: "Clan", type: "string", options: { list: CLANS }, validation: (r) => r.required() }),
-    defineField({ name: "location", title: "Location", type: "string", validation: (r) => r.required() }),
+    defineField({ name: "clan", title: "Clan (optional)", type: "string", options: { list: CLANS } }),
+    defineField({ name: "location", title: "Location (optional)", type: "string" }),
     defineField({ name: "role", title: "Role", type: "string" }),
     defineField({ name: "photo", title: "Photo", type: "image", options: { hotspot: true } }),
     defineField({ name: "joinedYear", title: "Joined Year", type: "number" }),
+    defineField({ name: "order", title: "Display Order", type: "number" }),
   ],
   preview: {
-    select: { title: "name", subtitle: "clan", media: "photo" },
+    select: { title: "name", subtitle: "location", media: "photo" },
   },
+  orderings: [
+    { title: "Display Order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
+  ],
 });

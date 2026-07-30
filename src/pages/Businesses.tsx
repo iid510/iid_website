@@ -20,6 +20,8 @@ import {
   type Business,
 } from "@/data/businesses";
 import { useSanityBusinesses } from "@/hooks/useSanityBusinesses";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { BUSINESSES_PAGE } from "@/data/pageContent";
 
 const CATEGORY_PILLS = [
   "Food & Catering",
@@ -277,6 +279,9 @@ function BusinessCard({ business, index }: { business: Business; index: number }
 /* ── Main page ──────────────────────────────────────────────────── */
 export default function Businesses() {
   const { data: BUSINESSES = [] } = useSanityBusinesses();
+  const { data: page } = useSanityPage("businesses", BUSINESSES_PAGE);
+  const hero = page?.hero ?? BUSINESSES_PAGE.hero!;
+  const cta = findSection(page?.sections, "businesses-cta") ?? findSection(BUSINESSES_PAGE.sections, "businesses-cta");
 
   useEffect(() => {
     const title = "Business Directory | Ijebu Igbo Descendants — Connect Ijebu Roots";
@@ -389,15 +394,14 @@ export default function Businesses() {
                          text-accent text-sm font-bold px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm"
             >
               <Store size={14} />
-              Community Business Directory
+              {hero.eyebrow}
             </motion.div>
 
             <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white mb-4 leading-tight">
-              Support Ijebu Igbo{" "}
-              <span className="text-accent">Businesses</span>
+              {hero.title}
             </h1>
             <p className="text-white/70 text-base sm:text-lg max-w-xl mx-auto mb-8">
-              Discover and support businesses owned by members of our community. Buy local, build together.
+              {hero.subtitle}
             </p>
 
             {/* Animated stats */}
@@ -744,13 +748,13 @@ export default function Businesses() {
           <div className="relative z-10">
             <span className="inline-flex items-center gap-2 text-accent/80 text-xs font-bold tracking-[0.15em] uppercase mb-3">
               <Sparkles size={12} />
-              Free Listing
+              {cta?.eyebrow}
             </span>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-white mb-3">
-              Own a Business? Get Listed Free.
+              {cta?.heading}
             </h2>
             <p className="text-white/65 mb-7 text-sm sm:text-base max-w-md mx-auto">
-              Reach thousands of Ijebu Igbo community members in the diaspora and back home. We publish your profile within 48 hours.
+              {cta?.body?.[0]}
             </p>
             <motion.button
               onClick={() => setShowListModal(true)}
@@ -763,7 +767,7 @@ export default function Businesses() {
               <ArrowRight size={15} />
             </motion.button>
             <p className="text-white/40 text-xs mt-4">
-              Yearly subscription · Submit details · Published within 48 hours
+              {cta?.body?.[1]}
             </p>
           </div>
         </motion.div>

@@ -4,6 +4,8 @@ import { Images, ZoomIn, Expand } from "lucide-react";
 import { useSanityGallery } from "@/hooks/useSanityGallery";
 import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 import Lightbox, { useLightbox } from "@/components/Lightbox";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { HOME_PAGE } from "@/data/pageContent";
 
 const PAGE_SIZE = 8;
 
@@ -100,6 +102,8 @@ function GalleryCard({
 /* ── Main component ───────────────────────────────────────────── */
 export default function Gallery() {
   const { data: images = [] } = useSanityGallery();
+  const { data: page } = useSanityPage("home", HOME_PAGE);
+  const header = findSection(page?.sections, "gallery-header");
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [prevVisible, setPrevVisible] = useState(0);
   const { index: lightboxIndex, direction, open, close, prev, next } = useLightbox(images);
@@ -121,10 +125,10 @@ export default function Gallery() {
     <section id="gallery" className="section-padding bg-background">
       <div className="container-main">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="label-accent">Gallery</h2>
-          <h3 className="heading-section">Moments That Matter</h3>
+          <h2 className="label-accent">{header?.eyebrow}</h2>
+          <h3 className="heading-section">{header?.heading}</h3>
           <p className="text-gray-600 mt-3 sm:mt-4 text-sm sm:text-base max-w-2xl mx-auto">
-            Explore our community in action — from cultural celebrations to landmark developments
+            {header?.body?.[0]}
           </p>
         </div>
 

@@ -2,16 +2,20 @@ import { motion } from "framer-motion";
 import { Calendar, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSanityNews } from "@/hooks/useSanityNews";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { HOME_PAGE } from "@/data/pageContent";
 
 export default function News() {
   const { data: newsArticles = [] } = useSanityNews();
+  const { data: page } = useSanityPage("home", HOME_PAGE);
+  const header = findSection(page?.sections, "news-header");
 
   return (
     <section id="news" className="section-padding bg-background">
       <div className="container-main">
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="label-accent">Latest Updates</h2>
-          <h3 className="heading-section">News & Announcements</h3>
+          <h2 className="label-accent">{header?.eyebrow}</h2>
+          <h3 className="heading-section">{header?.heading}</h3>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
@@ -78,10 +82,10 @@ export default function News() {
           className="text-center mt-8 sm:mt-12"
         >
           <Link
-            to="/news"
+            to="/blog"
             className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-semibold"
           >
-            View All News
+            View All News &amp; Articles
             <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>

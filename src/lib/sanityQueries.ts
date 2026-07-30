@@ -183,14 +183,15 @@ export const ANNOUNCEMENTS_QUERY = `
 `;
 
 export const MEMBERS_QUERY = `
-  *[_type == "member"] | order(name asc) {
+  *[_type == "member"] | order(order asc) {
     "id": _id,
     name,
     clan,
     location,
     role,
     "photo": photo.asset->url,
-    joinedYear
+    joinedYear,
+    order
   }
 `;
 
@@ -268,5 +269,20 @@ export const DONATE_PAGE_QUERY = `
 export const CONTACT_PAGE_QUERY = `
   *[_type == "contactPage"][0] {
     contacts
+  }
+`;
+
+export const PAGE_QUERY = `
+  *[_type == "page" && key == $key][0] {
+    key,
+    hero,
+    "sections": sections[]{
+      sectionId,
+      eyebrow,
+      heading,
+      body,
+      "image": image.asset->url
+    },
+    timeline
   }
 `;

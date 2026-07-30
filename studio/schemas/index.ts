@@ -37,6 +37,7 @@ import scholarshipPage from "./scholarshipPage";
 import travelGuidePage from "./travelGuidePage";
 import donatePage from "./donatePage";
 import contactPage from "./contactPage";
+import page from "./page";
 
 export const schemaTypes = [
   // objects
@@ -76,4 +77,5 @@ export const schemaTypes = [
   travelGuidePage,
   donatePage,
   contactPage,
+  page,
 ];

@@ -50,11 +50,11 @@ export default function NewsPost() {
         {/* Back Button */}
         <div className="container-main py-4 sm:py-6">
           <Link
-            to="/news"
+            to="/blog"
             className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors font-medium"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>Back to News</span>
+            <span>Back to Blog</span>
           </Link>
         </div>
 

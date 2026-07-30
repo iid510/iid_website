@@ -9,6 +9,8 @@ import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
 import { CATEGORY_STYLES, type AnnouncementCategory, type Announcement } from "@/data/announcements";
 import { useSanityAnnouncements } from "@/hooks/useSanityAnnouncements";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { ANNOUNCEMENTS_PAGE } from "@/data/pageContent";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -68,6 +70,9 @@ function AnnouncementCard({ item, index }: { item: Announcement; index: number }
 
 export default function AnnouncementsPage() {
   const { data: ANNOUNCEMENTS = [] } = useSanityAnnouncements();
+  const { data: page } = useSanityPage("announcements", ANNOUNCEMENTS_PAGE);
+  const hero = page?.hero ?? ANNOUNCEMENTS_PAGE.hero!;
+  const cta = findSection(page?.sections, "announcements-cta") ?? findSection(ANNOUNCEMENTS_PAGE.sections, "announcements-cta");
   const [active, setActive] = useState<AnnouncementCategory | "All">("All");
 
   const filtered = active === "All"
@@ -90,21 +95,21 @@ export default function AnnouncementsPage() {
             transition={{ duration: 0.5 }}
             className="label-accent mb-2"
           >
-            Community Board
+            {hero.eyebrow}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-primary-foreground leading-tight"
           >
-            Announcements
+            {hero.title}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-3 text-primary-foreground/70 max-w-xl text-sm sm:text-base leading-relaxed"
           >
-            Births, obituaries, congratulations, achievements and community notices from across the IID family.
+            {hero.subtitle}
           </motion.p>
         </div>
       </section>
@@ -150,9 +155,9 @@ export default function AnnouncementsPage() {
             className="mt-12 bg-primary/5 border border-primary/20 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4"
           >
             <div>
-              <h3 className="font-display font-bold text-foreground text-lg">Have an announcement?</h3>
+              <h3 className="font-display font-bold text-foreground text-lg">{cta?.heading}</h3>
               <p className="text-muted-foreground text-sm mt-1">
-                Send your birth announcement, congratulations, or community notice to the secretary.
+                {cta?.body?.[0]}
               </p>
             </div>
             <a

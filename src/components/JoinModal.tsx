@@ -72,10 +72,22 @@ export default function JoinModal({ children }: JoinModalProps) {
               <strong className="text-primary font-semibold">
                 Ijebu Igbo Descendants in Diaspora (IID)
               </strong>
-              . Together, we're building a stronger community, preserving our heritage, 
+              . Together, we're building a stronger community, preserving our heritage,
               and driving development back home.
             </p>
           </div>
+
+          {/* Direct WhatsApp CTA — fastest path to join, no form required */}
+          <a
+            href="https://wa.me/447496933887?text=Hello%2C%20I%27d%20like%20to%20join%20the%20IID%20community."
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+            className="flex items-center justify-center gap-2 w-full px-4 py-3.5 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-bold rounded-xl transition-colors duration-200 touch-manipulation"
+          >
+            <MessageCircle className="w-5 h-5" />
+            Join Now via WhatsApp
+          </a>
 
           {/* Message clarity + expectation setting */}
           <div className="bg-primary/5 border border-primary/15 rounded-xl p-5 space-y-3">

@@ -8,12 +8,18 @@ import BackToTop from "@/components/BackToTop";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import { useSanityFoundationMembers } from "@/hooks/useSanityFoundationMembers";
 import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
+import { useSanityPage, findSection } from "@/hooks/useSanityPage";
+import { HONOUR_ROLL_PAGE } from "@/data/pageContent";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function HonourRollPage() {
   const { data: members = [] } = useSanityFoundationMembers();
   const { data: siteSettings } = useSanitySiteSettings();
+  const { data: page } = useSanityPage("honourRoll", HONOUR_ROLL_PAGE);
+  const hero = page?.hero ?? HONOUR_ROLL_PAGE.hero!;
+  const execHeader = findSection(page?.sections, "executives-header") ?? findSection(HONOUR_ROLL_PAGE.sections, "executives-header");
+  const membersHeader = findSection(page?.sections, "members-header") ?? findSection(HONOUR_ROLL_PAGE.sections, "members-header");
 
   const executives = members.filter((m) => m.group === "Executive");
   const general = members.filter((m) => m.group === "General");
@@ -29,15 +35,15 @@ export default function HonourRollPage() {
         <AnimatedHeroBg />
         <div className="container-main relative z-10">
           <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="label-accent mb-2">
-            Our Foundation
+            {hero.eyebrow}
           </motion.p>
           <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-primary-foreground leading-tight">
-            Honour Roll
+            {hero.title}
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-3 text-primary-foreground/70 max-w-xl text-sm sm:text-base leading-relaxed">
-            Honouring the pioneer members who founded IID Omo Orimolusi in Diaspora{honourRoll?.period ? ` (${honourRoll.period})` : ""}.
+            {hero.subtitle}{honourRoll?.period ? ` (${honourRoll.period})` : ""}.
           </motion.p>
         </div>
       </section>
@@ -48,9 +54,9 @@ export default function HonourRollPage() {
           <div className="container-main max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}
               className="text-center mb-10">
-              <h2 className="label-accent mb-2">Leadership</h2>
+              <h2 className="label-accent mb-2">{execHeader?.eyebrow}</h2>
               <h3 className="heading-section flex items-center justify-center gap-2">
-                <Crown size={26} className="text-accent" /> Pioneer Executive Committee
+                <Crown size={26} className="text-accent" /> {execHeader?.heading}
               </h3>
             </motion.div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -73,9 +79,9 @@ export default function HonourRollPage() {
           <div className="container-main max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}
               className="text-center mb-10">
-              <h2 className="label-accent mb-2">Community</h2>
+              <h2 className="label-accent mb-2">{membersHeader?.eyebrow}</h2>
               <h3 className="heading-section flex items-center justify-center gap-2">
-                <Users size={26} className="text-accent" /> Pioneer Members
+                <Users size={26} className="text-accent" /> {membersHeader?.heading}
               </h3>
             </motion.div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">

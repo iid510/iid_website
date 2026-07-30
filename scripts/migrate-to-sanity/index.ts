@@ -12,6 +12,7 @@ import { seedAnnouncements } from "./seedAnnouncements";
 import { seedFoundationMembers } from "./seedFoundationMembers";
 import { seedPlaces } from "./seedPlaces";
 import { seedSiteSettings } from "./seedSiteSettings";
+import { seedPages } from "./seedPages";
 
 async function main() {
   console.log("=== Step 1: Upload images ===");
@@ -33,6 +34,7 @@ async function main() {
   await seedFoundationMembers();
   await seedPlaces(assetMap);
   await seedSiteSettings(assetMap);
+  await seedPages(assetMap);
 
   console.log("\nMigration complete.");
 }

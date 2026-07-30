@@ -12,20 +12,19 @@ const navLinks = [
   { label: "About",     href: "/about" },
   { label: "Heritage",  href: "/heritage" },
   { label: "Events",    href: "/events" },
-  { label: "News",      href: "/news" },
+  { label: "Blog",      href: "/blog" },
   { label: "Gallery",   href: "/gallery" },
-  { label: "Directory", href: "/businesses" },
+  { label: "Members",   href: "/members" },
   { label: "Contact",   href: "/contact" },
 ];
 
 const moreLinks = [
-  { label: "Blog",           href: "/blog",          icon: "📝" },
+  { label: "Directory",      href: "/businesses",    icon: "🏢" },
   { label: "Impact",         href: "/impact",        icon: "📊" },
   { label: "Team",           href: "/team",          icon: "👥" },
   { label: "Tourism",        href: "/tourism",       icon: "🏛️" },
   { label: "Travel Guide",   href: "/travel",        icon: "✈️" },
   { label: "Videos",         href: "/videos",        icon: "🎬" },
-  { label: "Members",        href: "/members",       icon: "🤝" },
   { label: "Announcements",  href: "/announcements", icon: "📢" },
   { label: "Scholarship",    href: "/scholarship",   icon: "🎓" },
 ];
@@ -89,7 +88,7 @@ export default function Navbar() {
             <motion.img
               src="/logo-tp.webp"
               alt="IID Logo"
-              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 relative z-10"
+              className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 relative z-10"
               initial={{ opacity: 0, rotate: -180, scale: 0 }}
               animate={{
                 opacity: 1,

@@ -56,7 +56,7 @@ const Index = () => {
       <VideoSection />
       <Impact />
       <OrimolusiSection />
-      <Team />
+      <Team startCollapsed />
       <Story />
       <Testimonials />
       <News />

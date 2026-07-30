@@ -5,8 +5,13 @@ import Footer from "@/components/Footer";
 import Gallery from "@/components/Gallery";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import { motion } from "framer-motion";
+import { useSanityPage } from "@/hooks/useSanityPage";
+import { GALLERY_PAGE } from "@/data/pageContent";
 
 export default function GalleryPage() {
+  const { data: page } = useSanityPage("gallery", GALLERY_PAGE);
+  const hero = page?.hero ?? GALLERY_PAGE.hero!;
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -24,13 +29,13 @@ export default function GalleryPage() {
             className="relative z-10 text-center px-4"
           >
             <span className="text-white/60 text-xs font-bold tracking-[0.2em] uppercase block mb-2">
-              Connect Ijebu Roots
+              {hero.eyebrow}
             </span>
             <h1 className="font-display font-black text-white text-4xl sm:text-5xl">
-              Gallery
+              {hero.title}
             </h1>
             <p className="text-white/70 text-sm sm:text-base mt-2 max-w-lg mx-auto">
-              Moments from cultural celebrations, community projects, and diaspora events.
+              {hero.subtitle}
             </p>
           </motion.div>
         </div>

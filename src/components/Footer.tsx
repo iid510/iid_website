@@ -10,7 +10,7 @@ const quickLinks = [
   { label: "About", href: "/about" },
   { label: "Events", href: "/events" },
   { label: "Heritage", href: "/heritage" },
-  { label: "Directory", href: "/businesses" },
+  { label: "Members", href: "/members" },
   { label: "Gallery", href: "/gallery" },
   { label: "Join Us", href: "/join" },
   { label: "Contact", href: "/contact" },
@@ -19,7 +19,6 @@ const quickLinks = [
 const communityLinks = [
   { label: "Our Team", href: "/team" },
   { label: "Impact", href: "/impact" },
-  { label: "News", href: "/news" },
   { label: "Blog", href: "/blog" },
   { label: "Honour Roll", href: "/honour-roll" },
   { label: "Business Directory", href: "/businesses" },
@@ -74,13 +73,13 @@ export default function Footer() {
   const stats = siteSettings?.footerStats ?? [];
 
   return (
-    <footer id="footer" className="bg-charcoal text-primary-foreground safe-area-bottom">
+    <footer id="footer" className="bg-primary text-primary-foreground safe-area-bottom">
       <div className="container-main py-8 md:py-16 lg:py-20">
         {/* Mobile: native app-style footer */}
         <div className="lg:hidden">
           {/* Brand header */}
           <div className="flex items-center gap-3 mb-6">
-            <img src="/logo-tp.webp" alt="IID Logo" className="w-12 h-12" />
+            <img src="/logo-tp.webp" alt="IID Logo" className="w-16 h-16" />
             <div>
               <h3 className="font-display font-bold text-sm leading-tight">
                 Ijebu Igbo Descendants
@@ -214,7 +213,7 @@ export default function Footer() {
                 <motion.img
                   src="/logo-tp.webp"
                   alt="IID Logo"
-                  className="w-14 h-14"
+                  className="w-16 h-16"
                   whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.5 } }}
                 />
                 <div>

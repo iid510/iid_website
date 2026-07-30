@@ -6,8 +6,13 @@ import Team from "@/components/Team";
 import OrgChart from "@/components/OrgChart";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import { motion } from "framer-motion";
+import { useSanityPage } from "@/hooks/useSanityPage";
+import { TEAM_PAGE } from "@/data/pageContent";
 
 export default function TeamPage() {
+  const { data: page } = useSanityPage("team", TEAM_PAGE);
+  const hero = page?.hero ?? TEAM_PAGE.hero!;
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -25,13 +30,13 @@ export default function TeamPage() {
             className="relative z-10 text-center px-4"
           >
             <span className="text-white/60 text-xs font-bold tracking-[0.2em] uppercase block mb-2">
-              Connect Ijebu Roots
+              {hero.eyebrow}
             </span>
             <h1 className="font-display font-black text-white text-4xl sm:text-5xl">
-              Our Team
+              {hero.title}
             </h1>
             <p className="text-white/70 text-sm sm:text-base mt-2 max-w-lg mx-auto">
-              The current executives and past leaders who built this community.
+              {hero.subtitle}
             </p>
           </motion.div>
         </div>

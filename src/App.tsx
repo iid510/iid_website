@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import SmoothScroll, { useLenis } from "./components/SmoothScroll";
 
@@ -32,7 +32,6 @@ import Businesses from "./pages/Businesses.tsx";
 import BusinessProfile from "./pages/BusinessProfile.tsx";
 import JoinPage from "./pages/JoinPage.tsx";
 import KingProfile from "./pages/KingProfile.tsx";
-import NewsPage from "./pages/NewsPage.tsx";
 import TourismPage from "./pages/TourismPage.tsx";
 import OjowoKingdomPage from "./pages/OjowoKingdomPage.tsx";
 import JaparaKingdomPage from "./pages/JaparaKingdomPage.tsx";
@@ -70,7 +69,7 @@ const App = () => (
           <Route path="/events"      element={<EventsPage />} />
           <Route path="/gallery"     element={<GalleryPage />} />
           <Route path="/contact"     element={<ContactPage />} />
-          <Route path="/news"          element={<NewsPage />} />
+          <Route path="/news"          element={<Navigate to="/blog" replace />} />
           <Route path="/tourism"       element={<TourismPage />} />
           <Route path="/ojowo"         element={<OjowoKingdomPage />} />
           <Route path="/japara"        element={<JaparaKingdomPage />} />
