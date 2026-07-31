@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, FileText, Users } from "lucide-react";
+import { ExternalLink, FileText, Users } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
@@ -10,51 +9,10 @@ import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { JOIN_PAGE } from "@/data/pageContent";
 
-const IJEBU_AREAS = [
-  "Oke-Sopen",
-  "Japara",
-  "Oke-Agbo",
-  "Atikori",
-  "Ojowo",
-  "Other / Not Sure",
-];
-
-const HOW_HEARD = [
-  "WhatsApp",
-  "Facebook",
-  "Instagram",
-  "Friend or Family",
-  "Community Event",
-  "Google",
-  "Other",
-];
-
-const WHATSAPP_NUMBER = "447496933887";
-
-type FormData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  address1: string;
-  address2: string;
-  city: string;
-  state: string;
-  postcode: string;
-  country: string;
-  ijebuArea: string;
-  contact: string;
-  howHeard: string;
-  hasConstitution: string;
-  agreesToConstitution: string;
-};
-
-const empty: FormData = {
-  firstName: "", lastName: "", email: "",
-  address1: "", address2: "", city: "",
-  state: "", postcode: "", country: "",
-  ijebuArea: "", contact: "", howHeard: "",
-  hasConstitution: "", agreesToConstitution: "",
-};
+const MEMBERSHIP_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSejhZ_ZdpF96hIxB-543SGzxij5Hzspq9dJQ_XgdFAA6hv3ww/viewform?usp=dialog";
+const MEMBERSHIP_FORM_EMBED_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSejhZ_ZdpF96hIxB-543SGzxij5Hzspq9dJQ_XgdFAA6hv3ww/viewform?embedded=true";
 
 export default function JoinPage() {
   const { data: siteSettings } = useSanitySiteSettings();
@@ -71,38 +29,6 @@ export default function JoinPage() {
       acceptedAnswer: { "@type": "Answer", text: (faq.answer ?? []).join(" ") },
     })),
   };
-  const [form, setForm] = useState<FormData>(empty);
-  const [submitted, setSubmitted] = useState(false);
-
-  const set = (field: keyof FormData) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => setForm((f) => ({ ...f, [field]: e.target.value }));
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const msg = [
-      `*New IID Membership Application*`,
-      ``,
-      `*Name:* ${form.firstName} ${form.lastName}`,
-      `*Email:* ${form.email}`,
-      `*Address:* ${form.address1}${form.address2 ? ", " + form.address2 : ""}, ${form.city}, ${form.state}, ${form.postcode}, ${form.country}`,
-      `*Part of Ijebu Igbo:* ${form.ijebuArea}`,
-      `*Contact / WhatsApp:* ${form.contact}`,
-      `*How they heard about us:* ${form.howHeard}`,
-      `*Received Constitution & Code of Conduct:* ${form.hasConstitution}`,
-      `*Agrees to abide by Constitution:* ${form.agreesToConstitution}`,
-    ].join("\n");
-
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
-    setSubmitted(true);
-  };
-
-  const inputClass =
-    "w-full border border-border rounded-xl px-4 py-3 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-colors placeholder:text-muted-foreground/50";
-  const labelClass = "block text-sm font-semibold text-foreground mb-1.5";
-  const requiredStar = <span className="text-red-500 ml-0.5">*</span>;
 
   return (
     <div className="min-h-screen bg-[#f4f6f8]">
@@ -169,165 +95,32 @@ export default function JoinPage() {
         </motion.div>
 
         {/* Form */}
-        {!submitted ? (
-          <motion.form
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            onSubmit={handleSubmit}
-            className="bg-white rounded-2xl border border-border p-6 sm:p-8 shadow-sm space-y-6"
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden"
+        >
+          <div className="p-6 sm:p-8 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <h2 className="font-display font-bold text-foreground text-lg">{formHeader?.heading ?? "Membership Application Form"}</h2>
-
-            {/* Name */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className={labelClass}>First Name {requiredStar}</label>
-                <input required placeholder="Enter your first name" value={form.firstName} onChange={set("firstName")} className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>Last Name {requiredStar}</label>
-                <input required placeholder="Enter your last name" value={form.lastName} onChange={set("lastName")} className={inputClass} />
-              </div>
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className={labelClass}>Email Address {requiredStar}</label>
-              <input required type="email" placeholder="Enter your email" value={form.email} onChange={set("email")} className={inputClass} />
-            </div>
-
-            {/* Address */}
-            <div className="space-y-4">
-              <div>
-                <label className={labelClass}>Address Line 1 {requiredStar}</label>
-                <input required placeholder="Enter your address" value={form.address1} onChange={set("address1")} className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>Address Line 2</label>
-                <input placeholder="Apartment, suite, etc. (optional)" value={form.address2} onChange={set("address2")} className={inputClass} />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className={labelClass}>City {requiredStar}</label>
-                  <input required placeholder="Enter your city" value={form.city} onChange={set("city")} className={inputClass} />
-                </div>
-                <div>
-                  <label className={labelClass}>State / Province / Region {requiredStar}</label>
-                  <input required placeholder="Enter your region" value={form.state} onChange={set("state")} className={inputClass} />
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className={labelClass}>Postal / Zip Code {requiredStar}</label>
-                  <input required placeholder="Enter your postcode" value={form.postcode} onChange={set("postcode")} className={inputClass} />
-                </div>
-                <div>
-                  <label className={labelClass}>Country {requiredStar}</label>
-                  <input required placeholder="Enter your country" value={form.country} onChange={set("country")} className={inputClass} />
-                </div>
-              </div>
-            </div>
-
-            {/* Part of Ijebu Igbo */}
-            <div>
-              <label className={labelClass}>What Part of Ijebu Igbo do you come from? {requiredStar}</label>
-              <select required value={form.ijebuArea} onChange={set("ijebuArea")} className={inputClass}>
-                <option value="">— Please select —</option>
-                {IJEBU_AREAS.map((a) => <option key={a} value={a}>{a}</option>)}
-              </select>
-            </div>
-
-            {/* WhatsApp Contact */}
-            <div>
-              <label className={labelClass}>Contact (including WhatsApp number) {requiredStar}</label>
-              <input required placeholder="+44 XXXX XXXXXX" value={form.contact} onChange={set("contact")} className={inputClass} />
-            </div>
-
-            {/* How did you hear */}
-            <div>
-              <label className={labelClass}>How did you hear about us? {requiredStar}</label>
-              <select required value={form.howHeard} onChange={set("howHeard")} className={inputClass}>
-                <option value="">— Please select —</option>
-                {HOW_HEARD.map((h) => <option key={h} value={h}>{h}</option>)}
-              </select>
-            </div>
-
-            {/* Constitution questions */}
-            <div className="space-y-4 border-t border-border pt-6">
-              <div>
-                <label className={labelClass}>Have you received our Constitution and Code of Conduct? {requiredStar}</label>
-                <div className="flex gap-6 mt-2">
-                  {["Yes", "No"].map((v) => (
-                    <label key={v} className="flex items-center gap-2 cursor-pointer text-sm font-medium text-foreground">
-                      <input
-                        type="radio"
-                        required
-                        name="hasConstitution"
-                        value={v}
-                        checked={form.hasConstitution === v}
-                        onChange={set("hasConstitution")}
-                        className="accent-accent w-4 h-4"
-                      />
-                      {v}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className={labelClass}>
-                  Having read our Constitution and Code of Conduct, are you ready to abide by the contents therein? {requiredStar}
-                </label>
-                <div className="flex gap-6 mt-2">
-                  {["Yes", "No"].map((v) => (
-                    <label key={v} className="flex items-center gap-2 cursor-pointer text-sm font-medium text-foreground">
-                      <input
-                        type="radio"
-                        required
-                        name="agreesToConstitution"
-                        value={v}
-                        checked={form.agreesToConstitution === v}
-                        onChange={set("agreesToConstitution")}
-                        className="accent-accent w-4 h-4"
-                      />
-                      {v}
-                    </label>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-accent text-charcoal font-bold py-4 rounded-xl hover:bg-accent/90 active:scale-[0.98] transition-all text-sm sm:text-base flex items-center justify-center gap-2"
+            <a
+              href={MEMBERSHIP_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent transition-colors shrink-0"
             >
-              Submit Application via WhatsApp
-            </button>
-            <p className="text-xs text-center text-muted-foreground">
-              Your application will be sent directly to IID via WhatsApp for review.
-            </p>
-          </motion.form>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
-            className="bg-white rounded-2xl border border-border p-10 shadow-sm text-center"
+              Open in a new tab <ExternalLink size={14} />
+            </a>
+          </div>
+          <iframe
+            src={MEMBERSHIP_FORM_EMBED_URL}
+            title="IID Membership Application Form"
+            className="w-full border-0"
+            style={{ height: "1400px" }}
           >
-            <CheckCircle size={56} className="text-accent mx-auto mb-4" />
-            <h2 className="font-display font-bold text-2xl text-foreground mb-2">Application Sent!</h2>
-            <p className="text-muted-foreground text-sm max-w-sm mx-auto">
-              Your membership application has been submitted via WhatsApp. The IID team will be in touch with you shortly.
-            </p>
-            <button
-              onClick={() => setSubmitted(false)}
-              className="mt-6 text-sm text-primary underline"
-            >
-              Submit another application
-            </button>
-          </motion.div>
-        )}
+            Loading application form…
+          </iframe>
+        </motion.div>
       </div>
 
       <FAQ />
