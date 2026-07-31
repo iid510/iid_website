@@ -500,6 +500,28 @@ export default function BusinessProfile() {
           <aside className="md:col-span-1 md:order-last space-y-5">
             <div className="md:sticky md:top-28 space-y-5">
 
+              {/* Flyer — desktop only; on mobile it shows in-flow with the main content */}
+              {has.flyer && (
+                <motion.section
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.04 }}
+                  className="hidden md:block bg-white rounded-2xl border border-border overflow-hidden shadow-sm"
+                >
+                  <div className="px-6 pt-6 pb-3">
+                    <SectionHeader icon={<Layers size={16} className="text-accent" />} title="Flyer" />
+                  </div>
+                  <button className="block w-full" onClick={() => setLightbox(business.flyer!)}>
+                    <ImageWithSkeleton
+                      src={business.flyer ?? null}
+                      alt="Business flyer"
+                      className="w-full"
+                      imgClassName="!h-auto object-contain hover:opacity-95 transition-opacity"
+                    />
+                  </button>
+                </motion.section>
+              )}
+
               {/* Contact card */}
               {has.contact && (
                 <motion.div
@@ -955,13 +977,13 @@ export default function BusinessProfile() {
               </motion.section>
             )}
 
-            {/* Flyer — always shown in the content body, separate from the hero image */}
+            {/* Flyer — shown in-flow on mobile; on desktop it moves to the sidebar (see aside) */}
             {has.flyer && (
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.32 }}
-                className="bg-white rounded-2xl border border-border overflow-hidden shadow-sm"
+                className="md:hidden bg-white rounded-2xl border border-border overflow-hidden shadow-sm"
               >
                 <div className="px-6 pt-6 pb-3">
                   <SectionHeader icon={<Layers size={16} className="text-accent" />} title="Flyer" />
