@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Expand } from "lucide-react";
 
@@ -157,7 +158,11 @@ export default function Lightbox({
   images: LightboxImage[]; index: number | null; direction: number;
   onClose: () => void; onPrev: () => void; onNext: () => void;
 }) {
-  return (
+  // Rendered via portal so this fixed-position overlay always covers the full
+  // viewport, even when called from inside an ancestor with a CSS transform
+  // (e.g. a hover-tilt card) — a transformed ancestor otherwise becomes the
+  // containing block for `position: fixed`, pushing/clipping the overlay.
+  return createPortal(
     <AnimatePresence>
       {index !== null && (
         <LightboxView
@@ -169,6 +174,7 @@ export default function Lightbox({
           onNext={onNext}
         />
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

@@ -966,12 +966,12 @@ export default function BusinessProfile() {
                 <div className="px-6 pt-6 pb-3">
                   <SectionHeader icon={<Layers size={16} className="text-accent" />} title="Flyer" />
                 </div>
-                <button className="block w-full" onClick={() => setLightbox(business.flyer!)}>
+                <button className="block w-full max-w-md mx-auto" onClick={() => setLightbox(business.flyer!)}>
                   <ImageWithSkeleton
                     src={business.flyer ?? null}
                     alt="Business flyer"
-                    className="w-full max-h-[520px]"
-                    imgClassName="object-contain hover:opacity-95 transition-opacity"
+                    className="w-full"
+                    imgClassName="!h-auto object-contain hover:opacity-95 transition-opacity"
                   />
                 </button>
               </motion.section>
