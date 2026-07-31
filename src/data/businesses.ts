@@ -851,8 +851,9 @@ export const BUSINESSES: Business[] = [
       "Havilah Gold Secondary School is a government-approved secondary school located in Epe, Lagos, committed to raising the next generation of leaders through quality education. The school offers Junior Secondary School (JSS) and Senior Secondary School (SSS) programmes in a structured, disciplined, and nurturing environment. Admissions are conducted through a formal entrance examination, ensuring academic standards are upheld for every intake.",
     location: "Sekoni House, Beside Fowobi Petrol Station, Epe-Ijebu Ode Road, Odomola Epe, Lagos",
     phone: "08080030001 / 08107501847 / 08033564879 / 08020777088",
-    whatsapp: "+2348020777088",
+    whatsapp: "+2348107501847",
     email: "havilahgoldinternationalschool@gmail.com",
+    website: "www.havilahgold.org.ng",
     flyer: "/images/businesses/havilah-gold-school/flyer.webp",
     region: "Nigeria",
 
