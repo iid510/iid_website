@@ -7,8 +7,9 @@ import {
 import {
   Search, Store, X, ArrowUpDown, ArrowRight, Building2,
   CheckCircle2, Globe, MessageCircle, MapPin, SlidersHorizontal,
-  ChevronDown, Sparkles, TrendingUp,
+  ChevronDown, Sparkles, TrendingUp, Expand,
 } from "lucide-react";
+import Lightbox from "@/components/Lightbox";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
@@ -108,6 +109,7 @@ function BusinessCard({ business, index }: { business: Business; index: number }
   const cardRef = useRef<HTMLDivElement>(null);
   const gradient = CATEGORY_GRADIENTS[business.category] ?? "from-primary to-primary/70";
   const waNumber = (business.whatsapp ?? business.phone ?? "").replace(/\D/g, "");
+  const [flyerOpen, setFlyerOpen] = useState(false);
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
@@ -132,6 +134,7 @@ function BusinessCard({ business, index }: { business: Business; index: number }
   const row = Math.floor(index / 4);
 
   return (
+    <>
     <motion.div
       ref={cardRef}
       layout
@@ -161,11 +164,24 @@ function BusinessCard({ business, index }: { business: Business; index: number }
       {/* Visual header */}
       <div className="relative h-32 sm:h-44 overflow-hidden shrink-0">
         {business.flyer ? (
-          <img
-            src={business.flyer}
-            alt={business.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
+          <>
+            <img
+              src={business.flyer}
+              alt={business.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setFlyerOpen(true); }}
+              className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full
+                         bg-black/40 hover:bg-black/60 backdrop-blur-sm border border-white/20
+                         flex items-center justify-center text-white transition-colors"
+              aria-label="View full flyer"
+              title="View full flyer"
+            >
+              <Expand size={14} />
+            </button>
+          </>
         ) : (
           <div className={`relative w-full h-full bg-gradient-to-br ${gradient} overflow-hidden`}>
             {[...Array(3)].map((_, i) => (
@@ -273,6 +289,17 @@ function BusinessCard({ business, index }: { business: Business; index: number }
         </div>
       </div>
     </motion.div>
+    {business.flyer && (
+      <Lightbox
+        images={[{ src: business.flyer, alt: business.name }]}
+        index={flyerOpen ? 0 : null}
+        direction={0}
+        onClose={() => setFlyerOpen(false)}
+        onPrev={() => {}}
+        onNext={() => {}}
+      />
+    )}
+    </>
   );
 }
 

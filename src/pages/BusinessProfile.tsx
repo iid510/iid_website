@@ -218,12 +218,12 @@ export default function BusinessProfile() {
     focusAreas:       (business.focusAreas?.length ?? 0) > 0,
     benefits:         (business.benefits?.length ?? 0) > 0,
     testimonials:     (business.testimonials?.length ?? 0) > 0,
-    flyer:            !!(business.flyer && business.banner),
+    flyer:            !!business.flyer,
     promoVideo:       !!business.promoVideo,
     anyDetail:        false,
   };
   has.anyDetail = has.whatWeDo || has.services || has.serviceCategories
-    || has.gallery || has.values || has.benefits;
+    || has.gallery || has.values || has.benefits || has.flyer;
 
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
@@ -955,7 +955,7 @@ export default function BusinessProfile() {
               </motion.section>
             )}
 
-            {/* Flyer (when banner is the hero and flyer is a separate asset) */}
+            {/* Flyer — always shown in the content body, separate from the hero image */}
             {has.flyer && (
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
