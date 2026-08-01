@@ -387,7 +387,13 @@ export default function Footer() {
       <div className="border-t border-primary-foreground/10">
         <div className="container-main py-5 md:py-6 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4 text-xs md:text-sm text-primary-foreground/40 text-center md:text-left">
           <div>
-            <p>&copy; {new Date().getFullYear()} Ijebu Igbo Descendants in Diaspora. All rights reserved.</p>
+            <p>
+              &copy; {new Date().getFullYear()} Ijebu Igbo Descendants in Diaspora. All rights reserved.
+              {" · "}
+              <Link to="/privacy" className="hover:text-white transition-colors underline underline-offset-2">
+                Privacy Policy
+              </Link>
+            </p>
             <p className="mt-0.5 text-primary-foreground/35">
               Registered Charity — UK: 06408579 · Nigeria: 9684235
             </p>

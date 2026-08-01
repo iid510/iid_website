@@ -49,6 +49,7 @@ import VideoArchivePage from "./pages/VideoArchivePage.tsx";
 import BlogPage from "./pages/BlogPage.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import HonourRollPage from "./pages/HonourRollPage.tsx";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -88,6 +89,7 @@ const App = () => (
           <Route path="/blog"        element={<BlogPage />} />
           <Route path="/blog/:slug"  element={<BlogPost />} />
           <Route path="/honour-roll" element={<HonourRollPage />} />
+          <Route path="/privacy"     element={<PrivacyPolicyPage />} />
           <Route path="/businesses"          element={<Businesses />} />
           <Route path="/businesses/:slug"    element={<BusinessProfile />} />
           <Route path="/join"              element={<JoinPage />} />
