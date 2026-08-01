@@ -256,10 +256,6 @@ export const MEMBERS_PAGE: PageContent = {
   },
   sections: [
     {
-      sectionId: "members-empty", heading: "Member Directory Coming Soon",
-      body: ["The member directory is being set up. IID members will be listed here shortly. Want to be included? Join us today."],
-    },
-    {
       sectionId: "members-cta", heading: "Not yet a member?",
       body: ["Join IID Omo Orimolusi in Diaspora and be part of this growing community."],
     },

@@ -265,7 +265,6 @@ export default function MembersPage() {
   const { data: MEMBERS = [] } = useSanityMembers();
   const { data: page } = useSanityPage("members", MEMBERS_PAGE);
   const hero = page?.hero ?? MEMBERS_PAGE.hero!;
-  const emptyState = findSection(page?.sections, "members-empty") ?? findSection(MEMBERS_PAGE.sections, "members-empty");
   const joinCta = findSection(page?.sections, "members-cta") ?? findSection(MEMBERS_PAGE.sections, "members-cta");
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("All");
@@ -433,25 +432,7 @@ export default function MembersPage() {
 
           {/* Members sections or empty state */}
           <div id="members-results" />
-          {MEMBERS.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease }}
-              className="text-center py-24 border border-dashed border-border rounded-2xl"
-            >
-              <Users size={48} className="text-muted-foreground/25 mx-auto mb-4" />
-              <h3 className="font-display font-bold text-foreground text-xl mb-2">{emptyState?.heading}</h3>
-              <p className="text-muted-foreground text-sm max-w-sm mx-auto leading-relaxed">
-                {emptyState?.body?.[0]}
-              </p>
-              <a
-                href="/join"
-                className="inline-flex items-center gap-2 mt-5 btn-primary"
-              >
-                Become a Member <ChevronRight size={15} />
-              </a>
-            </motion.div>
-          ) : filtered.length === 0 ? (
+          {filtered.length === 0 ? (
             <div className="text-center py-16 border border-dashed border-border rounded-2xl">
               <p className="text-muted-foreground text-sm">No members match your search.</p>
             </div>

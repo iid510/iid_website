@@ -300,24 +300,16 @@ export default function Team({ startCollapsed = false }: { startCollapsed?: bool
 
         {/* ── Level 5: Members ── */}
         <Level label="Members" sublabel="IID Omo Orimolusi in Diaspora" index={5} defaultOpen={defaultOpen}>
-          {memberPreview.length === 0 ? (
-            <p className="text-center text-muted-foreground text-sm py-12 border border-dashed border-border rounded-2xl">
-              Members coming soon.
-            </p>
-          ) : (
-            <>
-              <MemberGrid members={memberPreview} />
-              <div className="text-center mt-8">
-                <Link
-                  to="/members"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-semibold"
-                >
-                  See All Members
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </>
-          )}
+          <MemberGrid members={memberPreview} />
+          <div className="text-center mt-8">
+            <Link
+              to="/members"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-semibold"
+            >
+              See All Members
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </Level>
 
       </div>
