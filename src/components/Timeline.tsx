@@ -1,5 +1,6 @@
 import { motion, useScroll } from "framer-motion";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { Calendar, Crown, Globe, Ship, Users, Heart } from "lucide-react";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { HOME_PAGE } from "@/data/pageContent";
@@ -176,8 +177,8 @@ export default function Timeline() {
           <p className="text-lg sm:text-xl text-foreground/80 mb-6 font-display">
             {cta?.body?.[0]}
           </p>
-          <a
-            href="#"
+          <Link
+            to="/join"
             className="btn-primary inline-flex items-center gap-2"
           >
             Join the Community
@@ -187,7 +188,7 @@ export default function Timeline() {
             >
               →
             </motion.span>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

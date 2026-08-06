@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Users, Search, MapPin, ChevronRight, ChevronLeft, LayoutGrid, List, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
@@ -501,9 +502,9 @@ export default function MembersPage() {
                 <h3 className="font-display font-bold text-foreground text-lg">{joinCta?.heading}</h3>
                 <p className="text-muted-foreground text-sm mt-1">{joinCta?.body?.[0]}</p>
               </div>
-              <a href="/join" className="shrink-0 btn-primary inline-flex items-center gap-2">
+              <Link to="/join" className="shrink-0 btn-primary inline-flex items-center gap-2">
                 Join Now <ChevronRight size={15} />
-              </a>
+              </Link>
             </motion.div>
           )}
 

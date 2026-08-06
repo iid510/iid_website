@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
-import JoinModal from "@/components/JoinModal";
 import ClanNetwork from "@/components/ClanNetwork";
 import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
@@ -86,13 +86,12 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-              <JoinModal>
-                <button
-                  className="btn-primary text-center w-full sm:w-auto min-h-[48px] font-semibold"
-                >
-                  Join the Community
-                </button>
-              </JoinModal>
+              <Link
+                to="/join"
+                className="btn-primary text-center w-full sm:w-auto min-h-[48px] font-semibold flex items-center justify-center"
+              >
+                Join the Community
+              </Link>
               <a
                 href="#impact"
                 className="btn-outline-light text-center min-h-[48px] flex items-center justify-center font-semibold"

@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ChevronRight, Sparkles, Search, ChevronDown, Heart } from "lucide-react";
-import JoinModal from "@/components/JoinModal";
 import SearchModal from "@/components/SearchModal";
 import { useLang } from "@/context/LanguageContext";
 
@@ -41,6 +40,7 @@ export default function Navbar() {
   const moreRef = useRef<HTMLDivElement>(null);
   const { lang, setLang } = useLang();
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Close all menus on every route change
   useEffect(() => {
@@ -242,8 +242,8 @@ export default function Navbar() {
               Donate
             </Link>
 
-            <JoinModal>
-              <motion.button
+            <motion.button
+                onClick={() => navigate("/join")}
                 className="btn-primary relative overflow-hidden text-sm !py-2.5 !px-6"
                 whileHover={{ y: -3, scale: 1.06 }}
                 whileTap={{ scale: 0.97 }}
@@ -289,7 +289,6 @@ export default function Navbar() {
                   transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
                 />
               </motion.button>
-            </JoinModal>
           </div>
 
           {/* Mobile: search + hamburger */}
@@ -402,8 +401,7 @@ export default function Navbar() {
 
                 {/* Bottom branding */}
                 <div className="p-6 border-t border-primary-foreground/10">
-                  <JoinModal>
-                    <motion.button
+                  <motion.button
                       className="btn-primary w-full text-center text-lg relative overflow-hidden"
                       whileHover={{ scale: 1.04, y: -2 }}
                       whileTap={{ scale: 0.98 }}
@@ -418,7 +416,10 @@ export default function Navbar() {
                         scale: { duration: 2.2, repeat: Infinity, ease: "easeInOut" },
                         boxShadow: { duration: 1.4, repeat: Infinity, ease: "easeOut" },
                       }}
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        setOpen(false);
+                        navigate("/join");
+                      }}
                     >
                       <span className="relative z-10 inline-flex items-center gap-2 justify-center font-semibold tracking-wide">
                         <motion.span
@@ -449,7 +450,6 @@ export default function Navbar() {
                         transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
                       />
                     </motion.button>
-                  </JoinModal>
                 </div>
               </div>
             </motion.div>
