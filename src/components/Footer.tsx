@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Globe, MessageCircle, ArrowRight, Send } from "lucide-react";
+import { Mail, MapPin, Phone, Globe, UserPlus, ArrowRight, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
 import { resolveIcon } from "@/lib/iconMap";
@@ -26,43 +25,16 @@ const communityLinks = [
   { label: "List Your Business", href: "/businesses" },
 ];
 
+/** Community updates are handled by the membership form on /join — one intake
+ *  route for everyone, instead of a separate WhatsApp signup list. */
 function NewsletterSignup() {
-  const [name, setName] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim()) return;
-    const msg = `👋 *Community Updates Signup*\n\nName: ${name}\n\nPlease add me to the IID community updates list.`;
-    window.open(`https://wa.me/447496933887?text=${encodeURIComponent(msg)}`, "_blank");
-    setSubmitted(true);
-    setTimeout(() => { setSubmitted(false); setName(""); }, 3000);
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full sm:w-auto">
-      {submitted ? (
-        <span className="text-accent font-semibold text-sm">Opening WhatsApp…</span>
-      ) : (
-        <>
-          <input
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Your name…"
-            aria-label="Your name for community updates"
-            className="px-4 py-2.5 rounded-xl bg-primary-foreground/10 border border-primary-foreground/20 text-white placeholder:text-primary-foreground/40 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 w-44"
-          />
-          <button
-            type="submit"
-            className="flex items-center gap-1.5 bg-accent text-charcoal font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-accent/90 transition-colors shrink-0"
-          >
-            <Send size={14} /> Sign Up
-          </button>
-        </>
-      )}
-    </form>
+    <Link
+      to="/join"
+      className="flex items-center gap-1.5 bg-accent text-charcoal font-bold text-sm px-4 py-2.5 rounded-xl hover:brightness-110 transition-all shrink-0"
+    >
+      <Send size={14} /> Get Community Updates
+    </Link>
   );
 }
 
@@ -103,15 +75,13 @@ export default function Footer() {
               <Phone size={22} className="text-green-400" />
               <span className="text-[11px] font-semibold text-primary-foreground/80">Call</span>
             </a>
-            <a
-              href="https://wa.me/447723953174"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1.5 py-4 rounded-2xl bg-[#25D366]/15 active:bg-[#25D366]/30 transition-colors touch-manipulation"
+            <Link
+              to="/join"
+              className="flex flex-col items-center gap-1.5 py-4 rounded-2xl bg-accent/20 active:bg-accent/30 transition-colors touch-manipulation"
             >
-              <MessageCircle size={22} className="text-[#25D366]" />
-              <span className="text-[11px] font-semibold text-primary-foreground/80">WhatsApp</span>
-            </a>
+              <UserPlus size={22} className="text-accent" />
+              <span className="text-[11px] font-semibold text-primary-foreground/80">Join</span>
+            </Link>
             <a
               href="mailto:info@ijebuigbodescendants.org"
               className="flex flex-col items-center gap-1.5 py-4 rounded-2xl bg-blue-600/15 active:bg-blue-600/30 transition-colors touch-manipulation"

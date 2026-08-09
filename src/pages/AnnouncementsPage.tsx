@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Baby, Heart, Star, Bell, Trophy, Calendar, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
@@ -160,13 +161,12 @@ export default function AnnouncementsPage() {
                 {cta?.body?.[0]}
               </p>
             </div>
-            <a
-              href="https://wa.me/447496933887"
-              target="_blank" rel="noopener noreferrer"
-              className="shrink-0 inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-5 py-3 rounded-xl text-sm transition-colors"
+            <Link
+              to="/join"
+              className="shrink-0 inline-flex items-center gap-2 bg-accent text-charcoal font-bold px-5 py-3 rounded-xl text-sm hover:brightness-110 transition-all"
             >
-              Submit via WhatsApp <ChevronRight size={15} />
-            </a>
+              Get in Touch <ChevronRight size={15} />
+            </Link>
           </motion.div>
 
         </div>

@@ -107,7 +107,8 @@ function VideoCard({
 
   const togglePlay = () => {
     if (!videoRef.current) return;
-    playing ? videoRef.current.pause() : videoRef.current.play();
+    if (playing) videoRef.current.pause();
+    else void videoRef.current.play();
     setPlaying((v) => !v);
   };
   const toggleMute = () => {

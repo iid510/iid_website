@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Heart, Building2, Copy, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
@@ -199,13 +200,12 @@ export default function DonatePage() {
             <p className="text-muted-foreground text-sm leading-relaxed max-w-lg mx-auto mb-5">
               Can't donate financially? You can still make a difference by spreading the word, volunteering your time or skills, or encouraging others in your network to contribute.
             </p>
-            <a
-              href="https://wa.me/447496933887"
-              target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+            <Link
+              to="/join"
+              className="inline-flex items-center gap-2 bg-accent text-charcoal font-bold px-6 py-3 rounded-xl text-sm hover:brightness-110 transition-all"
             >
-              Contact Us on WhatsApp
-            </a>
+              Get in Touch
+            </Link>
           </motion.div>
 
         </div>

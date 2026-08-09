@@ -2,9 +2,13 @@ import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 
 interface Props {
-  gradientClass: string;
+  /** Tailwind gradient utilities for the backdrop. Most heroes sit on `bg-primary`
+   *  and just want the default deep-blue wash. */
+  gradientClass?: string;
   children?: React.ReactNode;
 }
+
+const DEFAULT_GRADIENT = "bg-gradient-to-br from-primary via-primary to-primary/80";
 
 const rings = [
   { cx: 80,  cy: 80,  r: 130, duration: 7,   delay: 0   },
@@ -27,7 +31,7 @@ const nodes = [
   { cx: 535, cy: 145, delay: 1.0 },
 ];
 
-export default function AnimatedHeroBg({ gradientClass, children }: Props) {
+export default function AnimatedHeroBg({ gradientClass = DEFAULT_GRADIENT, children }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   // Only run the infinite keyframe loops while the hero is actually on screen —
   // otherwise these 14 motion elements keep ticking on every frame for the

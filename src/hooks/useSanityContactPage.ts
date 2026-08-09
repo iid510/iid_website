@@ -18,7 +18,7 @@ export interface ContactPageData {
 
 const FALLBACK_CONTACT_PAGE: ContactPageData = {
   contacts: [
-    { icon: "Phone", label: "Phone / WhatsApp", value: "+44 7723 953174", sub: "Available Mon – Fri, 9 am – 6 pm (BST)", href: "tel:+447723953174", ctaLabel: "Chat on WhatsApp", ctaHref: "https://wa.me/447723953174" },
+    { icon: "Phone", label: "Phone", value: "+44 7723 953174", sub: "Available Mon – Fri, 9 am – 6 pm (BST)", href: "tel:+447723953174", ctaLabel: "Join IID", ctaHref: "/join" },
     { icon: "Mail", label: "General Enquiries", value: "info@ijebuigbodescendants.org", sub: "We reply within 2 business days", href: "mailto:info@ijebuigbodescendants.org" },
     { icon: "Mail", label: "Support", value: "support@ijebuigbodescendants.org", sub: "Technical & membership questions", href: "mailto:support@ijebuigbodescendants.org" },
     { icon: "Globe", label: "Website", value: "ijebuigbodescendants.org", sub: "Official IID Omo Orimolusi portal", href: "https://www.ijebuigbodescendants.org/" },

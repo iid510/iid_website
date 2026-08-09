@@ -115,6 +115,18 @@
     "/privacy": {
       "title": "Privacy Policy — Ijebu Igbo Descendants in Diaspora",
       "description": "How Ijebu Igbo Descendants in Diaspora (IID Omo Orimolusi) collects, uses, and protects your personal data."
+    },
+    "/roots": {
+      "title": "Find Your Roots — Which Ijebu-Igbo Town Is Your Family From?",
+      "description": "Answer four questions about your family compound and surname, and trace your roots to one of the seven towns of Ijebu-Igbo — your Oba, your chiefs, your quarter."
+    },
+    "/my-iid": {
+      "title": "Your IID — Your Town, Saved Businesses and Next Event",
+      "description": "Your personal space on the IID Omo Orimolusi site: the town your family is from, businesses and articles you've saved, and a countdown to the next community event."
+    },
+    "/identity-card": {
+      "title": "Create Your Ọmọ Orimolusi Identity Card",
+      "description": "Generate and share a free Ọmọ Orimolusi card with your name and your Ijebu-Igbo town — made in your browser, ready for WhatsApp, Instagram and X."
     }
   }
 }

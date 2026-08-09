@@ -1,21 +1,24 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Mail, MessageCircle, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Phone, Mail, UserPlus, X } from "lucide-react";
 
 const contactInfo = {
   phone: "+44 7723 953174",
   email: "info@ijebuigbodescendants.org",
-  whatsapp: "447723953174",
 };
 
 export default function FloatingContact() {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Every enquiry funnels through /join (the membership form) rather than
+  // scattering people into WhatsApp DMs. Phone and email stay as direct channels.
   const contactOptions = [
     {
       icon: Phone,
       label: "Call Us",
       href: `tel:+447723953174`,
+      internal: false,
       color: "bg-primary hover:bg-primary/90 active:bg-primary/95 border border-accent/30",
       delay: 0.1,
     },
@@ -23,14 +26,16 @@ export default function FloatingContact() {
       icon: Mail,
       label: "Email",
       href: `mailto:${contactInfo.email}`,
+      internal: false,
       color: "bg-primary hover:bg-primary/90 active:bg-primary/95 border border-accent/30",
       delay: 0.15,
     },
     {
-      icon: MessageCircle,
-      label: "WhatsApp",
-      href: `https://wa.me/${contactInfo.whatsapp.replace(/\s/g, "")}`,
-      color: "bg-primary hover:bg-primary/90 active:bg-primary/95 border border-accent/30",
+      icon: UserPlus,
+      label: "Join IID",
+      href: "/join",
+      internal: true,
+      color: "bg-accent text-charcoal hover:brightness-110 active:brightness-95 border border-accent/30",
       delay: 0.2,
     },
   ];
@@ -47,24 +52,39 @@ export default function FloatingContact() {
             transition={{ duration: 0.2 }}
             className="flex flex-col gap-2 sm:gap-3 mb-2"
           >
-            {contactOptions.map((option) => (
-              <motion.a
-                key={option.label}
-                href={option.href}
-                target={option.label === "WhatsApp" ? "_blank" : undefined}
-                rel={option.label === "WhatsApp" ? "noopener noreferrer" : undefined}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ delay: option.delay }}
-                className={`flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-full text-white shadow-lg ${option.color} transition-all duration-200 touch-manipulation active:scale-95`}
-              >
-                <option.icon className="w-5 h-5 sm:w-6 sm:h-6" />
-                <span className="text-sm sm:text-base font-medium whitespace-nowrap">
-                  {option.label}
-                </span>
-              </motion.a>
-            ))}
+            {contactOptions.map((option) => {
+              const inner = (
+                <>
+                  <option.icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <span className="text-sm sm:text-base font-medium whitespace-nowrap">
+                    {option.label}
+                  </span>
+                </>
+              );
+              const className = `flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-full ${
+                option.internal ? "" : "text-white"
+              } shadow-lg ${option.color} transition-all duration-200 touch-manipulation active:scale-95`;
+
+              return (
+                <motion.div
+                  key={option.label}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ delay: option.delay }}
+                >
+                  {option.internal ? (
+                    <Link to={option.href} onClick={() => setIsOpen(false)} className={className}>
+                      {inner}
+                    </Link>
+                  ) : (
+                    <a href={option.href} className={className}>
+                      {inner}
+                    </a>
+                  )}
+                </motion.div>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>

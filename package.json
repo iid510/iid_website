@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/generate-og-pages.mjs",
+    "build": "node scripts/check-content.mjs && vite build && node scripts/generate-og-pages.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "check": "node scripts/check-content.mjs && tsc --noEmit -p tsconfig.app.json && eslint src",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",

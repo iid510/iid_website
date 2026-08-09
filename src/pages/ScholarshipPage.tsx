@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { BookOpen, CheckCircle2, Clock, FileText, Users, ChevronRight, GraduationCap } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
@@ -151,13 +152,12 @@ export default function ScholarshipPage() {
             {PAST_RECIPIENTS.length === 0 ? (
               <div className="text-center py-10 border border-dashed border-border rounded-xl space-y-3">
                 <p className="text-muted-foreground text-sm">Past recipients will be listed here as the programme grows.</p>
-                <a
-                  href={`https://wa.me/447496933887?text=${encodeURIComponent("Hello, I'd like to apply for the IID Scholarship Programme.")}`}
-                  target="_blank" rel="noopener noreferrer"
+                <Link
+                  to="/join"
                   className="inline-flex items-center gap-2 text-sm font-semibold text-primary border border-primary/30 px-5 py-2.5 rounded-xl hover:bg-primary/5 transition-colors"
                 >
-                  Ready to apply? Contact us →
-                </a>
+                  Ready to apply? Get in touch →
+                </Link>
               </div>
             ) : (
               <div className="space-y-3">
@@ -180,15 +180,14 @@ export default function ScholarshipPage() {
             <BookOpen size={32} className="text-accent mx-auto mb-3" />
             <h2 className="font-display font-black text-xl text-foreground mb-2">Ready to Apply?</h2>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-md mx-auto mb-5">
-              Contact the General Secretary to request an application form or to ask any questions about the programme.
+              Register your details with us to request an application form or to ask any questions about the programme.
             </p>
-            <a
-              href="https://wa.me/447496933887"
-              target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+            <Link
+              to="/join"
+              className="inline-flex items-center gap-2 bg-accent text-charcoal font-bold px-6 py-3 rounded-xl text-sm hover:brightness-110 transition-all"
             >
-              Contact Us on WhatsApp <ChevronRight size={15} />
-            </a>
+              Get in Touch <ChevronRight size={15} />
+            </Link>
           </motion.div>
 
         </div>

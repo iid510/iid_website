@@ -1,23 +1,25 @@
 {
-  "name": "Connect Ijebu Roots",
-  "short_name": "Ijebu Roots",
+  "name": "IID Omo Orimolusi — Ijebu Igbo Descendants in Diaspora",
+  "short_name": "IID Omo Orimolusi",
   "description": "IID Omo Orimolusi in Diaspora — Connecting Ijebu Igbo descendants worldwide.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#1a1a2e",
-  "theme_color": "#1a1a2e",
+  "background_color": "#0b2a6b",
+  "theme_color": "#0b2a6b",
   "orientation": "portrait-primary",
+  "lang": "en-GB",
   "icons": [
-    { "src": "/logo.webp", "sizes": "192x192", "type": "image/webp" },
-    { "src": "/logo.webp", "sizes": "512x512", "type": "image/webp" },
-    { "src": "/logo.png",  "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/logo.png",  "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Events",    "short_name": "Events",    "url": "/events",    "description": "Community events" },
-    { "name": "News",      "short_name": "News",      "url": "/news",      "description": "Latest news" },
-    { "name": "Directory", "short_name": "Directory", "url": "/businesses","description": "Business directory" },
-    { "name": "Donate",    "short_name": "Donate",    "url": "/donate",    "description": "Support the community" }
+    { "name": "Your IID", "short_name": "Your IID", "url": "/my-iid", "description": "Your town, saved items and next event" },
+    { "name": "Find Your Roots", "short_name": "Roots", "url": "/roots", "description": "Trace your family to a town" },
+    { "name": "Directory", "short_name": "Directory", "url": "/businesses", "description": "Business directory" },
+    { "name": "Donate", "short_name": "Donate", "url": "/donate", "description": "Support the community" }
   ],
   "categories": ["community", "social", "lifestyle"]
 }

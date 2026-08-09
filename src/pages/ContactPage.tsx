@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Mail, MessageCircle, Send,
+  Mail, MessageCircle, Send, UserPlus,
   Clock, CheckCircle, MapPin, ArrowRight, Users,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
@@ -217,15 +217,13 @@ export default function ContactPage() {
                 <Mail size={15} />
                 Email Us
               </a>
-              <a
-                href="https://wa.me/447723953174"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/join"
                 className="inline-flex items-center gap-2 bg-white/15 border border-white/25 text-white font-bold text-sm px-5 py-3 rounded-xl hover:bg-white/25 transition-all backdrop-blur-sm"
               >
-                <MessageCircle size={15} />
-                WhatsApp
-              </a>
+                <UserPlus size={15} />
+                Join IID
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -297,16 +295,27 @@ export default function ContactPage() {
                         <p className="text-xs text-muted-foreground mt-1">{c.sub}</p>
 
                         {c.ctaLabel && c.ctaHref && (
-                          <a
-                            href={c.ctaHref}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
-                          >
-                            <MessageCircle size={12} />
-                            {c.ctaLabel}
-                            <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
-                          </a>
+                          c.ctaHref.startsWith("/") ? (
+                            <Link
+                              to={c.ctaHref}
+                              className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-bold text-primary hover:text-primary/80 transition-colors"
+                            >
+                              <UserPlus size={12} />
+                              {c.ctaLabel}
+                              <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                          ) : (
+                            <a
+                              href={c.ctaHref}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
+                            >
+                              <MessageCircle size={12} />
+                              {c.ctaLabel}
+                              <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                            </a>
+                          )
                         )}
                       </div>
                     </motion.div>

@@ -15,6 +15,7 @@ import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
+import SaveButton from "@/components/SaveButton";
 import {
   CATEGORY_GRADIENTS,
   CATEGORY_COLORS,
@@ -78,8 +79,8 @@ function FloatingShapes({ gradient }: { gradient: string }) {
           style={{
             width: [80, 56, 100][i],
             height: [80, 56, 100][i],
-            left: [`${[15, 65, 40][i]}%`],
-            top: [`${[10, 50, 65][i]}%`],
+            left: `${[15, 65, 40][i]}%`,
+            top: `${[10, 50, 65][i]}%`,
           }}
           animate={{
             y: [0, -12, 0],
@@ -226,6 +227,10 @@ function BusinessCard({ business, index }: { business: Business; index: number }
             ★ Featured
           </div>
         )}
+
+        <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20">
+          <SaveButton slug={business.slug} kind="business" />
+        </div>
         <div className={`absolute bottom-2 right-2 sm:bottom-3 sm:right-3 z-10
                          text-[9px] sm:text-xs font-semibold px-2 py-0.5 sm:py-1
                          rounded-full border backdrop-blur-sm bg-white/85 hidden sm:block
@@ -346,7 +351,7 @@ export default function Businesses() {
         (b.tagline ?? "").toLowerCase().includes(q) ||
         b.category.toLowerCase().includes(q)
     ).slice(0, 6);
-  }, [search]);
+  }, [search, BUSINESSES]);
 
   const toggleCategory = (cat: string) => {
     setSelectedCategories((prev) => {
@@ -390,7 +395,7 @@ export default function Businesses() {
     if (sort === "az")       list = [...list].sort((a, b) => a.name.localeCompare(b.name));
     if (sort === "za")       list = [...list].sort((a, b) => b.name.localeCompare(a.name));
     return list;
-  }, [search, selectedCategories, region, hasWhatsApp, hasWebsite, sort]);
+  }, [search, selectedCategories, region, hasWhatsApp, hasWebsite, sort, BUSINESSES]);
 
   const totalBusinesses = BUSINESSES.length;
   const totalCategories = CATEGORY_PILLS.length;
@@ -785,7 +790,7 @@ export default function Businesses() {
             </p>
             <motion.button
               onClick={() => setShowListModal(true)}
-              whileHover={{ scale: 1.04, brightness: 1.1 }}
+              whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center gap-2 bg-accent text-primary font-bold px-7 py-3.5 rounded-xl shadow-lg hover:brightness-110 transition-all text-sm sm:text-base"
             >

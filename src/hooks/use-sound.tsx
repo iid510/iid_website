@@ -52,7 +52,6 @@ export function useSound(src: string, config: SoundConfig = {}): UseSoundReturn 
       audio.pause();
       audio.src = "";
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src, loop, autoplay, initialVolume]);
 
   // Update volume when changed

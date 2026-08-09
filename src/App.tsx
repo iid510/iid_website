@@ -50,6 +50,11 @@ import BlogPage from "./pages/BlogPage.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import HonourRollPage from "./pages/HonourRollPage.tsx";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage.tsx";
+import MyIIDPage from "./pages/MyIIDPage.tsx";
+import FindYourRootsPage from "./pages/FindYourRootsPage.tsx";
+import IdentityCardPage from "./pages/IdentityCardPage.tsx";
+import GuidedTour from "./components/GuidedTour.tsx";
+import InstallPrompt from "./components/InstallPrompt.tsx";
 
 const queryClient = new QueryClient();
 
@@ -93,10 +98,15 @@ const App = () => (
           <Route path="/businesses"          element={<Businesses />} />
           <Route path="/businesses/:slug"    element={<BusinessProfile />} />
           <Route path="/join"              element={<JoinPage />} />
+          <Route path="/my-iid"            element={<MyIIDPage />} />
+          <Route path="/roots"             element={<FindYourRootsPage />} />
+          <Route path="/identity-card"     element={<IdentityCardPage />} />
           <Route path="/heritage/orimolusi/:slug" element={<KingProfile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*"            element={<NotFound />} />
         </Routes>
+        <GuidedTour />
+        <InstallPrompt />
       </BrowserRouter>
       </SmoothScroll>
     </TooltipProvider>

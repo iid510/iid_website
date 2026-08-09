@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, ArrowRight, Search, X } from "lucide-react";
+import { Calendar, ArrowRight, BookOpen, Search, Sparkles, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
@@ -10,6 +10,8 @@ import BackToTop from "@/components/BackToTop";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import { useSanityBlogPosts } from "@/hooks/useSanityBlogPosts";
 import { useSanityNews } from "@/hooks/useSanityNews";
+import { useYourIID } from "@/context/YourIIDContext";
+import { BLOG_STARTER_PATH } from "@/data/blogStarterPath";
 
 interface UnifiedPost {
   key: string;
@@ -29,6 +31,7 @@ export default function BlogPage() {
   const { data: NEWS_ARTICLES = [] } = useSanityNews();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
+  const { profile } = useYourIID();
 
   const ALL_POSTS = useMemo<UnifiedPost[]>(() => {
     const news: UnifiedPost[] = NEWS_ARTICLES.map((a) => ({
@@ -55,6 +58,27 @@ export default function BlogPage() {
   }, [NEWS_ARTICLES, RAW_BLOG_POSTS]);
 
   const CATEGORIES = useMemo(() => ["All", ...Array.from(new Set(ALL_POSTS.map((p) => p.category)))], [ALL_POSTS]);
+
+  // Curated onboarding path. Any slug that no longer resolves is dropped rather
+  // than rendered as a dead link.
+  const starterPath = useMemo(
+    () =>
+      BLOG_STARTER_PATH.map((step) => ({
+        reason: step.reason,
+        post: RAW_BLOG_POSTS.find((p) => p.slug === step.slug),
+      })).filter((s): s is { reason: string; post: (typeof RAW_BLOG_POSTS)[number] } => Boolean(s.post)),
+    [RAW_BLOG_POSTS],
+  );
+
+  const continueReading = useMemo(
+    () =>
+      Object.entries(profile.reading)
+        .filter(([, mark]) => mark.percent > 5 && mark.percent < 95)
+        .sort((a, b) => b[1].updatedAt - a[1].updatedAt)
+        .slice(0, 3)
+        .map(([slug, mark]) => ({ slug, ...mark })),
+    [profile.reading],
+  );
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -127,6 +151,88 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
+
+      {/* Continue reading — only for visitors with something in progress */}
+      {continueReading.length > 0 && (
+        <section className="pt-8 md:pt-12">
+          <div className="container-main">
+            <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
+              <div className="flex items-center justify-between gap-3 mb-4">
+                <h2 className="font-display font-bold text-foreground text-lg flex items-center gap-2">
+                  <BookOpen size={18} className="text-accent" /> Continue reading
+                </h2>
+                <Link to="/my-iid" className="text-xs font-bold text-primary hover:underline shrink-0">
+                  Your IID →
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {continueReading.map((item) => (
+                  <Link
+                    key={item.slug}
+                    to={`/blog/${item.slug}`}
+                    className="p-4 rounded-xl border border-border hover:border-accent/50 transition-colors group"
+                  >
+                    <p className="font-semibold text-foreground text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </p>
+                    <div className="flex items-center gap-2.5 mt-2.5">
+                      <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-accent rounded-full" style={{ width: `${item.percent}%` }} />
+                      </div>
+                      <span className="text-[11px] font-bold text-muted-foreground shrink-0">{item.percent}%</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Start Here — a curated path through 100 posts */}
+      {starterPath.length > 0 && category === "All" && !query && (
+        <section className="pt-8 md:pt-12">
+          <div className="container-main">
+            <div className="rounded-2xl border border-accent/30 bg-accent/8 p-5 sm:p-7">
+              <div className="flex items-start justify-between gap-4 mb-5">
+                <div>
+                  <p className="label-accent !mb-1 flex items-center gap-2">
+                    <Sparkles size={13} /> Start here
+                  </p>
+                  <h2 className="font-display font-black text-foreground text-xl sm:text-2xl leading-tight">
+                    New to Ijebu-Igbo? Read these {starterPath.length}, in this order.
+                  </h2>
+                  <p className="text-muted-foreground text-sm mt-1.5 max-w-xl leading-relaxed">
+                    A guided path from "where is this place" to "how do I take part" — each article
+                    setting up the next.
+                  </p>
+                </div>
+              </div>
+
+              <ol className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                {starterPath.map((step, i) => (
+                  <li key={step.post.slug}>
+                    <Link
+                      to={`/blog/${step.post.slug}`}
+                      className="flex items-start gap-3.5 p-3.5 rounded-xl bg-card border border-border hover:border-accent/50 transition-colors group h-full"
+                    >
+                      <span className="w-7 h-7 rounded-full bg-primary text-primary-foreground font-display font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
+                        {i + 1}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-foreground text-sm leading-snug group-hover:text-primary transition-colors">
+                          {step.post.title}
+                        </p>
+                        <p className="text-muted-foreground text-xs mt-1 leading-relaxed">{step.reason}</p>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Articles Grid */}
       <section className="section-padding">

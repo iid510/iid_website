@@ -21,6 +21,8 @@ const mediaLinks = [
 ];
 
 const moreLinks = [
+  { label: "Find Your Roots", href: "/roots",        icon: "🧭" },
+  { label: "Your IID",       href: "/my-iid",        icon: "⭐" },
   { label: "Contact",        href: "/contact",       icon: "✉️" },
   { label: "Impact",         href: "/impact",        icon: "📊" },
   { label: "Team",           href: "/team",          icon: "👥" },
@@ -257,7 +259,6 @@ export default function Navbar() {
                 transition={{
                   scale: { duration: 2.2, repeat: Infinity, ease: "easeInOut" },
                   boxShadow: { duration: 1.4, repeat: Infinity, ease: "easeOut" },
-                  whileHover: { duration: 0.2 },
                 }}
               >
                 <span className="relative z-10 inline-flex items-center gap-2 font-semibold tracking-wide">

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Plane, Car, MapPin, Phone, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
@@ -175,13 +176,12 @@ export default function TravelGuidePage() {
             <p className="text-muted-foreground text-sm leading-relaxed max-w-md mx-auto mb-5">
               Let us know you're coming — we can connect you with members in Ijebu-Igbo, recommend places to visit, and ensure your homecoming is a memorable one.
             </p>
-            <a
-              href="https://wa.me/447496933887"
-              target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+            <Link
+              to="/join"
+              className="inline-flex items-center gap-2 bg-accent text-charcoal font-bold px-6 py-3 rounded-xl text-sm hover:brightness-110 transition-all"
             >
               Get in Touch <ChevronRight size={15} />
-            </a>
+            </Link>
           </motion.div>
 
         </div>

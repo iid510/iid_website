@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import HomeRootsBand from "@/components/HomeRootsBand";
 import VideoSection from "@/components/VideoSection";
 import Impact from "@/components/Impact";
 import Team from "@/components/Team";
@@ -52,6 +53,7 @@ const Index = () => {
       <Seo path="/" jsonLd={[ORG_JSONLD, homeFaqJsonLd]} />
       <Hero />
       <About />
+      <HomeRootsBand />
       <VideoSection />
       <Impact />
       <OrimolusiSection />

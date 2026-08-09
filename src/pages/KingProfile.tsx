@@ -13,6 +13,9 @@ export default function KingProfile() {
   const { slug } = useParams();
   const { data: kings = [] } = useSanityKings();
   const king = kings.find((k) => k.slug === slug);
+  // Declared before the early return — a conditional hook changes hook order
+  // between a found and a missing king and crashes React on navigation.
+  const [activePhoto, setActivePhoto] = useState(0);
 
   if (!king) {
     return (
@@ -26,7 +29,6 @@ export default function KingProfile() {
   }
 
   const isPresent = king.status === "Present";
-  const [activePhoto, setActivePhoto] = useState(0);
   const photos = king.photos ?? [king.photo];
   const prevPhoto = () => setActivePhoto((i) => (i - 1 + photos.length) % photos.length);
   const nextPhoto = () => setActivePhoto((i) => (i + 1) % photos.length);

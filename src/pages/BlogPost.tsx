@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Calendar, ArrowLeft, Share2, Tag } from "lucide-react";
+import { Calendar, ArrowLeft, ArrowRight, Share2, Tag } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
+import ReadingProgress from "@/components/ReadingProgress";
+import SaveButton from "@/components/SaveButton";
 import { useSanityBlogPosts } from "@/hooks/useSanityBlogPosts";
+import { BLOG_STARTER_PATH } from "@/data/blogStarterPath";
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -35,8 +38,17 @@ export default function BlogPost() {
 
   const related = BLOG_POSTS.filter((p) => p.category === post.category && p.slug !== post.slug).slice(0, 3);
 
+  // If this post sits on the curated path, offer the next step rather than
+  // dropping the reader back into a 100-post list.
+  const pathIndex = BLOG_STARTER_PATH.findIndex((s) => s.slug === post.slug);
+  const nextOnPath =
+    pathIndex >= 0 && pathIndex < BLOG_STARTER_PATH.length - 1
+      ? BLOG_POSTS.find((p) => p.slug === BLOG_STARTER_PATH[pathIndex + 1].slug) ?? null
+      : null;
+
   return (
     <div className="min-h-screen bg-background">
+      <ReadingProgress slug={post.slug} title={post.title} />
       <Seo
         title={`${post.title} | Ijebu Igbo Descendants in Diaspora`}
         description={post.excerpt}
@@ -68,17 +80,20 @@ export default function BlogPost() {
               <Calendar className="w-4 h-4" />
               <time>{post.date}</time>
             </div>
-            <button
-              onClick={() => {
-                if (navigator.share) {
-                  navigator.share({ title: post.title, url: window.location.href });
-                }
-              }}
-              className="ml-auto inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border border-border rounded-lg hover:bg-muted transition-colors text-sm sm:text-base"
-            >
-              <Share2 className="w-4 h-4" />
-              <span className="hidden sm:inline">Share</span>
-            </button>
+            <div className="ml-auto flex items-center gap-2">
+              <SaveButton slug={post.slug} kind="article" variant="full" className="!py-1.5 !px-3 sm:!py-2 sm:!px-4" />
+              <button
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({ title: post.title, url: window.location.href });
+                  }
+                }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border border-border rounded-lg hover:bg-muted transition-colors text-sm sm:text-base"
+              >
+                <Share2 className="w-4 h-4" />
+                <span className="hidden sm:inline">Share</span>
+              </button>
+            </div>
           </div>
 
           <motion.h1
@@ -107,6 +122,25 @@ export default function BlogPost() {
               </p>
             ))}
           </motion.div>
+
+          {nextOnPath && (
+            <div className="mt-10 sm:mt-14 rounded-2xl border border-accent/30 bg-accent/8 p-5 sm:p-6">
+              <p className="text-xs font-bold uppercase tracking-wide text-accent mb-2">
+                Next on the Start Here path · {pathIndex + 2} of {BLOG_STARTER_PATH.length}
+              </p>
+              <Link to={`/blog/${nextOnPath.slug}`} className="group block">
+                <h3 className="font-display font-bold text-foreground text-lg sm:text-xl leading-snug group-hover:text-primary transition-colors">
+                  {nextOnPath.title}
+                </h3>
+                <p className="text-muted-foreground text-sm mt-1.5 leading-relaxed">
+                  {BLOG_STARTER_PATH[pathIndex + 1].reason}
+                </p>
+                <span className="inline-flex items-center gap-1.5 mt-3 text-sm font-bold text-primary">
+                  Continue reading <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+            </div>
+          )}
 
           {related.length > 0 && (
             <div className="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-border">

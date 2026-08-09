@@ -12,6 +12,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import ImageWithSkeleton from "@/components/ImageWithSkeleton";
+import SaveButton from "@/components/SaveButton";
 import {
   CATEGORY_GRADIENTS,
   type ServiceCategory,
@@ -257,6 +258,7 @@ export default function BusinessProfile() {
               </div>
               {/* Quick actions */}
               <div className="flex items-center gap-2 shrink-0">
+                <SaveButton slug={business.slug} kind="business" variant="full" className="!py-1.5 !px-3 !text-xs" />
                 {waNumber && (
                   <a
                     href={`https://wa.me/${waNumber}`}

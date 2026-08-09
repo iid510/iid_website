@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, ArrowRight, Building2, Newspaper, Calendar, LayoutGrid } from "lucide-react";
+import { Search, X, ArrowRight, Building2, Newspaper, Calendar, LayoutGrid, BookOpen, Crown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSanityBusinesses } from "@/hooks/useSanityBusinesses";
 import { useSanityNews } from "@/hooks/useSanityNews";
+import { useSanityBlogPosts } from "@/hooks/useSanityBlogPosts";
+import { useSanityTowns } from "@/hooks/useSanityTowns";
+import { useSanityEvents } from "@/hooks/useSanityEvents";
 
 interface SearchResult {
-  type: "business" | "news" | "event" | "page";
+  type: "business" | "news" | "event" | "page" | "article" | "town";
   title: string;
   subtitle: string;
   href: string;
@@ -23,13 +26,14 @@ const PAGES: SearchResult[] = [
   { type: "page", title: "Gallery", subtitle: "Photos and memories", href: "/gallery" },
   { type: "page", title: "Contact Us", subtitle: "Get in touch with IID", href: "/contact" },
   { type: "page", title: "Blog", subtitle: "Community news, culture and heritage articles", href: "/blog" },
-];
-
-const EVENTS: SearchResult[] = [
-  { type: "event", title: "Annual General Meeting 2026", subtitle: "April 15, 2026 · Virtual (Zoom)", href: "/events" },
-  { type: "event", title: "Ojude Oba Cultural Festival", subtitle: "June 20, 2026 · Ijebu Igbo, Nigeria", href: "/events" },
-  { type: "event", title: "Diaspora Networking Gala", subtitle: "August 10, 2026 · London, UK", href: "/events" },
-  { type: "event", title: "Youth Leadership Summit", subtitle: "October 5, 2026 · Birmingham, UK", href: "/events" },
+  { type: "page", title: "Find Your Roots", subtitle: "Trace your family to one of the seven towns", href: "/roots" },
+  { type: "page", title: "Your IID", subtitle: "Your town, saved items and next event", href: "/my-iid" },
+  { type: "page", title: "Identity Card", subtitle: "Create a shareable Ọmọ Orimolusi card", href: "/identity-card" },
+  { type: "page", title: "Join IID", subtitle: "Become a member of the community", href: "/join" },
+  { type: "page", title: "Scholarship", subtitle: "IID scholarship and bursary programme", href: "/scholarship" },
+  { type: "page", title: "Travel Guide", subtitle: "Planning a trip to Ijebu-Igbo", href: "/travel" },
+  { type: "page", title: "Honour Roll", subtitle: "IID foundation members and founders", href: "/honour-roll" },
+  { type: "page", title: "Donate", subtitle: "Support community development projects", href: "/donate" },
 ];
 
 const TYPE_META: Record<string, { label: string; icon: React.ElementType; color: string }> = {
@@ -37,6 +41,8 @@ const TYPE_META: Record<string, { label: string; icon: React.ElementType; color:
   news:     { label: "News",     icon: Newspaper,  color: "text-green-500" },
   event:    { label: "Event",    icon: Calendar,   color: "text-amber-500" },
   page:     { label: "Page",     icon: LayoutGrid, color: "text-purple-500" },
+  article:  { label: "Article",  icon: BookOpen,   color: "text-rose-500" },
+  town:     { label: "Town",     icon: Crown,      color: "text-accent" },
 };
 
 interface Props {
@@ -57,6 +63,9 @@ export default function SearchModal({ open, onOpenChange }: Props) {
   const navigate = useNavigate();
   const { data: BUSINESSES = [] } = useSanityBusinesses();
   const { data: NEWS_ARTICLES = [] } = useSanityNews();
+  const { data: BLOG_POSTS = [] } = useSanityBlogPosts();
+  const { data: TOWNS = [] } = useSanityTowns();
+  const { data: EVENTS = [] } = useSanityEvents();
 
   useEffect(() => {
     if (open) {
@@ -110,16 +119,50 @@ export default function SearchModal({ open, onOpenChange }: Props) {
       }
     });
 
+    BLOG_POSTS.forEach((p) => {
+      if (match(q, p.title, p.excerpt, p.category, p.keyword)) {
+        found.push({
+          type: "article",
+          title: p.title,
+          subtitle: p.category,
+          href: `/blog/${p.slug}`,
+        });
+      }
+    });
+
+    TOWNS.forEach((t) => {
+      if (match(q, t.name, t.tagline ?? "", t.rulerTitle ?? "", t.rulerName ?? "")) {
+        found.push({
+          type: "town",
+          title: t.name,
+          subtitle: t.rulerTitle ?? "Town of Ijebu-Igbo",
+          href: `/${t.slug}`,
+        });
+      }
+    });
+
     EVENTS.forEach((ev) => {
-      if (match(q, ev.title, ev.subtitle)) found.push(ev);
+      if (match(q, ev.title, ev.date, ev.location, ev.description)) {
+        found.push({
+          type: "event",
+          title: ev.title,
+          subtitle: `${ev.date} · ${ev.location}`,
+          href: "/events",
+        });
+      }
     });
 
     PAGES.forEach((pg) => {
       if (match(q, pg.title, pg.subtitle)) found.push(pg);
     });
 
-    return found.slice(0, 12);
-  }, [query, BUSINESSES, NEWS_ARTICLES]);
+    // Pages and towns are the cheapest, most likely destinations — surface them
+    // above the long tail of articles when both match.
+    const weight: Record<SearchResult["type"], number> = {
+      page: 0, town: 1, business: 2, event: 3, news: 4, article: 5,
+    };
+    return found.sort((a, b) => weight[a.type] - weight[b.type]).slice(0, 12);
+  }, [query, BUSINESSES, NEWS_ARTICLES, BLOG_POSTS, TOWNS, EVENTS]);
 
   const handleSelect = (href: string) => {
     navigate(href);
