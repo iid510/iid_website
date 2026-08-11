@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSanityNews } from "@/hooks/useSanityNews";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { HOME_PAGE } from "@/data/pageContent";
+import Img from "@/components/Img";
 
 export default function News() {
   const { data: newsArticles = [] } = useSanityNews();
@@ -31,10 +32,11 @@ export default function News() {
               <Link to={`/news/${article.id}`} className="block">
                 {/* Featured Image */}
                 <div className="relative h-[250px] sm:h-[300px] lg:h-[350px] overflow-hidden">
-                  <img
+                  <Img
                     src={article.featuredImage}
                     alt={article.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(min-width: 1024px) 50vw, 100vw"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />

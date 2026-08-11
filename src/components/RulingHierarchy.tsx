@@ -259,7 +259,9 @@ export default function RulingHierarchy() {
           className="flex items-center gap-4 mb-6"
         >
           <div className="flex-1 h-px bg-border" />
-          <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest whitespace-nowrap">
+          {/* Not nowrap: at 390px this label is wider than the viewport and was
+              pushing the whole page into a horizontal scroll. */}
+          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider sm:tracking-widest text-center">
             Town Obas — Click to expand Baales
           </span>
           <div className="flex-1 h-px bg-border" />

@@ -23,8 +23,9 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handle}
-      className="ml-2 text-muted-foreground hover:text-accent transition-colors"
+      className="ml-1 w-11 h-11 inline-flex items-center justify-center shrink-0 text-muted-foreground hover:text-accent transition-colors touch-manipulation"
       title="Copy"
+      aria-label="Copy to clipboard"
     >
       {copied ? <CheckCircle2 size={14} className="text-emerald-500" /> : <Copy size={14} />}
     </button>
@@ -156,7 +157,7 @@ export default function DonatePage() {
                 <a
                   href="https://wa.me/447496933887"
                   target="_blank" rel="noopener noreferrer"
-                  className="underline font-bold"
+                  className="underline font-bold inline-flex items-center min-h-[44px] touch-manipulation"
                 >
                   +44 7496 933887
                 </a>{" "}

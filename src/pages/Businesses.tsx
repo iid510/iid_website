@@ -24,6 +24,7 @@ import {
 import { useSanityBusinesses } from "@/hooks/useSanityBusinesses";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { BUSINESSES_PAGE } from "@/data/pageContent";
+import Img from "@/components/Img";
 
 const CATEGORY_PILLS = [
   "Food & Catering",
@@ -166,10 +167,11 @@ function BusinessCard({ business, index }: { business: Business; index: number }
       <div className="relative h-32 sm:h-44 overflow-hidden shrink-0">
         {business.flyer ? (
           <>
-            <img
+            <Img
               src={business.flyer}
               alt={business.name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             />
             <button
               type="button"
@@ -271,7 +273,7 @@ function BusinessCard({ business, index }: { business: Business; index: number }
                 href={`https://wa.me/${waNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-7 h-7 bg-[#25D366] hover:bg-[#1fba58] rounded-lg flex items-center justify-center transition-colors"
+                className="w-11 h-11 bg-[#25D366] hover:bg-[#1fba58] rounded-lg flex items-center justify-center transition-colors touch-manipulation active:scale-95"
                 aria-label="WhatsApp"
               >
                 <svg className="w-3.5 h-3.5" fill="white" viewBox="0 0 24 24">
@@ -284,7 +286,7 @@ function BusinessCard({ business, index }: { business: Business; index: number }
                 href={business.website.startsWith("http") ? business.website : `https://${business.website}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-7 h-7 bg-primary/10 hover:bg-primary/20 rounded-lg items-center justify-center transition-colors hidden sm:flex"
+                className="w-11 h-11 bg-primary/10 hover:bg-primary/20 rounded-lg items-center justify-center transition-colors hidden sm:flex touch-manipulation"
                 aria-label="Website"
               >
                 <Globe size={13} className="text-primary" />
@@ -704,7 +706,7 @@ export default function Businesses() {
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value as Sort)}
-                className="bg-transparent text-sm text-foreground focus:outline-none cursor-pointer w-full"
+                className="bg-transparent text-sm text-foreground focus:outline-none cursor-pointer w-full min-h-[44px] touch-manipulation"
               >
                 {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>

@@ -5,6 +5,7 @@ import { useSanitySiteSettings } from "@/hooks/useSanitySiteSettings";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { resolveIcon } from "@/lib/iconMap";
 import { HOME_PAGE } from "@/data/pageContent";
+import Img from "@/components/Img";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -59,7 +60,7 @@ export default function About() {
             className="relative"
           >
             <div className="overflow-hidden rounded-2xl shadow-elevated">
-              <img
+              <Img
                 src={aboutImg}
                 alt="Ijebu Igbo community cultural gathering"
                 className="w-full h-[280px] sm:h-[360px] lg:h-[450px] object-cover"

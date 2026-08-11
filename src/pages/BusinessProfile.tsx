@@ -634,13 +634,13 @@ export default function BusinessProfile() {
                         href={`https://instagram.com/${business.social.instagram.replace("@", "")}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 text-sm text-foreground/80 hover:text-foreground group"
+                        className="flex items-center gap-3 min-w-0 min-h-[44px] text-sm text-foreground/80 hover:text-foreground group touch-manipulation"
                       >
                         <span className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500
                                          rounded-lg flex items-center justify-center shrink-0">
                           <Instagram size={14} className="text-white" />
                         </span>
-                        <span className="text-xs">@{business.social.instagram.replace("@", "")}</span>
+                        <span className="text-xs truncate min-w-0">@{business.social.instagram.replace("@", "")}</span>
                         <ExternalLink size={11} className="ml-auto text-muted-foreground/50 group-hover:text-muted-foreground" />
                       </a>
                     )}
@@ -649,12 +649,12 @@ export default function BusinessProfile() {
                         href={`https://facebook.com/${business.social.facebook}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 text-sm text-foreground/80 hover:text-foreground group"
+                        className="flex items-center gap-3 min-w-0 min-h-[44px] text-sm text-foreground/80 hover:text-foreground group touch-manipulation"
                       >
                         <span className="w-8 h-8 bg-[#1877F2] rounded-lg flex items-center justify-center shrink-0">
                           <Facebook size={14} className="text-white" />
                         </span>
-                        <span className="text-xs">{business.social.facebook}</span>
+                        <span className="text-xs truncate min-w-0">{business.social.facebook}</span>
                         <ExternalLink size={11} className="ml-auto text-muted-foreground/50 group-hover:text-muted-foreground" />
                       </a>
                     )}
@@ -663,12 +663,12 @@ export default function BusinessProfile() {
                         href={`https://twitter.com/${business.social.twitter.replace("@", "")}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 text-sm text-foreground/80 hover:text-foreground group"
+                        className="flex items-center gap-3 min-w-0 min-h-[44px] text-sm text-foreground/80 hover:text-foreground group touch-manipulation"
                       >
                         <span className="w-8 h-8 bg-black rounded-lg flex items-center justify-center shrink-0">
                           <Twitter size={14} className="text-white" />
                         </span>
-                        <span className="text-xs">@{business.social.twitter.replace("@", "")}</span>
+                        <span className="text-xs truncate min-w-0">@{business.social.twitter.replace("@", "")}</span>
                         <ExternalLink size={11} className="ml-auto text-muted-foreground/50 group-hover:text-muted-foreground" />
                       </a>
                     )}
@@ -677,12 +677,12 @@ export default function BusinessProfile() {
                         href={`https://tiktok.com/@${business.social.tiktok.replace("@", "")}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 text-sm text-foreground/80 hover:text-foreground group"
+                        className="flex items-center gap-3 min-w-0 min-h-[44px] text-sm text-foreground/80 hover:text-foreground group touch-manipulation"
                       >
                         <span className="w-8 h-8 bg-black rounded-lg flex items-center justify-center shrink-0">
                           <TikTokIcon />
                         </span>
-                        <span className="text-xs">@{business.social.tiktok.replace("@", "")}</span>
+                        <span className="text-xs truncate min-w-0">@{business.social.tiktok.replace("@", "")}</span>
                         <ExternalLink size={11} className="ml-auto text-muted-foreground/50 group-hover:text-muted-foreground" />
                       </a>
                     )}
@@ -707,7 +707,7 @@ export default function BusinessProfile() {
                 <button
                   onClick={() => navigate("/businesses")}
                   className="text-xs text-primary font-semibold hover:underline
-                             flex items-center gap-1 mx-auto"
+                             flex items-center justify-center gap-1 mx-auto min-h-[44px] touch-manipulation"
                 >
                   Browse All Businesses <ArrowRight size={11} />
                 </button>
@@ -1029,6 +1029,10 @@ export default function BusinessProfile() {
                     <video
                       src={business.promoVideo}
                       controls
+                      // Don't spend a phone's data on a video nobody has asked
+                      // to watch — this page was pulling megabytes on open.
+                      preload="none"
+                      playsInline
                       className="w-full rounded-xl max-h-[520px]"
                     />
                   )}

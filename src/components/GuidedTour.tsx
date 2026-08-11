@@ -160,16 +160,22 @@ export default function GuidedTour() {
 
               {/* Footer controls */}
               <div className="flex items-center justify-between gap-3 mt-6 pt-5 border-t border-border">
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center -mx-1">
                   {STEPS.map((_, i) => (
+                    // The dot stays small; the button around it is a real 44px
+                    // touch target so the pager is usable with a thumb.
                     <button
                       key={i}
                       onClick={() => setStep(i)}
                       aria-label={`Go to step ${i + 1}`}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
-                        i === step ? "w-6 bg-accent" : "w-1.5 bg-border hover:bg-muted-foreground/40"
-                      }`}
-                    />
+                      className="h-11 min-w-[40px] flex items-center justify-center touch-manipulation"
+                    >
+                      <span
+                        className={`block h-1.5 rounded-full transition-all duration-300 ${
+                          i === step ? "w-6 bg-accent" : "w-1.5 bg-border hover:bg-muted-foreground/40"
+                        }`}
+                      />
+                    </button>
                   ))}
                 </div>
 

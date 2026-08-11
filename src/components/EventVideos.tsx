@@ -8,6 +8,7 @@ import {
   Film, ChevronRight, Mic2, Users, Globe,
   BookOpen, Sparkles, Radio,
 } from "lucide-react";
+import Img from "@/components/Img";
 
 /* ── Tag config ───────────────────────────────────────────────── */
 const TAG_CONFIG: Record<VideoTag, {
@@ -142,7 +143,7 @@ function VideoCard({
             className="absolute inset-0 w-full h-full"
             aria-label="Play video"
           >
-            <img
+            <Img
               src={`https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`}
               alt={video.title}
               className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
@@ -171,7 +172,7 @@ function VideoCard({
             aria-label="Play video"
           >
             {video.thumbnail ? (
-              <img
+              <Img
                 src={video.thumbnail}
                 alt={video.title}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -332,7 +333,7 @@ function FeaturedCard({ video }: { video: EventVideo }) {
               className="absolute inset-0 w-full h-full group/thumb"
               aria-label="Play featured video"
             >
-              <img
+              <Img
                 src={`https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`}
                 alt={video.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover/thumb:scale-105"
@@ -360,7 +361,7 @@ function FeaturedCard({ video }: { video: EventVideo }) {
               aria-label="Play featured video"
             >
               {video.thumbnail ? (
-                <img
+                <Img
                   src={video.thumbnail}
                   alt={video.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover/thumb:scale-105"
@@ -470,11 +471,13 @@ export default function EventVideos() {
         </div>
 
         {/* ── Filter tabs ── */}
-        <div className="flex items-center gap-2 flex-wrap mb-7">
+        {/* Swipeable on phones rather than wrapping — keeps the tabs to one
+            row and gives each a 44px touch target. */}
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide -mx-4 px-4 pb-1 mb-7 sm:flex-wrap sm:mx-0 sm:px-0 sm:overflow-visible">
           <motion.button
             onClick={() => setActiveTag("All")}
             whileTap={{ scale: 0.94 }}
-            className={`text-xs font-bold px-4 py-1.5 rounded-full border transition-all duration-200 ${
+            className={`shrink-0 inline-flex items-center text-xs font-bold px-4 min-h-[44px] rounded-full border transition-all duration-200 touch-manipulation ${
               activeTag === "All"
                 ? "bg-accent text-black border-accent shadow-[0_0_12px_rgba(180,140,60,0.4)]"
                 : "border-border text-muted-foreground hover:border-accent/50 hover:text-foreground"
@@ -487,8 +490,8 @@ export default function EventVideos() {
               key={tag}
               onClick={() => setActiveTag(tag === activeTag ? "All" : tag)}
               whileTap={{ scale: 0.94 }}
-              className={`inline-flex items-center gap-1.5 text-xs font-bold px-4 py-1.5
-                          rounded-full border transition-all duration-200 ${
+              className={`shrink-0 inline-flex items-center gap-1.5 text-xs font-bold px-4 min-h-[44px]
+                          rounded-full border transition-all duration-200 touch-manipulation ${
                             activeTag === tag
                               ? "bg-accent text-black border-accent shadow-[0_0_12px_rgba(180,140,60,0.4)]"
                               : "border-border text-muted-foreground hover:border-accent/50 hover:text-foreground"

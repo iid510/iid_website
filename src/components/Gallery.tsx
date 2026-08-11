@@ -69,6 +69,7 @@ function GalleryCard({
         alt={img.alt}
         className="w-full h-full"
         imgClassName="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(min-width: 1024px) 25vw, 50vw"
       />
 
       {/* Glare layer */}

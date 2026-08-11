@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Img from "@/components/Img";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -31,7 +32,7 @@ export default function OrgChart() {
           transition={{ duration: 0.7, ease }}
           className="rounded-2xl overflow-hidden border border-border shadow-elevated bg-white"
         >
-          <img
+          <Img
             src="/images/org-chart.webp"
             alt="IID Omo Orimolusi in Diaspora — Organisational Chart"
             className="w-full h-auto"

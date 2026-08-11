@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Phone, Mail, UserPlus, X } from "lucide-react";
@@ -10,6 +10,26 @@ const contactInfo = {
 
 export default function FloatingContact() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+
+  // The button is fixed over the content, so on a narrow screen it inevitably
+  // covers something. Retract it while the reader is scrolling down and bring
+  // it back the moment they scroll up or stop.
+  useEffect(() => {
+    if (isOpen) return;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const goingDown = y > lastY.current;
+      // Ignore the rubber-band region at the very top.
+      setHidden(goingDown && y > 220);
+      lastY.current = y;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isOpen]);
 
   // Every enquiry funnels through /join (the membership form) rather than
   // scattering people into WhatsApp DMs. Phone and email stay as direct channels.
@@ -41,7 +61,12 @@ export default function FloatingContact() {
   ];
 
   return (
-    <div className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-50 flex flex-col items-end gap-3 safe-area-bottom">
+    <motion.div
+      animate={{ opacity: hidden ? 0 : 1, y: hidden ? 88 : 0 }}
+      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+      style={{ pointerEvents: hidden ? "none" : "auto" }}
+      className="fixed bottom-6 right-4 sm:bottom-24 sm:right-6 z-50 flex flex-col items-end gap-3 safe-area-bottom"
+    >
       {/* Contact options */}
       <AnimatePresence>
         {isOpen && (
@@ -127,6 +152,6 @@ export default function FloatingContact() {
           )}
         </AnimatePresence>
       </motion.button>
-    </div>
+    </motion.div>
   );
 }

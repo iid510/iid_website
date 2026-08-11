@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
 import { useSanityNews } from "@/hooks/useSanityNews";
+import Img from "@/components/Img";
 
 export default function NewsPost() {
   const { id } = useParams();
@@ -25,7 +26,7 @@ export default function NewsPost() {
         <Navbar />
         <div className="container-main py-20 text-center">
           <h1 className="text-3xl font-bold mb-4">Article Not Found</h1>
-          <Link to="/" className="text-accent hover:underline">
+          <Link to="/" className="inline-flex items-center min-h-[44px] text-accent hover:underline touch-manipulation">
             Return to Homepage
           </Link>
         </div>
@@ -60,7 +61,7 @@ export default function NewsPost() {
 
         {/* Featured Image */}
         <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] mb-8 sm:mb-12">
-          <img
+          <Img
             src={article.featuredImage}
             alt={article.title}
             className="w-full h-full object-cover"
@@ -142,7 +143,7 @@ export default function NewsPost() {
                     transition={{ duration: 0.5, delay: index * 0.05 }}
                     className="break-inside-avoid relative group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
                   >
-                    <img
+                    <Img
                       src={image.src}
                       alt={image.alt || `${article.title} photo ${index + 1}`}
                       className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"

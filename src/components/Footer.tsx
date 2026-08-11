@@ -360,7 +360,10 @@ export default function Footer() {
             <p>
               &copy; {new Date().getFullYear()} Ijebu Igbo Descendants in Diaspora. All rights reserved.
               {" · "}
-              <Link to="/privacy" className="hover:text-white transition-colors underline underline-offset-2">
+              <Link
+                to="/privacy"
+                className="inline-flex items-center min-h-[44px] py-2 hover:text-white transition-colors underline underline-offset-2 touch-manipulation"
+              >
                 Privacy Policy
               </Link>
             </p>

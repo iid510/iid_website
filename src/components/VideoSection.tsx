@@ -3,6 +3,7 @@ import { Play } from "lucide-react";
 import { useState } from "react";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { HOME_PAGE } from "@/data/pageContent";
+import Img from "@/components/Img";
 
 export default function VideoSection() {
   const [playing, setPlaying] = useState(false);
@@ -39,7 +40,7 @@ export default function VideoSection() {
               className="absolute inset-0 flex items-center justify-center group"
               aria-label="Play video"
             >
-              <img
+              <Img
                 src="https://img.youtube.com/vi/KbInaslfyrk/maxresdefault.jpg"
                 alt="Video thumbnail"
                 className="absolute inset-0 w-full h-full object-cover opacity-60"

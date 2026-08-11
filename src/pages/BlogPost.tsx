@@ -11,6 +11,7 @@ import ReadingProgress from "@/components/ReadingProgress";
 import SaveButton from "@/components/SaveButton";
 import { useSanityBlogPosts } from "@/hooks/useSanityBlogPosts";
 import { BLOG_STARTER_PATH } from "@/data/blogStarterPath";
+import Img from "@/components/Img";
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -27,7 +28,7 @@ export default function BlogPost() {
         <Navbar />
         <div className="container-main py-20 text-center pt-32">
           <h1 className="text-3xl font-bold mb-4">Article Not Found</h1>
-          <Link to="/blog" className="text-accent hover:underline">
+          <Link to="/blog" className="inline-flex items-center min-h-[44px] text-accent hover:underline touch-manipulation">
             Back to Blog
           </Link>
         </div>
@@ -60,14 +61,14 @@ export default function BlogPost() {
 
       <article className="pt-20 lg:pt-24">
         <div className="container-main py-4 sm:py-6">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors font-medium">
+          <Link to="/blog" className="inline-flex items-center gap-2 min-h-[44px] text-primary hover:text-accent transition-colors font-medium touch-manipulation">
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Back to Blog</span>
           </Link>
         </div>
 
         <div className="relative h-[280px] sm:h-[380px] lg:h-[460px] mb-8 sm:mb-12">
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+          <Img src={post.image} alt={post.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         </div>
 
@@ -153,7 +154,7 @@ export default function BlogPost() {
                     className="block rounded-xl border border-border overflow-hidden bg-card hover:shadow-md transition-shadow"
                   >
                     <div className="h-28 overflow-hidden">
-                      <img src={r.image} alt={r.title} className="w-full h-full object-cover" />
+                      <Img src={r.image} alt={r.title} className="w-full h-full object-cover" />
                     </div>
                     <div className="p-3">
                       <p className="text-sm font-semibold text-foreground leading-snug line-clamp-2">{r.title}</p>

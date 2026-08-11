@@ -85,7 +85,7 @@ function PlaceCard({ place, index }: { place: Place; index: number }) {
               href={place.mapLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 text-accent hover:text-accent/80 font-semibold text-sm transition-colors"
+              className="mt-4 inline-flex items-center gap-2 min-h-[44px] text-accent hover:text-accent/80 font-semibold text-sm transition-colors touch-manipulation"
             >
               <MapPin size={15} />
               View on Google Maps

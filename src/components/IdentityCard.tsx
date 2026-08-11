@@ -295,7 +295,7 @@ export default function IdentityCard() {
             ))}
           </select>
           <p className="text-xs text-muted-foreground mt-1.5">
-            Not sure which town is yours? <a href="/roots" className="text-primary font-semibold underline">Find your roots →</a>
+            Not sure which town is yours? <a href="/roots" className="text-primary font-semibold underline inline-flex items-center min-h-[44px] touch-manipulation">Find your roots →</a>
           </p>
         </div>
 

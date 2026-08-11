@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Expand } from "lucide-react";
+import Img from "@/components/Img";
 
 export interface LightboxImage {
   src: string;
@@ -96,9 +97,11 @@ function LightboxView({
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="relative w-full flex items-center justify-center"
           >
-            <img
+            <Img
               src={img.src}
               alt={img.alt}
+              priority
+              sizes="100vw"
               className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
             />
             {img.alt && (
@@ -144,7 +147,12 @@ export function ZoomableImage({
       onClick={onClick}
       className={`group relative block text-left cursor-zoom-in focus:outline-none ${className}`}
     >
-      <img src={src} alt={alt} className={imgClassName} loading="lazy" decoding="async" />
+      <Img
+        src={src}
+        alt={alt}
+        className={imgClassName}
+        sizes="(min-width: 1024px) 33vw, 50vw"
+      />
       <span className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
         <Expand size={20} className="text-white drop-shadow-lg" />
       </span>

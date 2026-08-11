@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import { useSanityKings } from "@/hooks/useSanityKings";
+import Img from "@/components/Img";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -22,7 +23,7 @@ export default function KingProfile() {
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <p className="text-muted-foreground mb-4">Profile not found.</p>
-          <Link to="/heritage" className="text-primary underline text-sm">← Back to Heritage</Link>
+          <Link to="/heritage" className="inline-flex items-center min-h-[44px] text-primary underline text-sm touch-manipulation">← Back to Heritage</Link>
         </div>
       </div>
     );
@@ -95,13 +96,19 @@ export default function KingProfile() {
                   </span>
                   {/* Dot indicators */}
                   {photos.length > 1 && (
-                    <div className="flex gap-1.5">
+                    <div className="flex -mx-4 -my-3.5">
                       {photos.map((_, i) => (
+                        // Dot stays small, hit area is thumb-sized.
                         <button
                           key={i}
                           onClick={() => setActivePhoto(i)}
-                          className={`w-1.5 h-1.5 rounded-full transition-all ${i === activePhoto ? "bg-accent w-3" : "bg-white/40"}`}
-                        />
+                          aria-label={`Show photo ${i + 1}`}
+                          className="px-4 py-3.5 flex items-center justify-center touch-manipulation"
+                        >
+                          <span
+                            className={`block w-1.5 h-1.5 rounded-full transition-all ${i === activePhoto ? "bg-accent w-3" : "bg-white/40"}`}
+                          />
+                        </button>
                       ))}
                     </div>
                   )}
@@ -117,7 +124,7 @@ export default function KingProfile() {
                       onClick={() => setActivePhoto(i)}
                       className={`w-14 h-14 rounded-lg overflow-hidden border-2 transition-all ${i === activePhoto ? "border-accent" : "border-white/20 opacity-60"}`}
                     >
-                      <img src={src} alt="" className="w-full h-full object-cover object-top" />
+                      <Img src={src} alt="" className="w-full h-full object-cover object-top" />
                     </button>
                   ))}
                 </div>
@@ -133,7 +140,7 @@ export default function KingProfile() {
             >
               <Link
                 to="/heritage"
-                className="inline-flex items-center gap-1.5 text-white/50 hover:text-accent text-xs font-semibold mb-6 transition-colors"
+                className="inline-flex items-center gap-1.5 min-h-[44px] text-white/50 hover:text-accent text-xs font-semibold mb-4 transition-colors touch-manipulation"
               >
                 <ArrowLeft size={13} /> Back to Heritage
               </Link>
@@ -373,7 +380,7 @@ export default function KingProfile() {
                   className="flex items-center gap-3 px-5 pb-5 group"
                 >
                   <div className="w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-border">
-                    <img src={other.photo} alt={other.name} className="w-full h-full object-cover object-top" />
+                    <Img src={other.photo} alt={other.name} className="w-full h-full object-cover object-top" />
                   </div>
                   <div>
                     <p className="text-xs text-accent font-bold">{other.reign}</p>

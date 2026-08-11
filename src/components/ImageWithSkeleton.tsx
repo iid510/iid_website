@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { responsiveImage } from "@/lib/imageSrc";
 
 interface Props {
   src: string | null;
@@ -8,6 +9,14 @@ interface Props {
   imgClassName?: string;
   fallback?: React.ReactNode;
   loading?: "lazy" | "eager";
+  /**
+   * How wide this image renders, for the browser's srcset maths. Defaults to
+   * full viewport width, which is right for the phone layouts where bandwidth
+   * actually matters. Pass something tighter for grids and thumbnails.
+   */
+  sizes?: string;
+  /** Set on the one image that is the LCP candidate on a page. */
+  priority?: boolean;
 }
 
 export default function ImageWithSkeleton({
@@ -17,11 +26,15 @@ export default function ImageWithSkeleton({
   imgClassName,
   fallback,
   loading = "lazy",
+  sizes = "100vw",
+  priority = false,
 }: Props) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
 
-  if (!src || errored) {
+  const resolved = responsiveImage(src);
+
+  if (!resolved || errored) {
     return (
       <div className={cn("flex items-center justify-center bg-muted", className)}>
         {fallback ?? (
@@ -38,9 +51,16 @@ export default function ImageWithSkeleton({
         <div className="absolute inset-0 bg-muted animate-pulse" />
       )}
       <img
-        src={src}
+        src={resolved.src}
+        srcSet={resolved.srcSet}
+        sizes={resolved.srcSet ? sizes : undefined}
+        // Intrinsic size lets the browser reserve the right box before the
+        // bytes arrive, which is what stops the page shifting under a reader.
+        width={resolved.width}
+        height={resolved.height}
         alt={alt}
-        loading={loading}
+        loading={priority ? "eager" : loading}
+        fetchPriority={priority ? "high" : undefined}
         decoding="async"
         onLoad={() => setLoaded(true)}
         onError={() => setErrored(true)}

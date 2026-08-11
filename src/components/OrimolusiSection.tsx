@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Crown, ArrowRight } from "lucide-react";
 import { useSanityKings } from "@/hooks/useSanityKings";
+import Img from "@/components/Img";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -41,7 +42,7 @@ export default function OrimolusiSection() {
               >
                 {/* Portrait */}
                 <div className="relative aspect-[3/4] overflow-hidden bg-muted">
-                  <img
+                  <Img
                     src={king.photos?.[0] ?? king.photo}
                     alt={king.name}
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"

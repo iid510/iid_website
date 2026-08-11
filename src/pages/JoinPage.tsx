@@ -107,7 +107,7 @@ export default function JoinPage() {
               href={MEMBERSHIP_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent transition-colors shrink-0"
+              className="inline-flex items-center gap-1.5 min-h-[44px] text-sm font-semibold text-primary hover:text-accent transition-colors shrink-0 touch-manipulation"
             >
               Open in a new tab <ExternalLink size={14} />
             </a>

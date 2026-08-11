@@ -285,7 +285,7 @@ export default function ContactPage() {
                         {c.href ? (
                           <a
                             href={c.href}
-                            className="text-sm sm:text-base font-bold text-foreground hover:text-primary transition-colors break-all leading-snug block"
+                            className="text-sm sm:text-base font-bold text-foreground hover:text-primary transition-colors break-all leading-snug flex items-center min-h-[44px] touch-manipulation"
                           >
                             {c.value}
                           </a>
@@ -298,7 +298,7 @@ export default function ContactPage() {
                           c.ctaHref.startsWith("/") ? (
                             <Link
                               to={c.ctaHref}
-                              className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-bold text-primary hover:text-primary/80 transition-colors"
+                              className="inline-flex items-center gap-1.5 mt-1 min-h-[44px] text-xs font-bold text-primary hover:text-primary/80 transition-colors touch-manipulation"
                             >
                               <UserPlus size={12} />
                               {c.ctaLabel}
@@ -309,7 +309,7 @@ export default function ContactPage() {
                               href={c.ctaHref}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
+                              className="inline-flex items-center gap-1.5 mt-1 min-h-[44px] text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors touch-manipulation"
                             >
                               <MessageCircle size={12} />
                               {c.ctaLabel}

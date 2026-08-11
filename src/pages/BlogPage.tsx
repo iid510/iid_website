@@ -12,6 +12,7 @@ import { useSanityBlogPosts } from "@/hooks/useSanityBlogPosts";
 import { useSanityNews } from "@/hooks/useSanityNews";
 import { useYourIID } from "@/context/YourIIDContext";
 import { BLOG_STARTER_PATH } from "@/data/blogStarterPath";
+import Img from "@/components/Img";
 
 interface UnifiedPost {
   key: string;
@@ -135,12 +136,15 @@ export default function BlogPage() {
                 </button>
               )}
             </div>
-            <div className="flex flex-wrap gap-2 overflow-x-auto">
+            {/* One swipeable row on phones. Wrapping these 12 categories cost
+                five rows of vertical space and put the last chip of each row
+                under the floating contact button. */}
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-4 px-4 pb-1 sm:flex-wrap sm:mx-0 sm:px-0 sm:overflow-visible">
               {CATEGORIES.map((c) => (
                 <button
                   key={c}
                   onClick={() => setCategory(c)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${
+                  className={`shrink-0 flex items-center px-4 min-h-[44px] rounded-full text-xs font-semibold whitespace-nowrap transition-colors touch-manipulation ${
                     category === c ? "bg-accent text-white" : "bg-muted text-muted-foreground hover:bg-muted/70"
                   }`}
                 >
@@ -257,10 +261,11 @@ export default function BlogPage() {
                 >
                   <Link to={post.href} className="block">
                     <div className="relative h-44 overflow-hidden">
-                      <img
+                      <Img
                         src={post.image}
                         alt={post.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />

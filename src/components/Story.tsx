@@ -3,6 +3,7 @@ import storyImg from "@/assets/story-history.jpg";
 import festivalImg from "@/assets/gallery-festival.jpg";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { HOME_PAGE } from "@/data/pageContent";
+import Img from "@/components/Img";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -34,7 +35,7 @@ export default function Story() {
             transition={{ duration: 0.7, ease }}
             className="overflow-hidden rounded-sm shadow-ceramic"
           >
-            <img
+            <Img
               src={storyImg}
               alt="Historic Ijebu Igbo architecture"
               className="w-full h-[360px] lg:h-[440px] object-cover"
@@ -86,7 +87,7 @@ export default function Story() {
             transition={{ duration: 0.7, ease }}
             className="overflow-hidden rounded-sm shadow-ceramic order-1 lg:order-2"
           >
-            <img
+            <Img
               src={festivalImg}
               alt="Ojude Oba festival celebration"
               className="w-full h-[360px] lg:h-[440px] object-cover"

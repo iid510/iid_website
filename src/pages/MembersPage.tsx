@@ -411,7 +411,7 @@ export default function MembersPage() {
                 onClick={() => setView("grid")}
                 aria-label="Grid view"
                 aria-pressed={view === "grid"}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`w-11 h-11 flex items-center justify-center rounded-lg transition-colors touch-manipulation ${
                   view === "grid" ? "bg-accent text-white" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -422,7 +422,7 @@ export default function MembersPage() {
                 onClick={() => setView("list")}
                 aria-label="List view"
                 aria-pressed={view === "list"}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`w-11 h-11 flex items-center justify-center rounded-lg transition-colors touch-manipulation ${
                   view === "list" ? "bg-accent text-white" : "text-muted-foreground hover:text-foreground"
                 }`}
               >

@@ -11,6 +11,7 @@ import { ArrowRight, Crown, MapPin } from "lucide-react";
 import { useSanityPage, findSection } from "@/hooks/useSanityPage";
 import { useSanityTowns, type Town } from "@/hooks/useSanityTowns";
 import { HERITAGE_PAGE } from "@/data/pageContent";
+import Img from "@/components/Img";
 
 const DISPLAY_ORDER = ["ojowo", "japara", "atikori", "oke-sopen", "oke-agbo", "imope-ijebu", "aparaki"];
 
@@ -40,7 +41,7 @@ function TownCard({ town, index }: { town: Town; index: number }) {
       >
         <div className={`relative h-36 bg-gradient-to-br ${style.color} flex items-center justify-center overflow-hidden`}>
           {town.rulerPhoto && (
-            <img
+            <Img
               src={town.rulerPhoto}
               alt={town.rulerTitle ?? town.name}
               className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity duration-300"
