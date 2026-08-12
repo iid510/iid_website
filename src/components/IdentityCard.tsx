@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Download, Share2 } from "lucide-react";
 import { useYourIID } from "@/context/YourIIDContext";
 import { useSanityTowns } from "@/hooks/useSanityTowns";
+import { useSanityKings } from "@/hooks/useSanityKings";
 
 /**
  * Shareable "Omo Orimolusi" identity card.
@@ -34,8 +35,20 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: numbe
 interface CardData {
   name: string;
   townName: string;
-  rulerTitle: string;
+  /**
+   * The reigning Orimolusi — never a town Oba.
+   *
+   * The card is a statement about being Ọmọ Orimolusi, which belongs to
+   * Ijebu-Igbo as a whole. The town below the holder's name says where their
+   * family is from; the throne they hold their identity under is the paramount
+   * one. Naming a town Oba here would place the whole kingdom under him.
+   */
+  orimolusiName: string;
 }
+
+/** Only the Orimolusi carries HRM. */
+const ORIMOLUSI_STYLE = "HRM";
+const ORIMOLUSI_TITLE = "Orimolusi of Ijebu-Igbo";
 
 function draw(canvas: HTMLCanvasElement, data: CardData) {
   const ctx = canvas.getContext("2d");
@@ -132,26 +145,33 @@ function draw(canvas: HTMLCanvasElement, data: CardData) {
   ctx.font = "500 15px 'Instrument Sans', system-ui, sans-serif";
   ctx.fillText("Ijebu-Igbo, Ogun State, Nigeria", W / 2, 464);
 
-  // Ruler strip
-  if (data.rulerTitle) {
+  // Throne strip — always the Orimolusi, whichever town is shown above
+  if (data.orimolusiName) {
     ctx.fillStyle = "rgba(255,255,255,0.07)";
-    roundRect(ctx, 60, 496, W - 120, 62, 14);
+    roundRect(ctx, 60, 492, W - 120, 78, 14);
     ctx.fill();
 
     ctx.fillStyle = "rgba(255,255,255,0.5)";
     ctx.font = "600 11px 'Instrument Sans', system-ui, sans-serif";
     ctx.letterSpacing = "2px";
-    ctx.fillText("UNDER THE THRONE OF", W / 2, 520);
+    ctx.fillText("UNDER THE THRONE OF", W / 2, 516);
     ctx.letterSpacing = "0px";
 
+    const styled = `${ORIMOLUSI_STYLE} ${data.orimolusiName}`;
     ctx.fillStyle = CREAM;
-    ctx.font = "700 15px 'Instrument Sans', system-ui, sans-serif";
-    let rulerSize = 15;
-    while (ctx.measureText(data.rulerTitle).width > W - 150 && rulerSize > 10) {
+    ctx.font = "700 16px 'Instrument Sans', system-ui, sans-serif";
+    let rulerSize = 16;
+    while (ctx.measureText(styled).width > W - 150 && rulerSize > 10) {
       rulerSize -= 1;
       ctx.font = `700 ${rulerSize}px 'Instrument Sans', system-ui, sans-serif`;
     }
-    ctx.fillText(data.rulerTitle, W / 2, 543);
+    ctx.fillText(styled, W / 2, 540);
+
+    ctx.fillStyle = GOLD;
+    ctx.font = "600 12px 'Instrument Sans', system-ui, sans-serif";
+    ctx.letterSpacing = "1px";
+    ctx.fillText(ORIMOLUSI_TITLE, W / 2, 559);
+    ctx.letterSpacing = "0px";
   }
 
   // Footer
@@ -164,6 +184,7 @@ export default function IdentityCard() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { profile, setDisplayName, setTown } = useYourIID();
   const { data: towns = [] } = useSanityTowns();
+  const { data: kings = [] } = useSanityKings();
   const [name, setName] = useState(profile.displayName ?? "");
   const [townSlug, setTownSlug] = useState(profile.town ?? "");
   const [shareSupported, setShareSupported] = useState(false);
@@ -180,14 +201,19 @@ export default function IdentityCard() {
 
   const town = towns.find((t) => t.slug === townSlug);
 
+  // Read the sitting Orimolusi from the same source /heritage uses, so the card
+  // follows the throne rather than hard-coding whoever reigns today.
+  const orimolusiName =
+    kings.find((k) => k.status === "Present")?.name ?? "Oba Lawrence Jaiyeoba Adebajo";
+
   useEffect(() => {
     if (!canvasRef.current) return;
     draw(canvasRef.current, {
       name,
       townName: town?.name ?? "Ijebu-Igbo",
-      rulerTitle: town?.rulerTitle ?? "",
+      orimolusiName,
     });
-  }, [name, town]);
+  }, [name, town, orimolusiName]);
 
   const persist = useCallback(() => {
     setDisplayName(name.trim() || null);
