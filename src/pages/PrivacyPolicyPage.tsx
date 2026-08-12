@@ -170,11 +170,11 @@ export default function PrivacyPolicyPage() {
             <p>
               If you have any questions about this policy, or want to exercise any of your data protection
               rights, contact us at{" "}
-              <a href="mailto:info@ijebuigbodescendants.org" className="text-primary font-semibold hover:text-accent transition-colors">
+              <a href="mailto:info@ijebuigbodescendants.org" className="inline-flex items-center min-h-[44px] text-primary font-semibold hover:text-accent transition-colors touch-manipulation">
                 info@ijebuigbodescendants.org
               </a>{" "}
               or{" "}
-              <a href="mailto:support@ijebuigbodescendants.org" className="text-primary font-semibold hover:text-accent transition-colors">
+              <a href="mailto:support@ijebuigbodescendants.org" className="inline-flex items-center min-h-[44px] text-primary font-semibold hover:text-accent transition-colors touch-manipulation">
                 support@ijebuigbodescendants.org
               </a>.
             </p>

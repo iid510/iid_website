@@ -78,10 +78,10 @@ export default function KingProfile() {
                 {/* Arrow controls */}
                 {photos.length > 1 && (
                   <>
-                    <button onClick={prevPhoto} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white transition-colors">
+                    <button onClick={prevPhoto} className="absolute left-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white transition-colors touch-manipulation">
                       <ChevronLeft size={16} />
                     </button>
-                    <button onClick={nextPhoto} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white transition-colors">
+                    <button onClick={nextPhoto} className="absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white transition-colors touch-manipulation">
                       <ChevronRight size={16} />
                     </button>
                   </>
@@ -96,14 +96,14 @@ export default function KingProfile() {
                   </span>
                   {/* Dot indicators */}
                   {photos.length > 1 && (
-                    <div className="flex -mx-4 -my-3.5">
+                    <div className="flex -mx-5 -my-5">
                       {photos.map((_, i) => (
                         // Dot stays small, hit area is thumb-sized.
                         <button
                           key={i}
                           onClick={() => setActivePhoto(i)}
                           aria-label={`Show photo ${i + 1}`}
-                          className="px-4 py-3.5 flex items-center justify-center touch-manipulation"
+                          className="px-5 py-5 flex items-center justify-center touch-manipulation"
                         >
                           <span
                             className={`block w-1.5 h-1.5 rounded-full transition-all ${i === activePhoto ? "bg-accent w-3" : "bg-white/40"}`}

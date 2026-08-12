@@ -452,7 +452,7 @@ export default function MembersPage() {
                 onClick={() => goToPage(pageNum - 1)}
                 disabled={pageNum === 1}
                 aria-label="Previous page"
-                className="w-9 h-9 flex items-center justify-center rounded-lg border border-border bg-card text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+                className="w-11 h-11 flex items-center justify-center rounded-lg border border-border bg-card text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted transition-colors touch-manipulation"
               >
                 <ChevronLeft size={16} />
               </button>
@@ -468,7 +468,7 @@ export default function MembersPage() {
                       type="button"
                       onClick={() => goToPage(p)}
                       aria-current={p === pageNum ? "page" : undefined}
-                      className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
+                      className={`w-11 h-11 flex items-center justify-center rounded-lg text-sm font-semibold transition-colors touch-manipulation ${
                         p === pageNum
                           ? "bg-accent text-white"
                           : "border border-border bg-card text-foreground hover:bg-muted"
@@ -484,7 +484,7 @@ export default function MembersPage() {
                 onClick={() => goToPage(pageNum + 1)}
                 disabled={pageNum === pageCount}
                 aria-label="Next page"
-                className="w-9 h-9 flex items-center justify-center rounded-lg border border-border bg-card text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+                className="w-11 h-11 flex items-center justify-center rounded-lg border border-border bg-card text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted transition-colors touch-manipulation"
               >
                 <ChevronRight size={16} />
               </button>

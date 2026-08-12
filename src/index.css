@@ -9,12 +9,33 @@
   html {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
-    font-size: 125%; /* bump base type scale (client feedback: text reads too small) */
+    /*
+     * Back to a 16px root.
+     *
+     * This was 125% to answer "text reads too small". But Tailwind's spacing is
+     * rem-based too, so it enlarged every padding, gap and card by a quarter,
+     * not just the type — the homepage ran to nearly 27 phone screens and
+     * /heritage gave roughly one Oba per screen. The type scale in
+     * tailwind.config.ts now carries the larger text on its own, so body copy
+     * stays exactly the size it was while the layout tightens around it.
+     */
+    font-size: 100%;
   }
 
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /*
+   * Sections animate in from `x: 20`, so mid-flight they stick 20px past the
+   * content box and the page wobbles sideways for the length of the animation.
+   * `clip` rather than `hidden`: hidden would make this a scroll container and
+   * break every `position: sticky` inside it (the blog filter bar, the
+   * directory toolbar).
+   */
+  #root {
+    overflow-x: clip;
   }
 
   /* Support for mobile viewport units */
@@ -126,7 +147,9 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    /* text-base, not the 16px root: anything without an explicit size class
+       inherits from here, and must stay the 20px it read at before. */
+    @apply bg-background text-foreground font-sans antialiased text-base;
   }
 
   h1, h2, h3, h4, h5, h6 {

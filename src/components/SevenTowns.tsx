@@ -25,9 +25,9 @@ const TOWN_ACCENT: Record<string, string> = {
  * high on the homepage, and seven more photographs would undo the page-weight
  * work for a section people mostly scan for a name.
  */
-export default function SevenTowns() {
+export default function SevenTowns({ current }: { current?: string } = {}) {
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding bg-background border-t border-border">
       <div className="container-main">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -55,8 +55,13 @@ export default function SevenTowns() {
             >
               <Link
                 to={`/${town.slug}`}
-                className="group relative flex flex-col justify-between h-full min-h-[112px] p-4 rounded-2xl border border-border bg-card overflow-hidden
-                           hover:border-accent/60 hover:shadow-ceramic active:scale-[0.98] transition-all duration-200 touch-manipulation"
+                aria-current={town.slug === current ? "page" : undefined}
+                className={`group relative flex flex-col justify-between h-full min-h-[112px] p-4 rounded-2xl border overflow-hidden
+                           active:scale-[0.98] transition-all duration-200 touch-manipulation ${
+                             town.slug === current
+                               ? "border-accent bg-accent/10"
+                               : "border-border bg-card hover:border-accent/60 hover:shadow-ceramic"
+                           }`}
               >
                 <span
                   aria-hidden
@@ -72,7 +77,7 @@ export default function SevenTowns() {
                   </p>
                 </div>
                 <span className="flex items-center gap-1 text-xs font-bold text-primary mt-3 group-hover:gap-2 transition-all">
-                  Open <ArrowRight size={12} />
+                  {town.slug === current ? "You are here" : <>Open <ArrowRight size={12} /></>}
                 </span>
               </Link>
             </motion.div>

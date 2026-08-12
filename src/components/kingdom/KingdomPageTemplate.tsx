@@ -10,7 +10,7 @@ import AnimatedHeroBg from "@/components/AnimatedHeroBg";
 import Lightbox, { useLightbox, ZoomableImage } from "@/components/Lightbox";
 import { resolveIcon } from "@/lib/iconMap";
 import { useSanityTownBySlug } from "@/hooks/useSanityTowns";
-import TownSwitcher from "@/components/kingdom/TownSwitcher";
+import SevenTowns from "@/components/SevenTowns";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -196,9 +196,6 @@ export default function KingdomPageTemplate({ slug }: { slug: string }) {
           )}
         </div>
       </section>
-
-      {/* Move straight to any of the other six towns */}
-      <TownSwitcher current={slug} />
 
       {/* Royal Portrait */}
       {town.rulerPhoto && (
@@ -654,6 +651,11 @@ export default function KingdomPageTemplate({ slug }: { slug: string }) {
       {galleryImages.length > 0 && (
         <Lightbox images={galleryImages} index={index} direction={direction} onClose={close} onPrev={prev} onNext={next} />
       )}
+
+      {/* The seven towns belong to Ijebu-Igbo as a whole, so this sits at the
+          end of the page as kingdom-level navigation — never beside this
+          town's Oba, which would read as the seven sitting under him. */}
+      <SevenTowns current={slug} />
 
       <Footer />
       <FloatingContact />

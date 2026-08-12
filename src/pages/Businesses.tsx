@@ -176,7 +176,7 @@ function BusinessCard({ business, index }: { business: Business; index: number }
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); setFlyerOpen(true); }}
-              className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full
+              className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-11 h-11 rounded-full
                          bg-black/40 hover:bg-black/60 backdrop-blur-sm border border-white/20
                          flex items-center justify-center text-white transition-colors"
               aria-label="View full flyer"
@@ -552,8 +552,8 @@ export default function Businesses() {
                   key={cat}
                   onClick={() => toggleCategory(cat)}
                   whileTap={{ scale: 0.94 }}
-                  className={`relative shrink-0 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm
-                              font-semibold transition-colors duration-200 border ${
+                  className={`relative shrink-0 flex items-center gap-1.5 px-4 min-h-[44px] rounded-full text-sm
+                              font-semibold transition-colors duration-200 border touch-manipulation ${
                                 active
                                   ? "bg-primary text-white border-primary shadow-sm"
                                   : "bg-transparent text-muted-foreground border-border hover:border-primary hover:text-primary"

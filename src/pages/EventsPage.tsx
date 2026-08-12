@@ -237,7 +237,7 @@ function EventCard({ event, index }: { event: Event; index: number }) {
         {event.details && (
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="text-xs font-semibold text-primary mb-4 flex items-center gap-1 hover:underline"
+            className="text-xs font-semibold text-primary mb-2 min-h-[44px] flex items-center gap-1 hover:underline touch-manipulation"
           >
             {expanded ? "Show less" : "Read more"}
             <ArrowRight size={11} className={`transition-transform ${expanded ? "rotate-90" : ""}`} />
@@ -318,13 +318,13 @@ function CalendarView({ events }: { events: Event[] }) {
     <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
       {/* Month header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-        <button onClick={prev} className="w-8 h-8 rounded-full hover:bg-muted flex items-center justify-center transition-colors">
+        <button onClick={prev} aria-label="Previous month" className="w-11 h-11 rounded-full hover:bg-muted flex items-center justify-center transition-colors touch-manipulation">
           <ChevronLeft size={16} />
         </button>
         <h3 className="font-display font-bold text-foreground text-base">
           {MONTH_NAMES[month]} {year}
         </h3>
-        <button onClick={next} className="w-8 h-8 rounded-full hover:bg-muted flex items-center justify-center transition-colors">
+        <button onClick={next} aria-label="Next month" className="w-11 h-11 rounded-full hover:bg-muted flex items-center justify-center transition-colors touch-manipulation">
           <ChevronRight size={16} />
         </button>
       </div>
@@ -490,13 +490,13 @@ export default function EventsPage() {
         <div className="flex items-center bg-white border border-border rounded-xl p-1 mr-2">
           <button
             onClick={() => setView("list")}
-            className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${view === "list" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            className={`flex items-center gap-1.5 text-xs font-semibold px-3 min-h-[44px] rounded-lg transition-colors touch-manipulation ${view === "list" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
           >
             <LayoutList size={13} /> List
           </button>
           <button
             onClick={() => setView("calendar")}
-            className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${view === "calendar" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            className={`flex items-center gap-1.5 text-xs font-semibold px-3 min-h-[44px] rounded-lg transition-colors touch-manipulation ${view === "calendar" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
           >
             <CalendarDays size={13} /> Calendar
           </button>
@@ -506,7 +506,7 @@ export default function EventsPage() {
         {/* Type filters */}
         <button
           onClick={() => setActiveType("All")}
-          className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${
+          className={`inline-flex items-center text-xs font-semibold px-3 min-h-[44px] rounded-full border transition-colors touch-manipulation ${
             activeType === "All"
               ? "bg-primary text-primary-foreground border-primary"
               : "bg-white text-muted-foreground border-border hover:border-primary hover:text-primary"
@@ -519,8 +519,8 @@ export default function EventsPage() {
           <button
             key={t}
             onClick={() => setActiveType(t === activeType ? "All" : t)}
-            className={`flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full
-                        border transition-colors ${
+            className={`flex items-center gap-1 text-xs font-semibold px-3 min-h-[44px] rounded-full
+                        border transition-colors touch-manipulation ${
                           activeType === t
                             ? "bg-primary text-primary-foreground border-primary"
                             : "bg-white text-muted-foreground border-border hover:border-primary hover:text-primary"
@@ -534,8 +534,8 @@ export default function EventsPage() {
         {/* Virtual toggle */}
         <button
           onClick={() => setShowVirtualOnly((v) => !v)}
-          className={`flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full
-                      border transition-colors ml-auto ${
+          className={`flex items-center gap-1 text-xs font-semibold px-3 min-h-[44px] rounded-full
+                      border transition-colors touch-manipulation ml-auto ${
                         showVirtualOnly
                           ? "bg-accent text-accent-foreground border-accent"
                           : "bg-white text-muted-foreground border-border hover:border-accent hover:text-accent"

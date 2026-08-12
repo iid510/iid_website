@@ -374,8 +374,8 @@ export default function BusinessProfile() {
               )}
               <button
                 onClick={handleShare}
-                className="bg-black/30 hover:bg-black/50 text-white p-2.5 rounded-full backdrop-blur-sm
-                           border border-white/15 transition-colors"
+                className="bg-black/30 hover:bg-black/50 text-white w-11 h-11 flex items-center justify-center rounded-full backdrop-blur-sm
+                           border border-white/15 transition-colors touch-manipulation"
                 aria-label="Share"
               >
                 <Share2 size={15} />

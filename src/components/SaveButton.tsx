@@ -54,7 +54,7 @@ export default function SaveButton({ slug, kind, variant = "icon", className = "
       aria-pressed={saved}
       aria-label={saved ? `Remove ${kind} from saved` : `Save ${kind}`}
       title={label}
-      className={`w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-sm transition-colors touch-manipulation ${
+      className={`w-11 h-11 rounded-full flex items-center justify-center backdrop-blur-sm transition-colors touch-manipulation ${
         saved
           ? "bg-accent text-charcoal"
           : "bg-black/35 text-white hover:bg-black/55"
