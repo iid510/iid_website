@@ -11,6 +11,7 @@ import Testimonials from "@/components/Testimonials";
 import News from "@/components/News";
 import Gallery from "@/components/Gallery";
 import OrimolusiSection from "@/components/OrimolusiSection";
+import SevenTowns from "@/components/SevenTowns";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
@@ -57,6 +58,7 @@ const Index = () => {
       <VideoSection />
       <Impact />
       <OrimolusiSection />
+      <SevenTowns />
       <Team startCollapsed />
       <Story />
       <Testimonials />
