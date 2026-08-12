@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ChevronRight, Sparkles, Search, ChevronDown, Heart } from "lucide-react";
 import SearchModal from "@/components/SearchModal";
 import { useLang } from "@/context/LanguageContext";
+import { TOWNS } from "@/data/towns";
 
 const navLinks = [
   { label: "Home",      href: "/" },
@@ -32,14 +33,59 @@ const moreLinks = [
   { label: "Scholarship",    href: "/scholarship",   icon: "🎓" },
 ];
 
+/**
+ * The mobile drawer used to be one flat list of 19 links — nearly three screens
+ * of scrolling with nothing to orient against, and the seven town pages were
+ * missing from it entirely. Grouping mirrors the Media/More split the desktop
+ * nav already had, and gives the towns a home.
+ */
+const MOBILE_SECTIONS: { heading: string; links: { label: string; href: string; icon?: string }[] }[] = [
+  {
+    heading: "Explore",
+    links: [
+      { label: "Home",      href: "/",           icon: "🏠" },
+      { label: "About",     href: "/about",      icon: "ℹ️" },
+      { label: "Heritage",  href: "/heritage",   icon: "👑" },
+      { label: "Members",   href: "/members",    icon: "🤝" },
+      { label: "Directory", href: "/businesses", icon: "🏪" },
+    ],
+  },
+  {
+    heading: "The Seven Towns",
+    links: TOWNS.map((t) => ({ label: t.name, href: `/${t.slug}`, icon: "📍" })),
+  },
+  { heading: "Media", links: mediaLinks },
+  {
+    heading: "Community",
+    links: [
+      { label: "Find Your Roots", href: "/roots",        icon: "🧭" },
+      { label: "Your IID",        href: "/my-iid",       icon: "⭐" },
+      { label: "Impact",          href: "/impact",       icon: "📊" },
+      { label: "Scholarship",     href: "/scholarship",  icon: "🎓" },
+      { label: "Announcements",   href: "/announcements", icon: "📢" },
+    ],
+  },
+  {
+    heading: "Visit & Contact",
+    links: [
+      { label: "Tourism",      href: "/tourism", icon: "🏛️" },
+      { label: "Travel Guide", href: "/travel",  icon: "✈️" },
+      { label: "Team",         href: "/team",    icon: "👥" },
+      { label: "Contact",      href: "/contact", icon: "✉️" },
+    ],
+  },
+];
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+  const [townsOpen, setTownsOpen] = useState(false);
   const mediaRef = useRef<HTMLDivElement>(null);
   const moreRef = useRef<HTMLDivElement>(null);
+  const townsRef = useRef<HTMLDivElement>(null);
   const { lang, setLang } = useLang();
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,6 +94,7 @@ export default function Navbar() {
   useEffect(() => {
     setMediaOpen(false);
     setMoreOpen(false);
+    setTownsOpen(false);
     setOpen(false);
   }, [location.pathname]);
 
@@ -58,6 +105,9 @@ export default function Navbar() {
       }
       if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
         setMoreOpen(false);
+      }
+      if (townsRef.current && !townsRef.current.contains(e.target as Node)) {
+        setTownsOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -143,6 +193,49 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Towns dropdown — the seven town pages had no nav entry at all */}
+            <div className="relative" ref={townsRef}>
+              <button
+                onClick={() => setTownsOpen((v) => !v)}
+                className="flex items-center gap-1 text-xs text-primary-foreground/70 hover:text-primary-foreground transition-colors font-medium"
+              >
+                Towns
+                <motion.span animate={{ rotate: townsOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                  <ChevronDown size={13} />
+                </motion.span>
+              </button>
+              <AnimatePresence>
+                {townsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full right-0 mt-2 w-60 bg-card border border-border rounded-xl shadow-xl overflow-hidden z-50"
+                  >
+                    {TOWNS.map((town) => (
+                      <Link
+                        key={town.slug}
+                        to={`/${town.slug}`}
+                        onClick={() => setTownsOpen(false)}
+                        className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm text-foreground/80 hover:bg-muted hover:text-foreground transition-colors"
+                      >
+                        <span className="font-medium">{town.name}</span>
+                        <span className="text-[11px] text-muted-foreground">{town.ruler}</span>
+                      </Link>
+                    ))}
+                    <Link
+                      to="/heritage"
+                      onClick={() => setTownsOpen(false)}
+                      className="block px-4 py-2.5 text-xs font-bold text-primary border-t border-border hover:bg-muted transition-colors"
+                    >
+                      All heritage &rarr;
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Media dropdown */}
             <div className="relative" ref={mediaRef}>
@@ -337,7 +430,9 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-primary z-50 md:hidden safe-area-top safe-area-bottom"
+              // Above the floating contact button (z-50), which otherwise sits
+              // on top of the drawer's Join Us CTA.
+              className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-primary z-[60] md:hidden safe-area-top safe-area-bottom"
             >
               <div className="flex flex-col h-full">
                 {/* Header */}
@@ -363,23 +458,38 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                {/* Nav links */}
-                <div className="flex-1 overflow-y-auto py-4">
-                  {[...navLinks, ...mediaLinks, ...moreLinks].map((link, index) => (
+                {/* Nav links, grouped */}
+                <div className="flex-1 overflow-y-auto py-2">
+                  {MOBILE_SECTIONS.map((section, sectionIndex) => (
                     <motion.div
-                      key={link.href}
+                      key={section.heading}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.04, duration: 0.3 }}
+                      transition={{ delay: sectionIndex * 0.06, duration: 0.3 }}
                     >
-                      <Link
-                        to={link.href}
-                        onClick={() => setOpen(false)}
-                        className="flex items-center justify-between px-6 py-3.5 text-primary-foreground/90 hover:bg-primary-foreground/5 active:bg-primary-foreground/10 font-medium text-base transition-colors touch-manipulation"
-                      >
-                        {link.label}
-                        <ChevronRight size={18} className="text-primary-foreground/40" />
-                      </Link>
+                      <p className="px-6 pt-4 pb-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-accent/80">
+                        {section.heading}
+                      </p>
+                      {section.links.map((link) => {
+                        const active = location.pathname === link.href;
+                        return (
+                          <Link
+                            key={link.href}
+                            to={link.href}
+                            onClick={() => setOpen(false)}
+                            aria-current={active ? "page" : undefined}
+                            className={`flex items-center gap-3 px-6 min-h-[44px] py-2 font-medium text-[15px] transition-colors touch-manipulation ${
+                              active
+                                ? "bg-primary-foreground/10 text-accent"
+                                : "text-primary-foreground/90 hover:bg-primary-foreground/5 active:bg-primary-foreground/10"
+                            }`}
+                          >
+                            <span aria-hidden className="text-sm w-5 shrink-0">{link.icon}</span>
+                            <span className="flex-1">{link.label}</span>
+                            <ChevronRight size={16} className="text-primary-foreground/30 shrink-0" />
+                          </Link>
+                        );
+                      })}
                     </motion.div>
                   ))}
 
