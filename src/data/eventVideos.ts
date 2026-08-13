@@ -115,4 +115,14 @@ export const EVENT_VIDEOS: EventVideo[] = [
     date: "IID Omo Orimolusi in Diaspora",
     tag: "Community",
   },
+  {
+    id: 12,
+    title: "President's Speech — Healthcare Outreach Project",
+    description:
+      "The President of IID Omo Orimolusi in Diaspora speaks from the ground at the community healthcare outreach project, on what the programme means for Ijebu-Igbo and the people it was built to serve.",
+    src: "/videos/events/iid-president-speech-healthcare-outreach.mp4",
+    thumbnail: "/videos/thumbs/iid-president-speech-healthcare-outreach.webp",
+    date: "IID Omo Orimolusi in Diaspora",
+    tag: "Community",
+  },
 ];

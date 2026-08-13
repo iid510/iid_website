@@ -1059,4 +1059,90 @@ export const BUSINESSES: Business[] = [
       "Contact: 08052593350, 09043437256, 09069386181",
     ],
   },
+
+  {
+    id: 14,
+    slug: "eweso-online",
+    name: "Èwèsó Online",
+    category: "Professional Services",
+    tagline: "Your number 1 platform for culture",
+    description:
+      "Èwèsó Online is a media and event coverage company documenting the vibrant traditions, contemporary voices and rich heritage of our communities through a curated mix of multimedia content. Alongside professional event coverage, Èwèsó runs a family of platforms — Èwèsó Events, Èwèsó News, the Èwèsó e-Magazine and the Èwèsó Podcast — and produces documentary films in partnership with Motòrò Films, including \"Ojúde Ọba — The Royal Legacy\" and the forthcoming \"Eyo — The Untold Roots\".",
+    flyer: "/images/businesses/eweso-online/flyer.webp",
+    gallery: [
+      "/images/businesses/eweso-online/flyer.webp",
+      "/images/businesses/eweso-online/platforms.webp",
+    ],
+    phone: "+2349162522112",
+    whatsapp: "+2349162522112",
+    email: "kansiwa@ewesoonline.com",
+    website: "www.ewesoonline.com",
+    social: {
+      instagram: "https://www.instagram.com/ewesoonline",
+      facebook: "https://www.facebook.com/ewesoonline",
+      twitter: "https://x.com/ewesoonline",
+      tiktok: "https://www.tiktok.com/@ewesoonline",
+      youtube: "https://www.youtube.com/@ewesoonline",
+    },
+    region: "Diaspora",
+
+    services: [
+      "Iwuye Ceremonies",
+      "Cultural Days",
+      "Movie Premieres",
+      "Weddings & Anniversaries",
+      "Birthdays",
+      "Burials",
+      "Product Launches",
+      "Music Concerts",
+      "Conferences & Seminars",
+      "Corporate Events & Workshops",
+      "Zoom / Virtual Coverage",
+    ],
+
+    serviceCategories: [
+      {
+        name: "Event Coverage",
+        items: [
+          "Iwuye ceremonies, cultural days and movie premieres",
+          "Birthdays, weddings, burials and anniversaries",
+          "Product launches, music concerts and conferences",
+          "Corporate events, seminars, workshops and Zoom coverage",
+        ],
+      },
+      {
+        name: "Èwèsó Platforms",
+        items: [
+          "Èwèsó Events — cultural and community event coverage",
+          "Èwèsó News — reporting from the communities",
+          "Èwèsó e-Magazine — long-form culture and heritage writing",
+          "Èwèsó Podcast — conversations with contemporary voices",
+        ],
+      },
+      {
+        name: "Documentary Films",
+        items: [
+          "Ojúde Ọba — The Royal Legacy (with Motòrò Films)",
+          "Eyo — The Untold Roots (coming soon, with Motòrò Films)",
+        ],
+      },
+    ],
+
+    whatWeDo: [
+      {
+        title: "What We Do",
+        description:
+          "We explore the vibrant traditions, contemporary voices and rich heritage of our communities through a curated mix of multimedia content — from full event coverage to documentary film.",
+        items: [],
+      },
+    ],
+
+    benefits: [
+      "Professional multi-camera and gimbal event coverage",
+      "Cultural events documented by a team that understands them",
+      "Virtual and Zoom coverage for the diaspora audience",
+      "Reach across Instagram, TikTok, Facebook, X and YouTube — @ewesoonline",
+      "UK and Nigeria contact lines: +234 916 252 2112, +44 7903 720 801",
+    ],
+  },
 ];
